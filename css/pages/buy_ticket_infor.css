@@ -1,0 +1,252 @@
+/* =====================================
+   BUY TICKET INFO PAGE
+===================================== */
+
+body {
+  background-color: #e3edf1; /* nền xám xanh nhạt như trang buy_ticket */
+}
+
+.ticket-info-layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 32px;
+  align-items: flex-start;
+}
+
+/* FORM NGƯỜI MUA */
+.buyer-section {
+  flex: 1;
+  background: #fff; /* trắng tinh */
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: #111;
+}
+
+.buyer-form h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #36366d;
+  margin-bottom: 16px;
+}
+
+
+.buyer-form label {
+  display: block;
+  font-weight: 500;
+  margin-top: 14px;
+  color: #222;
+}
+
+.buyer-form input,
+.buyer-form textarea {
+  background-color: #fff;
+  color: #111;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  font-family: inherit;
+}
+
+.buyer-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.required {
+  color: red;
+}
+
+/* ĐIỀU KHOẢN ĐỒNG Ý */
+.agree-box {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;         /* căn giữa theo chiều dọc */
+  gap: 10px;                   /* khoảng cách giữa ô và chữ */
+  font-size: 0.95rem;
+  color: #222;
+  line-height: 1.4;
+}
+
+.agree-box input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #6c4dc2;       /* đổi màu tick cho đồng bộ theme */
+  cursor: pointer;
+}
+
+
+.btn-continue {
+  width: 100%;
+  margin-top: 24px;
+  padding: 12px;
+  background-color: #6c4dc2;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-continue:hover {
+  background-color: #5639a6;
+}
+
+/* TÓM TẮT ĐƠN HÀNG */
+.ticket-summary {
+  flex: 0 0 340px;
+  background: #f6f7fb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+}
+
+.ticket-summary h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 12px;
+}
+
+.ticket-summary ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ticket-summary li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.95rem;
+}
+
+.ticket-summary li span {
+  color: #555;
+}
+
+.note {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+
+/* ========== HEADER SỰ KIỆN - GIAO DIỆN MỚI (NỀN ẢNH + NỘI DUNG TRẮNG NỔI BẬT) ========== */
+.event-header {
+  position: relative;
+  width: 95%;
+  max-width: 1200px;
+  margin: 28px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  height: 240px;
+
+  /* ảnh banner sự kiện */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* đổ bóng nhẹ cho khối */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+}
+
+/* không overlay tối nữa */
+.event-overlay {
+  display: none;
+}
+
+/* === BÊN TRÁI: KHỐI ĐẾM NGƯỢC === */
+.event-header-left {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 14px 24px;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  min-width: 190px;
+}
+
+.event-header-left p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+#countdown {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff4e4e;
+  animation: pulse 1.5s infinite;
+  letter-spacing: 1px;
+}
+
+/* === BÊN PHẢI: THÔNG TIN SỰ KIỆN === */
+.event-header-right {
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.event-header-right h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.event-header-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: #f2f2f2;
+}
+
+.event-header-detail .icon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.9;
+}
+
+/* Hiệu ứng nhẹ cho đồng hồ */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .event-header {
+    flex-direction: column;
+    justify-content: center;
+    height: auto;
+    padding: 24px 30px;
+  }
+
+  .event-header-left {
+    margin-bottom: 16px;
+  }
+
+  .event-header-right {
+    align-items: center;
+    text-align: center;
+  }
+}

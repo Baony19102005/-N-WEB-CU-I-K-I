@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanivan Ticket - Trang chủ</title>
+
+    <!-- CẬP NHẬT ĐƯỜNG DẪN CSS -->
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/homepage.css">
+
+    <!-- Link tới Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header sẽ được JavaScript tải và chèn vào đây -->
+    <header id="header-placeholder" class="header"></header>
+
+    <!-- Nội dung chính của trang web -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Banner với hiệu ứng chuyển động -->
+            <section class="hero-banner">
+                <div class="banner-scroll">
+                    <div class="banner-card"><img src="../../images/pages/homepage/Banner/banner-1.jpg"
+                            alt="Banner Em Xinh Say Hi Concert"></div>
+                    <div class="banner-card"><img src="../../images/pages/homepage/Banner/banner-2.jpg"
+                            alt="Banner 33 Anh Tài Hẹn Gặp Lại"></div>
+                    <!-- Lặp lại các ảnh để tạo hiệu ứng cuộn mượt mà -->
+                    <div class="banner-card"><img src="../../images/pages/homepage/Banner/banner-3.jpg"
+                            alt="Banner Chị đẹp đạp gió"></div>
+                    <div class="banner-card"><img src="../../images/pages/homepage/Banner/banner-4.jpg"
+                            alt="Banner Anh trai Say Hi"></div>
+                </div>
+            </section>
+
+            <!-- Sự kiện nổi bật -->
+            <section class="event-section">
+                <div class="section-header">
+                    <h2>SỰ KIỆN NỔI BẬT</h2>
+                </div>
+                <div class="events-grid" id="featured-events">
+                    <!-- JavaScript sẽ chèn dữ liệu vào đây -->
+                </div>
+            </section>
+
+            <!-- Dành cho bạn -->
+            <section class="event-section">
+                <div class="section-header">
+                    <h2>DÀNH CHO BẠN</h2>
+                    <a href="search.html" class="view-more">Xem thêm ></a>
+                </div>
+                <div class="horizontal-scroll-grid" id="for-you-events">
+                    <!-- JavaScript sẽ chèn dữ liệu vào đây -->
+                </div>
+            </section>
+            <!-- Sự kiện xu hướng -->
+            <section class="event-section">
+                <div class="section-header">
+                    <h2>🔥 SỰ KIỆN XU HƯỚNG</h2>
+                    <a href="search.html" class="view-more">Xem thêm ></a>
+                </div>
+                <div class="trending-grid" id="trending-events">
+                    <!-- JavaScript sẽ chèn dữ liệu vào đây -->
+                </div>
+            </section>
+
+            <!-- Sân khấu và nghệ thuật -->
+            <section class="event-section">
+                <div class="section-header">
+                    <h2>SÂN KHẤU VÀ NGHỆ THUẬT</h2>
+                    <a href="search.html" class="view-more">Xem thêm ></a>
+                </div>
+                <div class="horizontal-scroll-grid" id="stage-art-events">
+                    <!-- JavaScript sẽ chèn dữ liệu vào đây -->
+                </div>
+            </section>
+
+            <!-- Thể loại khác -->
+            <section class="event-section">
+                <div class="section-header">
+                    <h2>THỂ LOẠI KHÁC</h2>
+                    <a href="search.html" class="view-more">Xem thêm ></a>
+                </div>
+                <div class="horizontal-scroll-grid" id="other-categories-events">
+                    <!-- JavaScript sẽ chèn dữ liệu vào đây -->
+                </div>
+            </section>
+
+            <!-- Điểm đến thú vị -->
+            <section class="event-section">
+                <div class="section-header">
+                    <h2>ĐIỂM ĐẾN THÚ VỊ</h2>
+                </div>
+                <div class="destinations-grid">
+                    <div class="destination-card">
+                        <img src="../../images/pages/homepage/ĐỊA ĐIỂM THÚ VỊ/diem-den-hcmc.jpg" alt="TP. Hồ Chí Minh">
+                        <div class="destination-overlay">
+                            <h3>TP. Hồ Chí Minh</h3>
+                        </div>
+                    </div>
+                    <div class="destination-card">
+                        <img src="../../images/pages/homepage/ĐỊA ĐIỂM THÚ VỊ/diem-den-hanoi.jpg" alt="Hà Nội">
+                        <div class="destination-overlay">
+                            <h3>Hà Nội</h3>
+                        </div>
+                    </div>
+                    <div class="destination-card">
+                        <img src="../../images/pages/homepage/ĐỊA ĐIỂM THÚ VỊ/diem-den-dalat.jpg" alt="Đà Lạt">
+                        <div class="destination-overlay">
+                            <h3>Đà Lạt</h3>
+                        </div>
+                    </div>
+                    <div class="destination-card">
+                        <img src="../../images/pages/homepage/ĐỊA ĐIỂM THÚ VỊ/diem-den-khac.jpg" alt="Địa điểm khác">
+                        <div class="destination-overlay">
+                            <h3>Địa điểm khác</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Chèn dòng này vào homepage.html và event_detail.html -->
+    <div class="auth-modal-overlay" id="auth-modal"></div>
+
+    <!-- Footer sẽ được JavaScript tải và chèn vào đây -->
+    <footer id="footer-placeholder" class="footer">
+    </footer>
+
+    <!-- CẬP NHẬT ĐƯỜNG DẪN JS -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/pages/homepage.js"></script>
+</body>
+
+</html>

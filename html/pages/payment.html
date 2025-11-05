@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán - Tanivan Ticket</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/payment.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="header-placeholder" class="header"></header>
+
+    <main class="payment-container">
+        <!-- Thông tin sự kiện -->
+        <section class="event-header">
+            <h2>[CONCERT] ANH TRAI VƯỢT NGÀN CHÔNG GAI DAY3, DAY4</h2>
+            <div class="event-details">
+                <div class="event-meta">
+                    <img src="../../images/icon-time.png" class="icon" alt="Thời gian">
+                    <span>18:00 - 23:00, 28/12/2025</span>
+                </div>
+                <div class="event-meta">
+                    <img src="../../images/icon-location.png" class="icon" alt="Địa điểm">
+                    <span>The Global City, TP.HCM</span>
+                </div>
+            </div>
+
+            <!-- Bộ đếm thời gian -->
+            <div class="countdown-box" id="countdownBox">
+                <p class="countdown-title">Hoàn tất đặt vé trong:</p>
+                <div class="countdown-timer">
+                    <div class="time-box" id="minutes">15</div>
+                    <span>:</span>
+                    <div class="time-box" id="seconds">00</div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <div class="payment-layout">
+            <!-- Bên trái -->
+            <div class="payment-left">
+                <h3 class="section-title">Phương thức thanh toán</h3>
+
+                <div class="payment-box">
+                    <h4>Chọn phương thức thanh toán</h4>
+                    <div class="payment-methods">
+                        <label>
+                            <input type="radio" name="paymentMethod" value="atm" checked>
+                            Thẻ nội địa / ATM
+                        </label>
+
+                        <label>
+                            <input type="radio" name="paymentMethod" value="momo">
+                            MoMo
+                        </label>
+                        <label>
+                            <input type="radio" name="paymentMethod" value="zalo">
+                            ZaloPay
+                        </label>
+                        <label>
+                            <input type="radio" name="paymentMethod" value="spay">
+                            Shopeepay
+                        </label>
+
+                        <label>
+                            <input type="radio" name="paymentMethod" value="bank">
+                            Chuyển khoản ngân hàng
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="payment-box">
+                    <h4>Mã giảm giá</h4>
+                    <div id="voucher-display">
+                        <button class="voucher-btn" id="openVoucherBtn">+ Nhập mã giảm giá</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bên phải -->
+            <div class="payment-right">
+                <div class="order-summary">
+                    <h4>Tóm tắt đơn hàng</h4>
+                    <p>Loại vé: <span id="pay_zone">--</span></p>
+                    <p>Số lượng: <span id="pay_qty">--</span></p>
+                    <p>Giá vé: <span id="pay_price">--</span></p>
+                    <p><strong>Tổng cộng: <span id="pay_total">--</span></strong></p>
+                </div>
+
+                <div class="order-summary">
+                    <h4>Thông tin người mua</h4>
+                    <p>Họ và tên: <span id="pay_fullname">--</span></p>
+                    <p>SĐT: <span id="pay_phone">--</span></p>
+                    <p>Email: <span id="pay_email">--</span></p>
+                </div>
+
+                <button class="confirmBtn" id="confirmPaymentBtn">Xác nhận thanh toán</button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer-placeholder" class="footer"></footer>
+    <!-- POPUP VOUCHER -->
+    <div class="voucher-modal-overlay" id="voucherModal">
+        <div class="voucher-modal">
+            <div class="voucher-header">
+                <p class="voucher-title">Chọn tối đa 1 voucher</p>
+                <div class="voucher-input-row">
+                    <input type="text" class="voucher-input" placeholder="Nhập mã voucher" />
+                    <button class="voucher-apply-btn">Áp dụng</button>
+                </div>
+            </div>
+
+            <div class="voucher-section">
+                <p class="voucher-section-title">Voucher từ Ban tổ chức</p>
+                <p class="voucher-empty">Chưa có voucher nào</p>
+            </div>
+
+            <div class="voucher-section">
+                <p class="voucher-section-title">Voucher từ Tanivan Ticket</p>
+
+                <!-- Voucher MoMo -->
+                <div class="voucher-item" data-logo="momo" data-method="momo" data-minorder="800000">
+                    <div class="voucher-left">
+                        <div class="voucher-logo">
+                            <img src="../../images/logo-momo.png" alt="Momo logo">
+                        </div>
+                        <div class="voucher-info">
+                            <div class="voucher-title-main">Giảm 20.000đ</div>
+                            <div class="voucher-sub">Đơn tối thiểu 800.000đ</div>
+                            <div class="voucher-more">
+                                <div class="voucher-expire">HSD: 31/12/2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="voucher-right">
+                        <input type="radio" name="voucherSelect">
+                    </div>
+                </div>
+
+
+                <!-- Voucher ShopeePay -->
+                <div class="voucher-item" data-logo="spay" data-method="spay" data-minorder="800000">
+                    <div class="voucher-left">
+                        <div class="voucher-logo">
+                            <img src="../../images/icon-Spay.jpg" alt="ShopeePay logo">
+                        </div>
+                        <div class="voucher-info">
+                            <div class="voucher-title-main">Giảm 20.000đ</div>
+                            <div class="voucher-sub">Đơn tối thiểu 800.000đ</div>
+                            <div class="voucher-more">
+                                <div class="voucher-expire">HSD: 31/12/2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="voucher-right">
+                        <input type="radio" name="voucherSelect">
+                    </div>
+                </div>
+
+                <!-- Voucher ZaloPay -->
+                <div class="voucher-item" data-logo="zalo" data-method="zalo" data-minorder="600000">
+                    <div class="voucher-left">
+                        <div class="voucher-logo">
+                            <img src="../../images/icon-zalopay.png" alt="Zalo logo">
+                        </div>
+                        <div class="voucher-info">
+                            <div class="voucher-title-main">Giảm 15.000đ</div>
+                            <div class="voucher-sub">Đơn tối thiểu 600.000đ</div>
+                            <div class="voucher-more">
+                                <div class="voucher-expire">HSD: 31/12/2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="voucher-right">
+                        <input type="radio" name="voucherSelect">
+                    </div>
+                </div>
+
+                <!-- Voucher MoMo (bản khác) -->
+                <div class="voucher-item" data-logo="momo" data-method="momo" data-minorder="400000">
+                    <div class="voucher-left">
+                        <div class="voucher-logo">
+                            <img src="../../images/logo-momo.png" alt="Momo logo">
+                        </div>
+                        <div class="voucher-info">
+                            <div class="voucher-main">
+                                <div class="voucher-title-main">Giảm 10.000đ</div>
+                                <div class="voucher-sub">Đơn tối thiểu 400.000đ</div>
+                            </div>
+                            <div class="voucher-more">
+                                <div class="voucher-expire">HSD: 31/12/2025</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="voucher-right">
+                        <input type="radio" name="voucherSelect">
+                    </div>
+                </div>
+            </div>
+
+            <div class="voucher-footer">
+                <button class="voucher-cancel-btn" id="voucherCancelBtn">Hủy bỏ</button>
+                <button class="voucher-confirm-btn" id="voucherConfirmBtn" disabled>Xác nhận</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- POPUP QR THANH TOÁN -->
+    <div class="qr-modal-overlay" id="qrModal">
+        <div class="qr-modal">
+            <div class="qr-header">
+                <h3>Thông tin thanh toán</h3>
+                <button id="qrCloseBtn">×</button>
+            </div>
+
+            <div class="qr-body">
+                <div class="qr-left">
+                    <img src="../../images/QR-test.png" alt="QR Code" class="qr-image">
+                    <p class="qr-amount">Tổng tiền<br><strong id="qrTotal">1.200.000 đ</strong></p>
+                </div>
+
+                <div class="qr-right">
+                    <h4>Quét mã QR để thanh toán</h4>
+                    <ol>
+                        <li>Mở ứng dụng ngân hàng trên điện thoại</li>
+                        <li>Chọn biểu tượng <strong>Quét mã QR</strong></li>
+                        <li>Quét mã QR ở trang này</li>
+                        <li>Thực hiện thanh toán và xem kết quả tại trang này</li>
+                    </ol>
+
+                    <div class="qr-timer-box">
+                        Giao dịch sẽ kết thúc sau<br>
+                        <span id="qrMinutes">10</span> : <span id="qrSeconds">30</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/common.js"></script>
+    <script src="../../js/pages/payment.js"></script>
+</body>
+
+</html>

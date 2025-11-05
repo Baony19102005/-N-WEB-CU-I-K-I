@@ -1,0 +1,30 @@
+<!-- html/templates/header.html -->
+<div class="main-nav">
+    <div class="container">
+        <a href="../pages/hompage.html" class="logo">
+            <!-- Đường dẫn ảnh tính từ homepage.html -->
+            <img src="../../images/common/logo.png" alt="Tanivan Ticket Logo">
+        </a>
+        <form action="../pages/search.html" method="get" class="search-bar">
+            <img src="https://img.icons8.com/ios-glyphs/30/36366D/search--v1.png" alt="Search Icon"
+                class="search-icon" />
+            <input type="text" name="keyword" placeholder="Bạn tìm gì hôm nay?">
+            <span>|</span>
+            <button type="submit">Tìm kiếm</button>
+        </form>
+        <div class="user-actions">
+            <a href="../pages/create_event.html" target="_blank" class="nav-btn-outline">Tạo sự kiện</a>
+            <a href="../pages/myticket.html" class="nav-btn">Vé của tôi</a>
+            <a href="#" id="open-auth-modal-btn" class="nav-btn-solid">Đăng nhập | Đăng ký</a>
+        </div>
+    </div>
+</div>
+<!-- DÙNG ĐOẠN NÀY ĐỂ THAY THẾ -->
+<div class="category-nav">
+    <div class="container">
+        <a href="../pages/search.html?category=music">Âm nhạc</a>
+        <a href="../pages/search.html?category=art">Sân khấu & nghệ thuật</a>
+        <a href="../pages/search.html?category=sport">Thể thao</a>
+        <a href="../pages/search.html?category=other">Khác</a>
+    </div>
+</div>

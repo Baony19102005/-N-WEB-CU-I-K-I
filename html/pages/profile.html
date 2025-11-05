@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin tài khoản - Tanivan Ticket</title>
+    <!-- CẬP NHẬT ĐƯỜNG DẪN CSS -->
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/profile.css">
+</head>
+
+<body>
+    <!-- Tái sử dụng Header -->
+    <header id="header-placeholder" class="header"></header>
+
+    <!-- Nội dung chính của trang profile -->
+    <main class="profile-page-background">
+        <div class="container">
+            <!-- Breadcrumb (Thanh điều hướng phân cấp) -->
+            <nav class="breadcrumb">
+                <a href="hompage.html">Trang chủ</a>
+                <span>&gt;</span>
+                <a href="profile.html">Cài đặt tài khoản</a>
+                <span>&gt;</span>
+                <p>Thông tin tài khoản</p>
+            </nav>
+
+            <!-- Bố cục chính của trang -->
+            <div class="profile-layout">
+                <!-- THANH ĐIỀU HƯỚNG BÊN TRÁI (SIDEBAR) -->
+                <aside class="profile-sidebar">
+                    <div class="user-info">
+                        <img src="../../images/pages/profile/user-avatar.png" alt="User Avatar" class="user-avatar-small">
+                        <div>
+                            <p>Tài khoản của</p>
+                            <h3>Nguyễn Ngô Thảo Vân</h3>
+                        </div>
+                    </div>
+                    <nav class="profile-nav">
+                        <ul>
+                            <li>
+                                <a href="profile.html" class="active">
+                                    <img src="../../images/pages/profile/icon-user.png" alt="User Icon">
+                                    <span>Cài đặt tài khoản</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="myticket.html">
+                                    <img src="../../images/pages/profile/icon-ticket.png" alt="Ticket Icon">
+                                    <span>Vé của tôi</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <img src="../../images/pages/profile/icon-calendar-white.png" alt="Calendar Icon">
+                                    <span>Sự kiện của tôi</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <!-- NỘI DUNG CHÍNH BÊN PHẢI -->
+                <section class="profile-content">
+                    <h1>Thông tin tài khoản</h1>
+
+                    <form action="#">
+                        <!-- Cập nhật khối này trong file profile.html -->
+                        <div class="avatar-upload-section">
+                            <div class="avatar-preview">
+                                <img src="../../images/pages/profile/user-avatar.png" alt="User Avatar Large"
+                                    id="avatar-preview-img">
+
+                                <!-- Nút camera bây giờ sẽ kích hoạt input ẩn -->
+                                <button type="button" class="btn-change-avatar" id="btn-change-avatar">
+                                    <img src="../../images/pages/profile/icon-camera.png" alt="Change Avatar">
+                                </button>
+
+                                <!-- Đây là input ẩn để xử lý việc chọn file -->
+                                <input type="file" id="avatar-upload-input" accept="image/png, image/jpeg, image/jpg"
+                                    style="display: none;">
+                            </div>
+                            <p>Cung cấp thông tin chính xác sẽ hỗ trợ bạn trong quá trình mua vé, hoặc khi cần xác thực
+                                vé</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="full-name">Họ và tên</label>
+                            <input type="text" id="full-name" value="Nguyễn Ngô Thảo Vân">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone-number">Số điện thoại</label>
+                            <input type="tel" id="phone-number">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birth-date">Ngày tháng năm sinh</label>
+                            <input type="date" id="birth-date">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Giới tính</label>
+                            <div class="gender-options">
+                                <label><input type="radio" name="gender" value="male"> Nam</label>
+                                <label><input type="radio" name="gender" value="female" checked> Nữ</label>
+                                <label><input type="radio" name="gender" value="other"> Khác</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-profile-save">Hoàn thành</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Tái sử dụng Footer -->
+    <footer id="footer-placeholder" class="footer"></footer>
+
+    <!-- CẬP NHẬT ĐƯỜNG DẪN JS -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/pages/profile.js"></script>
+</body>
+
+</html>

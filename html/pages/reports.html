@@ -1,0 +1,136 @@
+--- START OF FILE reports.html ---
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo & Phân tích - Organizer Center</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/create_event.css">
+    <!-- THƯ VIỆN CHART.JS (BẮT BUỘC PHẢI CÓ) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="organizer-body">
+
+    <header class="organizer-header-fixed">
+        <div class="container">
+            <a href="#" class="organizer-logo-header">
+                <img src="../../images/pages/create_event/logo.png" alt="Tanivan Logo">
+                <span>Ticket</span>
+            </a>
+            <div class="organizer-header-actions">
+                <a href="create_event.html" class="btn btn-primary-outline">Tạo sự kiện</a>
+                <div class="organizer-user-menu">
+                    <img src="../../images/pages/create_event/user-avatar.png" alt="User Avatar">
+                    <span>Tài khoản</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="organizer-main-layout container">
+        <aside class="organizer-sidebar">
+            <h1 class="organizer-title">Organizer Center</h1>
+            <nav class="organizer-nav">
+                <ul>
+                    <li><a href="my_events.html">Sự kiện của tôi</a></li>
+                    <li class="active"><a href="reports.html">Quản lý báo cáo</a></li>
+                    <li><a href="terms_organizer.html">Điều khoản Ban tổ chức</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="organizer-content">
+            <div class="page-header">
+                <h1>Báo cáo & Phân tích</h1>
+            </div>
+
+            <div class="dashboard-summary">
+                <div class="summary-card">
+                    <h4>Tổng doanh thu</h4>
+                    <p>9.745.000.000 ₫</p>
+                    <span>+15% so với tháng trước</span>
+                </div>
+                <div class="summary-card">
+                    <h4>Vé đã bán</h4>
+                    <p>18,900</p>
+                    <span>+20% so với tháng trước</span>
+                </div>
+                <div class="summary-card">
+                    <h4>Lượt xem sự kiện</h4>
+                    <p>125,430</p>
+                    <span>+8% so với tháng trước</span>
+                </div>
+            </div>
+
+            <!-- LƯỚI CHỨA BIỂU ĐỒ -->
+            <div class="dashboard-charts-grid">
+                <!-- BIỂU ĐỒ DOANH THU -->
+                <div class="form-card dashboard-chart-card">
+                    <h3 class="card-title">DOANH THU 7 NGÀY GẦN NHẤT</h3>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- BIỂU ĐỒ PHÂN LOẠI VÉ -->
+                <div class="form-card dashboard-chart-card">
+                    <h3 class="card-title">TỈ LỆ VÉ BÁN RA</h3>
+                     <div class="chart-container">
+                        <canvas id="ticketTypeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BẢNG CHI TIẾT CÁC SỰ KIỆN -->
+            <div class="form-card dashboard-table-card">
+                 <h3 class="card-title">CHI TIẾT DOANH THU</h3>
+                 <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên sự kiện</th>
+                                <th>Trạng thái</th>
+                                <th>Vé đã bán</th>
+                                <th>Doanh thu</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Übermensch - G-DRAGON 2025</td>
+                                <td><span class="event-status-badge status-live">Đang diễn ra</span></td>
+                                <td>5,120 / 10,000</td>
+                                <td>2.560.000.000 ₫</td>
+                            </tr>
+                            <tr>
+                                <td>Vũ Cát Tường Live Concert</td>
+                                <td><span class="event-status-badge status-upcoming">Sắp diễn ra</span></td>
+                                <td>3,850 / 5,000</td>
+                                <td>1.925.000.000 ₫</td>
+                            </tr>
+                             <tr>
+                                <td>WOW MUSIC FESTIVAL</td>
+                                <td><span class="event-status-badge status-ended">Đã kết thúc</span></td>
+                                <td>8,150 / 8,500</td>
+                                <td>3.260.000.000 ₫</td>
+                            </tr>
+                            <tr>
+                                <td>SUPERFEST 2025</td>
+                                <td><span class="event-status-badge status-approved">Được duyệt</span></td>
+                                <td>1,250 / 8,000</td>
+                                <td>2.000.000.000 ₫</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- NHÚNG FILE JS MỚI CỦA TRANG -->
+    <script src="../../js/pages/reports.js"></script>
+</body>
+</html>

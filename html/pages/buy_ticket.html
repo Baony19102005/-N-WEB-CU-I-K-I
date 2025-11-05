@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mua vé - Tanivan Ticket</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/pages/buy_ticket.css" />
+    <link rel="stylesheet" href="../../css/common.css" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header id="header-placeholder" class="header"></header>
+
+    <main class="ticket-layout">
+        <!-- BÊN TRÁI: SƠ ĐỒ CHỖ NGỒI -->
+        <section class="seat-map">
+            <h3 class="map-title">
+                Chọn khu vực<br><span>Bấm vào khu vực để chọn vé</span>
+            </h3>
+            <img id="seatmap-img" src="" alt="Seat Map" class="seatmap-image" />
+        </section>
+
+        <!-- BÊN PHẢI: THÔNG TIN SỰ KIỆN + GIÁ VÉ -->
+        <aside class="ticket-info">
+            <div id="event-info"></div>
+
+            <h5 class="price-title">Giá vé</h5>
+            <ul id="price-list" class="price-list"></ul>
+
+            <button class="choose-btn">Vui lòng chọn vé →</button>
+        </aside>
+    </main>
+
+    <!-- POPUP CHỌN VÉ -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2 id="popup-zone-name">Khu VÉ</h2>
+            <p>Lưu ý: Bạn chỉ có thể chọn vé trong 1 khu vực</p>
+            <div class="qty-control">
+                <button id="minus">-</button>
+                <span id="quantity">1</span>
+                <button id="plus">+</button>
+            </div>
+            <button class="btn-continue" id="continueBtn">Tiếp tục</button>
+            <div class="close" id="closePopup">Chọn khu vực khác</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer-placeholder" class="footer"></footer>
+
+    <!-- JS -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/pages/buy_ticket.js"></script>
+</body>
+
+</html>
