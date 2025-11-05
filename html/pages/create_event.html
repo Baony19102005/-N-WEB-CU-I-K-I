@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo sự kiện mới - Organizer Center</title>
+    <!-- CẬP NHẬT ĐƯỜNG DẪN CSS -->
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/create_event.css">
+
+    <!-- TÍCH HỢP TRÌNH SOẠN THẢO VĂN BẢN TINYMCE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.2/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: '#event-description-editor',
+            height: 400,
+            plugins: [
+                'autolink', 'link', 'lists', 'searchreplace', 'wordcount'
+            ],
+            toolbar: 'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link | removeformat',
+            content_style: 'body { font-family:Inter,Arial,sans-serif; font-size:14px }',
+            setup: function (editor) {
+                editor.on('change', function () {
+                    editor.save();
+                });
+            }
+        });
+    </script>
+</head>
+
+<body id="create-event-page" class="organizer-body">
+
+    <!-- HEADER FULL-WIDTH CỐ ĐỊNH -->
+    <header class="organizer-header-fixed">
+        <div class="container">
+            <a href="hompage.html" class="organizer-logo-header">
+                <img src="../../images/pages/create_event/logo.png" alt="Tanivan Logo">
+                <span>Ticket</span>
+            </a>
+            <div class="organizer-header-actions">
+                <button class="btn btn-primary-outline">Tạo sự kiện</button>
+                <div class="organizer-user-menu">
+                    <img src="../../images/pages/create_event/user-avatar.png" alt="User Avatar">
+                    <span>Tài khoản</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- LAYOUT CHÍNH NẰM DƯỚI HEADER -->
+    <div class="organizer-main-layout container">
+
+        <!-- CỘT BÊN TRÁI CỐ ĐỊNH -->
+        <aside class="organizer-sidebar">
+            <h1 class="organizer-title">Organizer Center</h1>
+            <nav class="organizer-nav">
+                <ul>
+                    <!-- Bỏ active ở đây và thêm link đúng -->
+                    <li><a href="my_events.html">Sự kiện của tôi</a></li>
+                    <li><a href="reports.html">Quản lý báo cáo</a></li>
+                    <li><a href="terms_organizer.html">Điều khoản Ban tổ chức</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- NỘI DUNG CHÍNH BÊN PHẢI -->
+        <main class="organizer-content">
+
+            <!-- Thanh tiến trình (Stepper) -->
+            <nav class="stepper-wrapper">
+                <div class="stepper-item active" data-step="1">
+                    <div class="step-counter">1</div>
+                    <div class="step-name">Thông tin sự kiện</div>
+                </div>
+                <div class="stepper-item" data-step="2">
+                    <div class="step-counter">2</div>
+                    <div class="step-name">Thời gian & Loại vé</div>
+                </div>
+                <div class="stepper-item" data-step="3">
+                    <div class="step-counter">3</div>
+                    <div class="step-name">Cài đặt</div>
+                </div>
+                <div class="stepper-item" data-step="4">
+                    <div class="step-counter">4</div>
+                    <div class="step-name">Thông tin thanh toán</div>
+                </div>
+            </nav>
+
+            <!-- Form chứa các bước -->
+            <form id="create-event-form">
+                <!-- STEP 1: THÔNG TIN SỰ KIỆN -->
+                <div class="form-step active" data-step-content="1">
+
+                    <!-- Card Upload hình ảnh -->
+                    <div class="form-card">
+                        <h3 class="card-title">UPLOAD HÌNH ẢNH <a href="#" class="view-link">Xem vị trí hiển thị các
+                                ảnh</a></h3>
+                        <div class="grid-2-col image-upload-grid">
+                            <!-- Box upload 1 -->
+                            <label class="upload-box image-preview-box" for="event-thumbnail-upload"
+                                id="thumbnail-preview">
+                                <div class="upload-content">
+                                    <img src="../../images/pages/create_event/icon-upload.png" alt="Upload Icon">
+                                    <p>Thêm ảnh sự kiện để<br>hiển thị ở các vị trí khác</p>
+                                    <span>(298 × 380)</span>
+                                </div>  
+                            </label>
+                            <input type="file" id="event-thumbnail-upload" class="image-upload-input"
+                                data-preview-id="thumbnail-preview" hidden>
+
+                            <!-- Box upload 2 -->
+                            <label class="upload-box image-preview-box" for="event-banner-upload" id="banner-preview">
+                                <div class="upload-content">
+                                    <img src="../../images/pages/create_event/icon-upload.png" alt="Upload Icon">
+                                    <p>Thêm ảnh bìa sự kiện</p>
+                                    <span>(380 × 676)</span>
+                                </div>
+                            </label>
+                            <input type="file" id="event-banner-upload" class="image-upload-input"
+                                data-preview-id="banner-preview" hidden>
+                        </div>
+                    </div>
+
+                    <!-- Card Tên sự kiện -->
+                    <div class="form-card">
+                        <h3 class="card-title">TÊN SỰ KIỆN <span class="required">*</span></h3>
+                        <input type="text" id="event-name" placeholder="Tên sự kiện" required>
+                    </div>
+
+                    <!-- Card Địa chỉ sự kiện -->
+                    <div class="form-card">
+                        <h3 class="card-title">ĐỊA CHỈ SỰ KIỆN <span class="required">*</span></h3>
+                        <div class="radio-toggle-group">
+                            <input type="radio" name="location_type" value="offline" id="loc-offline" checked>
+                            <label for="loc-offline">Sự kiện Offline</label>
+
+                            <input type="radio" name="location_type" value="online" id="loc-online">
+                            <label for="loc-online">Sự kiện Online</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="location-name">Tên địa điểm</label>
+                            <input type="text" id="location-name" placeholder="Tên địa điểm">
+                        </div>
+                        <div class="grid-2-col address-grid">
+                            <div class="form-group">
+                                <label for="province">Tỉnh/Thành</label>
+                                <select id="province" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="district">Quận/Huyện</label>
+                                <select id="district" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="ward">Phường/Xã</label>
+                                <select id="ward" required></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="street">Số nhà/Đường <span class="required">*</span></label>
+                                <input type="text" id="street" placeholder="Số nhà/Đường" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Thể loại sự kiện -->
+                    <div class="form-card">
+                        <h3 class="card-title">THỂ LOẠI SỰ KIỆN <span class="required">*</span></h3>
+                        <select id="event-category" required>
+                            <option value="">Vui lòng chọn</option>
+                            <option value="music">Âm nhạc</option>
+                            <option value="art">Sân khấu & Nghệ thuật</option>
+                            <option value="sport">Thể thao</option>
+                            <option value="other">Khác</option>
+                        </select>
+                    </div>
+
+                    <!-- Card Thông tin sự kiện (Rich Text Editor) -->
+                    <div class="form-card">
+                        <h3 class="card-title">THÔNG TIN SỰ KIỆN <span class="required">*</span></h3>
+                        <textarea id="event-description-editor"></textarea>
+                    </div>
+
+                    <!-- Card Ban tổ chức -->
+                    <div class="form-card">
+                        <h3 class="card-title">UPLOAD HÌNH ẢNH <a href="#" class="view-link">Xem vị trí hiển thị các
+                                ảnh</a></h3>
+                        <div class="organizer-info-layout">
+                            <label class="upload-box square image-preview-box" for="organizer-logo-upload"
+                                id="organizer-logo-preview">
+                                <div class="upload-content">
+                                    <img src="../../images/pages/create_event/icon-upload.png" alt="Upload Icon">
+                                    <p>Thêm logo Ban tổ chức</p>
+                                    <span>(270 × 270)</span>
+                                </div>
+                            </label>
+                            <input type="file" id="organizer-logo-upload" class="image-upload-input"
+                                data-preview-id="organizer-logo-preview" hidden>
+
+                            <div class="organizer-fields">
+                                <div class="form-group">
+                                    <label for="organizer-name">Tên Ban tổ chức <span class="required">*</span></label>
+                                    <input type="text" id="organizer-name" placeholder="Tên Ban tổ chức" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="organizer-info">Thông tin Ban tổ chức <span
+                                            class="required">*</span></label>
+                                    <textarea id="organizer-info" rows="4" placeholder="Thông tin Ban tổ chức"
+                                        required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: THỜI GIAN & LOẠI VÉ -->
+                <div class="form-step" data-step-content="2">
+                    <!-- Card Thời gian -->
+                    <div class="form-card">
+                        <h3 class="card-title">THỜI GIAN <span class="required">*</span></h3>
+                        <div class="grid-2-col equal-columns">
+                            <div class="form-group">
+                                <label for="start-date">Ngày bắt đầu</label>
+                                <input type="text" id="start-date" class="date-input-organizer" required readonly
+                                    placeholder="Chọn ngày bắt đầu">
+                            </div>
+                            <div class="form-group">
+                                <label for="end-date">Ngày kết thúc</label>
+                                <input type="text" id="end-date" class="date-input-organizer" required readonly
+                                    placeholder="Chọn ngày kết thúc">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Loại vé -->
+                    <div class="form-card">
+                        <h3 class="card-title">LOẠI VÉ <span class="required">*</span></h3>
+                        <div id="ticket-types-list"></div>
+                        <button type="button" class="btn-add-item" id="btn-open-ticket-modal">+ Tạo loại vé mới</button>
+                    </div>
+
+                    <!-- Card Suất diễn -->
+                    <div class="form-card">
+                        <h3 class="card-title">SUẤT DIỄN <span class="required">*</span></h3>
+                        <!-- Nơi hiển thị danh sách suất diễn -->
+                        <div id="sessions-list"></div>
+                        <button type="button" class="btn-add-item" id="btn-open-session-modal">+ Tạo suất diễn</button>
+                    </div>
+
+                    <!-- Card Sơ đồ chỗ ngồi -->
+                    <div class="form-card">
+                        <h3 class="card-title">HÌNH ẢNH SƠ ĐỒ CHỖ NGỒI</h3>
+                        <div class="seating-map-upload-wrapper">
+                            <label class="upload-box seating-map" for="seating-map-upload">
+                                <!-- Vùng hiển thị ảnh xem trước -->
+                                <div id="seating-map-preview" class="seating-map-preview-area">
+                                    <!-- Thẻ img thật để hiển thị ảnh, ban đầu ẩn đi -->
+                                    <img id="seating-map-img" src="#" alt="Sơ đồ chỗ ngồi xem trước"
+                                        style="display: none;">
+
+                                    <!-- Nội dung mặc định khi chưa có ảnh -->
+                                    <div class="upload-content" id="seating-map-placeholder">
+                                        <img src="../../images/pages/create_event/icon-upload.png" alt="Upload Icon">
+                                        <p>Thêm hình ảnh sơ đồ</p>
+                                    </div>
+                                </div>
+                            </label>
+                            <input type="file" id="seating-map-upload" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: CÀI ĐẶT -->
+                <div class="form-step" data-step-content="3">
+                    <!-- Link sự kiện -->
+                    <div class="form-group">
+                        <label for="event-link">Link dẫn đến sự kiện <span class="required">*</span></label>
+                        <input type="text" id="event-link" placeholder="Đường dẫn" required>
+                    </div>
+
+                    <!-- Quyền riêng tư -->
+                    <div class="form-group">
+                        <label>Quyền riêng tư sự kiện <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="privacy" value="public" checked> Sự kiện mở dành cho
+                                mọi người</label>
+                            <label><input type="radio" name="privacy" value="group"> Sự kiện mở dành cho một
+                                nhóm</label>
+                            <label><input type="radio" name="privacy" value="private"> Sự kiện riêng tư</label>
+                        </div>
+                    </div>
+
+                    <!-- Tin nhắn xác nhận -->
+                    <div class="form-group">
+                        <label for="event-confirmation-msg">Tin nhắn xác nhận cho người tham gia</label>
+                        <textarea id="event-confirmation-msg" rows="5"
+                            placeholder="Tin nhắn này sẽ được gửi đến người tham gia sau khi đặt vé thành công"></textarea>
+                    </div>
+                </div>
+
+                <!-- STEP 4: THÔNG TIN THANH TOÁN -->
+                <div class="form-step" data-step-content="4">
+                    <!-- Thông tin tài khoản ngân hàng -->
+                    <h4>Thông tin thanh toán <span class="required">*</span></h4>
+                    <p class="form-description">Tanivan sẽ gửi tiền vé về đến tài khoản của bạn...</p>
+                    <div class="form-group">
+                        <input type="text" placeholder="Chủ tài khoản" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Số tài khoản" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Tên ngân hàng" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Chi nhánh" required>
+                    </div>
+
+                    <!-- Thông tin hóa đơn đỏ -->
+                    <h4>Hóa đơn đỏ</h4>
+                    <div class="form-group">
+                        <input type="text" placeholder="Loại hình kinh doanh">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Họ tên">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Địa chỉ">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Mã số thuế">
+                    </div>
+                </div>
+            </form>
+
+            <!-- Các nút điều khiển -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="btn-prev-step" style="display: none;">Quay
+                    lại</button>
+                <button type="button" class="btn btn-secondary" id="btn-save">Lưu</button>
+                <button type="button" class="btn btn-primary" id="btn-next-step">Tiếp tục</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Popup thông báo lỗi -->
+    <div class="modal-overlay" id="validation-modal">
+        <div class="modal-content">
+            <h3>Thông báo</h3>
+            <p>Vui lòng điền đầy đủ các thông tin bắt buộc (*).</p>
+            <button class="btn btn-primary" id="close-modal-btn">Đã hiểu</button>
+        </div>
+    </div>
+
+    <!-- POPUP THÔNG BÁO THÀNH CÔNG (THÊM MỚI) -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal-content success-modal-content">
+            <!-- Icon dấu tick -->
+            <div class="success-icon">
+                <png viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/png">
+                    <circle cx="26" cy="26" r="25" stroke="#4CAF50" stroke-width="2" />
+                    <path d="M14 27L22 35L38 19" stroke="#4CAF50" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </png>
+            </div>
+            <h3>Tạo sự kiện thành công!</h3>
+            <p>Sự kiện của bạn đã được gửi đi và đang trong trạng thái "Chờ duyệt". Bạn có thể theo dõi tại mục
+                <strong>Sự kiện của tôi</strong>.
+            </p>
+            <button class="btn btn-primary" id="view-my-events-btn">Xem sự kiện của tôi</button>
+        </div>
+    </div>
+
+    <!-- POPUP TẠO LOẠI VÉ MỚI (PHIÊN BẢN CẢI TIẾN) -->
+    <div class="modal-overlay wide-modal" id="ticket-type-modal">
+        <div class="modal-content form-card">
+            <h3 class="popup-title">TẠO LOẠI VÉ MỚI</h3>
+            <form id="ticket-type-form">
+
+                <div class="form-group">
+                    <label for="ticket-name">Tên vé <span class="required">*</span></label>
+                    <input type="text" id="ticket-name" placeholder="Ví dụ: Vé VIP, Vé thường..." required>
+                </div>
+
+                <div class="grid-2-col popup-grid">
+                    <div class="form-group">
+                        <label for="ticket-price">Giá vé (VND) <span class="required">*</span></label>
+                        <input type="number" id="ticket-price" placeholder="0" required>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="ticket-free">
+                            <span>Miễn phí</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="grid-2-col popup-grid">
+                    <div class="form-group">
+                        <label for="ticket-quantity">Tổng số lượng vé <span class="required">*</span></label>
+                        <input type="number" id="ticket-quantity" placeholder="Nhập số lượng" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ticket-min-order">Tối thiểu/đơn hàng <span class="required">*</span></label>
+                        <input type="number" id="ticket-min-order" value="1" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ticket-color">Màu vé (trên sơ đồ) <span class="required">*</span></label>
+                    <input type="color" id="ticket-color" value="#A855F7" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ticket-info">Thông tin/quyền lợi của vé</label>
+                    <textarea id="ticket-info" rows="3"
+                        placeholder="Ví dụ: Bao gồm 1 phần nước, lối đi riêng..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Lưu</button>
+            </form>
+        </div>
+    </div>
+    <!-- POPUP XÁC NHẬN XÓA VÉ -->
+    <div class="modal-overlay" id="delete-confirm-modal">
+        <div class="modal-content">
+            <h3>Xác nhận xóa</h3>
+            <p>Bạn có chắc chắn muốn xóa loại vé này không? Hành động này không thể hoàn tác.</p>
+            <div class="form-actions" style="justify-content: center;">
+                <button class="btn btn-secondary" id="btn-cancel-delete">Hủy</button>
+                <button class="btn btn-primary" id="btn-confirm-delete" style="background-color: #F87171;">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP TẠO SUẤT DIỄN MỚI -->
+    <div class="modal-overlay" id="session-modal">
+        <div class="modal-content form-card">
+            <h3 class="popup-title">TẠO SUẤT DIỄN MỚI</h3>
+            <form id="session-form">
+                <div class="form-group">
+                    <label for="session-name">Tên suất diễn <span class="required">*</span></label>
+                    <input type="text" id="session-name" placeholder="Ví dụ: Đêm 1, Suất chiều..." required>
+                </div>
+                <div class="form-group">
+                    <label for="session-start-date">Thời gian bắt đầu <span class="required">*</span></label>
+                    <input type="text" id="session-start-date" class="date-input-organizer" required readonly
+                        placeholder="Chọn ngày và giờ bắt đầu">
+                </div>
+                <div class="form-group">
+                    <label for="session-end-date">Thời gian kết thúc <span class="required">*</span></label>
+                    <input type="text" id="session-end-date" class="date-input-organizer" required readonly
+                        placeholder="Chọn ngày và giờ kết thúc">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 20px;">Lưu</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- POPUP XÁC NHẬN XÓA SUẤT DIỄN -->
+    <div class="modal-overlay" id="delete-session-confirm-modal">
+        <div class="modal-content">
+            <h3>Xác nhận xóa</h3>
+            <p>Bạn có chắc chắn muốn xóa suất diễn này không?</p>
+            <div class="form-actions" style="justify-content: center;">
+                <button class="btn btn-secondary" id="btn-cancel-delete-session">Hủy</button>
+                <button class="btn btn-primary" id="btn-confirm-delete-session"
+                    style="background-color: #F87171;">Xóa</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP CHỌN NGÀY CỦA TRANG ORGANIZER (PHIÊN BẢN CẢI TIẾN) -->
+    <div class="filter-modal-overlay" id="date-picker-modal-organizer">
+        <div class="filter-modal-content date-modal">
+            <div class="quick-date-options">
+                <button data-range="today">Hôm nay</button>
+                <button data-range="tomorrow">Ngày mai</button>
+            </div>
+            <div class="calendars-wrapper">
+                <div class="calendar-nav">
+                    <button class="nav-arrow" id="org-calendar-prev-month">&lt;</button>
+                    <div class="month-display">
+                        <h4 id="org-month-name-1"></h4>
+                        <h4 id="org-month-name-2"></h4>
+                    </div>
+                    <button class="nav-arrow" id="org-calendar-next-month">&gt;</button>
+                </div>
+                <div class="calendar-body">
+                    <div class="calendar-container">
+                        <div class="calendar-grid weekdays">
+                            <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
+                        </div>
+                        <div class="calendar-grid days" id="org-calendar-grid-1"></div>
+                    </div>
+                    <div class="calendar-container">
+                        <div class="calendar-grid weekdays">
+                            <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
+                        </div>
+                        <div class="calendar-grid days" id="org-calendar-grid-2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions-column">
+                <div class="time-picker">
+                    <label for="org-time-select">Chọn giờ:</label>
+                    <div class="time-input-wrapper two-selects">
+                        <!-- Custom Dropdown cho Giờ -->
+                        <div class="custom-dropdown" data-role="hour">
+                            <div class="dropdown-trigger">00</div>
+                            <select id="org-hour-select" class="dropdown-panel" size="5"></select>
+                        </div>
+                        <span class="time-separator">:</span>
+                        <!-- Custom Dropdown cho Phút -->
+                        <div class="custom-dropdown" data-role="minute">
+                            <div class="dropdown-trigger">00</div>
+                            <select id="org-minute-select" class="dropdown-panel" size="5"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-action-buttons">
+                    <button class="btn-reset" id="org-datepicker-reset-btn">Thiết lập lại</button>
+                    <button class="btn-apply" id="org-datepicker-apply-btn">Áp dụng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tái sử dụng Footer -->
+    <footer id="footer-placeholder" class="footer"></footer>
+
+    <!-- CẬP NHẬT ĐƯỜNG DẪN JS -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/pages/create_event.js"></script>
+</body>
+
+</html>

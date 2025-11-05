@@ -1,0 +1,198 @@
+/* ====================================
+   BUY TICKET PAGE - Tanivan Ticket
+==================================== */
+
+.ticket-layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px;
+}
+
+/* BÊN TRÁI */
+.seat-map {
+  flex: 1;
+  background: #f6f7fb;
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+}
+
+.map-title {
+  color: #36366d;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+.map-title span {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #666;
+}
+
+.seatmap-image {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 12px;
+}
+
+/* BÊN PHẢI */
+.ticket-info {
+  flex: 0 0 340px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.event-card h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+.event-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  color: #292929;
+  font-size: 0.95rem;
+}
+
+.event-meta .icon {
+  width: 15px;
+  height: 15px;
+  transform: translateY(1px);
+  opacity: 0.8;
+}
+
+/* DANH SÁCH GIÁ VÉ */
+.price-title {
+  font-weight: 600;
+  color: #36366d;
+  margin: 16px 0 8px;
+}
+
+.price-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.price-item:hover {
+  background: #f3f3fa;
+}
+
+.color {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-right: 6px;
+}
+
+/* NÚT */
+.choose-btn {
+  width: 100%;
+  margin-top: 16px;
+  background-color: #6c4dc2;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.choose-btn:hover {
+  background-color: #5639a6;
+}
+
+/* POPUP */
+.popup {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  width: 360px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.qty-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+  gap: 12px;
+}
+
+.qty-control button {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+  font-size: 18px;
+  background: #f9f9f9;
+  cursor: pointer;
+}
+
+/* ===== NÚT TIẾP TỤC ===== */
+.btn-continue {
+  width: 100%;
+  margin-top: 16px;
+  background: linear-gradient(90deg, #6c4dc2, #8b68e8);
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer; /* hình bàn tay khi hover */
+}
+
+/* Hiệu ứng hover: gradient sáng hơn và phóng nhẹ */
+.btn-continue:hover {
+  background: linear-gradient(90deg, #8b68e8, #b190ff);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(108, 77, 194, 0.4);
+  cursor: pointer; /* bảo đảm đổi hình bàn tay */
+}
+
+/* Hiệu ứng click (ấn xuống nhẹ) */
+.btn-continue:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(108, 77, 194, 0.3);
+}
+
+
+.close {
+  margin-top: 10px;
+  color: #666;
+  cursor: pointer;
+  font-size: 0.9rem;
+}

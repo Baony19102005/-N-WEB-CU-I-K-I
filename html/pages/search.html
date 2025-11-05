@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả tìm kiếm - Tanivan Ticket</title>
+    <!-- CẬP NHẬT ĐƯỜNG DẪN CSS -->
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/pages/search.css">
+</head>
+
+<body>
+    <!-- Tái sử dụng Header -->
+    <header id="header-placeholder" class="header"></header>
+
+    <!-- Nội dung chính của trang tìm kiếm -->
+    <main class="search-page-background">
+        <div class="container">
+            <h1 id="search-title">Kết quả tìm kiếm:</h1>
+
+            <!-- THANH BỘ LỌC -->
+            <div class="filter-bar">
+                <!-- Sửa dòng này trong file search.html -->
+                <button class="filter-button" id="date-filter-btn">
+                    <img src="../../images/pages/search/icon-calendar-white.png" alt="Calendar Icon">
+                    <!-- THÊM DÒNG NÀY -->
+                    <span id="date-filter-text">Tất cả các ngày</span>
+                </button>
+                <button class="filter-button" id="main-filter-btn">
+                    <img src="../../images/pages/search/icon-filter.png" alt="Fillter">
+                    <span>Bộ lọc</span>
+                    <img src="../../images/pages/search/icon-chevron-down-white.png" class="chevron" alt="">
+                </button>
+                <!-- Nơi hiển thị các thẻ filter đang active -->
+                <div class="active-filters" id="active-filters-container">
+
+                </div>
+            </div>
+
+            <!-- THAY THẾ NỘI DUNG CỦA LƯỚI SỰ KIỆN BẰNG KHỐI NÀY -->
+            <!-- DÙNG ĐOẠN NÀY ĐỂ THAY THẾ -->
+            <div class="events-grid search-results-grid" id="search-results-container">
+                <!-- JavaScript sẽ tự động điền kết quả vào đây -->
+            </div>
+
+            <!-- PHÂN TRANG -->
+            <div class="pagination">
+                <a href="#" class="page-arrow disabled">&laquo;</a>
+                <a href="#" class="page-number active">1</a>
+                <a href="#" class="page-number">2</a>
+                <a href="#" class="page-number">3</a>
+                <span class="page-ellipsis">...</span>
+                <a href="#" class="page-number">10</a>
+                <a href="#" class="page-arrow">&raquo;</a>
+            </div>
+        </div>
+    </main>
+
+
+
+    <!-- Tái sử dụng Footer -->
+    <footer id="footer-placeholder" class="footer"></footer>
+
+    <!-- CÁC POPUP (MODAL) BỘ LỌC - MẶC ĐỊNH SẼ BỊ ẨN -->
+
+    <!-- 1. Popup chọn ngày -->
+    <div class="filter-modal-overlay" id="date-filter-modal">
+        <div class="filter-modal-content date-modal">
+            <!-- Cột 1: Lựa chọn nhanh -->
+            <div class="quick-date-options">
+                <button data-range="all">Tất cả các ngày</button>
+                <button data-range="today">Hôm nay</button>
+                <button data-range="tomorrow">Ngày mai</button>
+                <button data-range="this_weekend">Cuối tuần này</button>
+                <button data-range="this_month">Tháng này</button>
+            </div>
+
+            <!-- Cột 2: Lịch -->
+            <div class="calendars-wrapper">
+                <div class="calendar-nav">
+                    <button class="nav-arrow" id="calendar-prev-month">&lt;</button>
+                    <div class="month-display">
+                        <h4 id="month-name-1">Tháng 11, 2025</h4>
+                        <h4 id="month-name-2">Tháng 12, 2025</h4>
+                    </div>
+                    <button class="nav-arrow" id="calendar-next-month">&gt;</button>
+                </div>
+                <div class="calendar-body">
+                    <div class="calendar-container">
+                        <div class="calendar-grid weekdays">
+                            <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
+                        </div>
+                        <div class="calendar-grid days" id="calendar-grid-1">
+                            <!-- JS sẽ tạo lịch ở đây -->
+                        </div>
+                    </div>
+                    <div class="calendar-container">
+                        <div class="calendar-grid weekdays">
+                            <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
+                        </div>
+                        <div class="calendar-grid days" id="calendar-grid-2">
+                            <!-- JS sẽ tạo lịch ở đây -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột 3: Nút hành động -->
+            <div class="modal-actions-column">
+                <button class="btn-reset">Thiết lập lại</button>
+                <button class="btn-apply">Áp dụng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Popup bộ lọc chính -->
+    <div class="filter-modal-overlay" id="main-filter-modal">
+        <div class="filter-modal-content main-filter-modal">
+            <div class="filter-section">
+                <h4>Vị trí</h4>
+                <div class="filter-options">
+                    <label><input type="radio" name="location" value="" checked> Toàn quốc</label>
+                    <label><input type="radio" name="location" value="hcm"> Hồ Chí Minh</label>
+                    <label><input type="radio" name="location" value="hn"> Hà Nội</label>
+                    <label><input type="radio" name="location" value="dl"> Đà Lạt</label>
+                    <label><input type="radio" name="location" value="other"> Vị trí khác</label>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h4>Giá tiền</h4>
+                <div class="filter-options price-toggle">
+                    <span>Miễn phí</span>
+                    <label class="switch">
+                        <input type="checkbox" value="free">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="filter-section">
+                <h4>Thể loại</h4>
+                <div class="filter-pills category-pills">
+                    <a href="#" class="filter-pill">Âm nhạc</a>
+                    <a href="#" class="filter-pill">Sân khấu & Nghệ thuật</a>
+                    <a href="#" class="filter-pill">Thể Thao</a>
+                    <a href="#" class="filter-pill">Khác</a>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-reset">Thiết lập lại</button>
+                <button class="btn-apply">Áp dụng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CẬP NHẬT ĐƯỜNG DẪN JS -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/pages/search.js"></script>
+</body>
+
+</html>

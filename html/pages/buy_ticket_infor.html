@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thông tin đặt vé - Tanivan Ticket</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/common.css" />
+    <link rel="stylesheet" href="../../css/pages/buy_ticket_infor.css" />
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header id="header-placeholder" class="header"></header>
+
+    <!-- ========== SỰ KIỆN & ĐỒNG HỒ GIỮ CHỖ ========== -->
+    <div class="event-header" id="eventHeader">
+        <div class="event-header-left">
+            <p>Hoàn tất đặt vé trong</p>
+            <div id="countdown">15:00</div>
+        </div>
+
+        <div class="event-header-right">
+            <h2 id="event-title"></h2>
+            <div class="event-header-detail">
+                <img src="../../images/icon-time.png" alt="time" class="icon">
+                <span id="event-time"></span>
+            </div>
+            <div class="event-header-detail">
+                <img src="../../images/icon-location.png" alt="location" class="icon">
+                <span id="event-location"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="ticket-info-layout">
+        <!-- CỘT TRÁI: FORM NGƯỜI MUA -->
+        <section class="buyer-section">
+            <form id="buyerForm" class="buyer-form">
+                <h3>Thông tin người mua</h3>
+                <label>Họ và tên <span class="required">*</span></label>
+                <input type="text" id="fullname" placeholder="Điền họ và tên của bạn" required />
+
+                <label>Số điện thoại <span class="required">*</span></label>
+                <input type="tel" id="phone" placeholder="Nhập số điện thoại" required />
+
+                <label>Email <span class="required">*</span></label>
+                <input type="email" id="email" placeholder="Nhập email" required />
+
+                <label>
+                    Nếu bạn cần xuất hóa đơn công ty, vui lòng cung cấp:
+                    <small>(Tên công ty, mã số thuế, email nhận hóa đơn)</small>
+                </label>
+                <textarea id="invoice" placeholder="Điền thông tin tại đây..."></textarea>
+
+                <div class="agree-box">
+                    <input type="checkbox" id="agree" required />
+                    <label for="agree">
+                        Tôi đồng ý để Tanivan Ticket và BTC sử dụng thông tin để vận hành sự kiện
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-continue">Tiếp tục →</button>
+            </form>
+        </section>
+
+        <!-- CỘT PHẢI: TÓM TẮT ĐƠN HÀNG -->
+        <aside class="ticket-summary">
+            <h4>Thông tin vé của bạn</h4>
+            <ul>
+                <li><span>Sự kiện:</span> <b id="event-name">--</b></li>
+                <li><span>Khu vực:</span> <b id="zone-name">--</b></li>
+                <li><span>Số lượng:</span> <b id="zone-qty">--</b></li>
+                <li><span>Giá vé:</span> <b id="zone-price">--</b></li>
+                <li><span>Tổng cộng:</span> <b id="zone-total">--</b></li>
+            </ul>
+            <div class="note">Vui lòng kiểm tra thông tin kỹ trước khi tiếp tục thanh toán.</div>
+        </aside>
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer-placeholder" class="footer"></footer>
+
+    <!-- JS -->
+    <script src="../../js/common.js"></script>
+    <script src="../../js/pages/buy_ticket_infor.js"></script>
+</body>
+
+</html>
