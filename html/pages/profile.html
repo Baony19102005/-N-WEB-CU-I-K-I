@@ -11,122 +11,177 @@
 </head>
 
 <body>
-    <!-- Tái sử dụng Header -->
-    <header id="header-placeholder" class="header"></header>
 
-    <!-- Nội dung chính của trang profile -->
-    <main class="profile-page-background">
-        <div class="container">
-            <!-- Breadcrumb (Thanh điều hướng phân cấp) -->
-            <nav class="breadcrumb">
-                <a href="hompage.html">Trang chủ</a>
-                <span>&gt;</span>
-                <a href="profile.html">Cài đặt tài khoản</a>
-                <span>&gt;</span>
-                <p>Thông tin tài khoản</p>
-            </nav>
+    <body>
+        <script>
+            // AUTH GUARD SCRIPT (version 3)
+            if (!sessionStorage.getItem('currentUser')) {
+                // Ẩn nội dung chính ngay lập tức để tránh bị lộ
+                document.addEventListener('DOMContentLoaded', () => {
+                    const mainContent = document.querySelector('main');
+                    if (mainContent) mainContent.style.display = 'none';
+                });
 
-            <!-- Bố cục chính của trang -->
-            <div class="profile-layout">
-                <!-- THANH ĐIỀU HƯỚNG BÊN TRÁI (SIDEBAR) -->
-                <aside class="profile-sidebar">
-                    <div class="user-info">
-                        <img src="../../images/pages/profile/user-avatar.png" alt="User Avatar" class="user-avatar-small">
-                        <div>
-                            <p>Tài khoản của</p>
-                            <h3>Nguyễn Ngô Thảo Vân</h3>
-                        </div>
-                    </div>
-                    <nav class="profile-nav">
-                        <ul>
-                            <li>
-                                <a href="profile.html" class="active">
-                                    <img src="../../images/pages/profile/icon-user.png" alt="User Icon">
-                                    <span>Cài đặt tài khoản</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="myticket.html">
-                                    <img src="../../images/pages/profile/icon-ticket.png" alt="Ticket Icon">
-                                    <span>Vé của tôi</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="../../images/pages/profile/icon-calendar-white.png" alt="Calendar Icon">
-                                    <span>Sự kiện của tôi</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
-
-                <!-- NỘI DUNG CHÍNH BÊN PHẢI -->
-                <section class="profile-content">
-                    <h1>Thông tin tài khoản</h1>
-
-                    <form action="#">
-                        <!-- Cập nhật khối này trong file profile.html -->
-                        <div class="avatar-upload-section">
-                            <div class="avatar-preview">
-                                <img src="../../images/pages/profile/user-avatar.png" alt="User Avatar Large"
-                                    id="avatar-preview-img">
-
-                                <!-- Nút camera bây giờ sẽ kích hoạt input ẩn -->
-                                <button type="button" class="btn-change-avatar" id="btn-change-avatar">
-                                    <img src="../../images/pages/profile/icon-camera.png" alt="Change Avatar">
-                                </button>
-
-                                <!-- Đây là input ẩn để xử lý việc chọn file -->
-                                <input type="file" id="avatar-upload-input" accept="image/png, image/jpeg, image/jpg"
-                                    style="display: none;">
-                            </div>
-                            <p>Cung cấp thông tin chính xác sẽ hỗ trợ bạn trong quá trình mua vé, hoặc khi cần xác thực
-                                vé</p>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="full-name">Họ và tên</label>
-                            <input type="text" id="full-name" value="Nguyễn Ngô Thảo Vân">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone-number">Số điện thoại</label>
-                            <input type="tel" id="phone-number">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="birth-date">Ngày tháng năm sinh</label>
-                            <input type="date" id="birth-date">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Giới tính</label>
-                            <div class="gender-options">
-                                <label><input type="radio" name="gender" value="male"> Nam</label>
-                                <label><input type="radio" name="gender" value="female" checked> Nữ</label>
-                                <label><input type="radio" name="gender" value="other"> Khác</label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn-profile-save">Hoàn thành</button>
-                    </form>
-                </section>
+                // Tạo overlay và chèn vào body
+                const guardOverlay = document.createElement('div');
+                guardOverlay.className = 'auth-guard-overlay';
+                guardOverlay.id = 'auth-guard-overlay';
+                guardOverlay.innerHTML = `
+            <div class="auth-guard-box">
+                <button class="auth-guard-close">&times;</button>
+                <h2>Vui lòng đăng nhập</h2>
+                <p>Bạn cần đăng nhập để truy cập chức năng này. Hãy đăng nhập để tiếp tục nhé!</p>
+                <div class="auth-guard-actions">
+                    <button id="guard-login-btn" class="btn-login-guard">Đăng nhập ngay</button>
+                    <a href="homepage.html" class="btn-home-guard">Quay về Trang chủ</a>
+                </div>
             </div>
-        </div>
-    </main>
+        `;
+                document.body.appendChild(guardOverlay);
 
-    <!-- Tái sử dụng Footer -->
-    <footer id="footer-placeholder" class="footer"></footer>
+                // Gắn sự kiện sau khi chèn
+                const closeBtn = guardOverlay.querySelector('.auth-guard-close');
+                closeBtn.onclick = () => window.location.href = 'homepage.html'; // Nút X sẽ đưa về trang chủ
 
-    <!-- CẬP NHẬT ĐƯỜNG DẪN JS -->
-    <script src="../../js/common.js"></script>
-    <script src="../../js/pages/profile.js"></script>
-</body>
+                // Đợi common.js tải xong để gắn sự kiện cho nút "Đăng nhập ngay"
+                document.addEventListener('commonJsLoaded', () => {
+                    const guardLoginBtn = document.getElementById('guard-login-btn');
+                    const openAuthModalBtn = document.getElementById('open-auth-modal-btn');
+                    if (guardLoginBtn && openAuthModalBtn) {
+                        guardLoginBtn.addEventListener('click', () => {
+                            // Ẩn thông báo guard đi để hiện popup đăng nhập
+                            guardOverlay.style.display = 'none';
+                            openAuthModalBtn.click();
+                        });
+                    }
+                });
+            }
+        </script>
+
+        <!-- Tái sử dụng Header -->
+        <header id="header-placeholder" class="header"></header>
+
+        <!-- Nội dung chính của trang profile -->
+        <main class="profile-page-background">
+            <!-- ... phần còn lại của file giữ nguyên ... -->
+            <!-- Tái sử dụng Header -->
+            <header id="header-placeholder" class="header"></header>
+
+            <!-- Nội dung chính của trang profile -->
+            <main class="profile-page-background">
+                <div class="container">
+                    <!-- Breadcrumb (Thanh điều hướng phân cấp) -->
+                    <nav class="breadcrumb">
+                        <a href="hompage.html">Trang chủ</a>
+                        <span>&gt;</span>
+                        <a href="profile.html">Cài đặt tài khoản</a>
+                        <span>&gt;</span>
+                        <p>Thông tin tài khoản</p>
+                    </nav>
+
+                    <!-- Bố cục chính của trang -->
+                    <div class="profile-layout">
+                        <!-- THANH ĐIỀU HƯỚNG BÊN TRÁI (SIDEBAR) -->
+                        <aside class="profile-sidebar">
+                            <div class="user-info">
+                                <img src="../../images/pages/profile/user-avatar.png" alt="User Avatar"
+                                    class="user-avatar-small" id="sidebar-avatar-img">
+                                <div>
+                                    <p></p>
+                                    <h3 id="sidebar-user-name"></h3>
+                                </div>
+                            </div>
+                            <nav class="profile-nav">
+                                <ul>
+                                    <li>
+                                        <a href="profile.html" class="active">
+                                            <img src="../../images/pages/profile/icon-user.png" alt="User Icon">
+                                            <span>Cài đặt tài khoản</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="myticket.html">
+                                            <img src="../../images/pages/profile/icon-ticket.png" alt="Ticket Icon">
+                                            <span>Vé của tôi</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="../../images/pages/profile/icon-calendar-white.png"
+                                                alt="Calendar Icon">
+                                            <span>Sự kiện của tôi</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </aside>
+
+                        <!-- NỘI DUNG CHÍNH BÊN PHẢI -->
+                        <section class="profile-content">
+                            <h1>Thông tin tài khoản</h1>
+
+                            <form action="#">
+                                <!-- Cập nhật khối này trong file profile.html -->
+                                <div class="avatar-upload-section">
+                                    <div class="avatar-preview" id="avatar-preview-container">
+                                        <!-- Thẻ img sẽ được JavaScript thêm vào đây nếu có avatar -->
+
+                                        <!-- Nút camera để kích hoạt chọn file -->
+                                        <button type="button" class="btn-change-avatar" id="btn-change-avatar">
+                                            <img src="../../images/pages/profile/icon-camera.png" alt="Change Avatar">
+                                        </button>
+
+                                        <!-- Input ẩn để xử lý việc chọn file -->
+                                        <input type="file" id="avatar-upload-input"
+                                            accept="image/png, image/jpeg, image/jpg" style="display: none;">
+                                    </div>
+                                    <p>Cung cấp thông tin chính xác sẽ hỗ trợ bạn trong quá trình mua vé, hoặc khi cần
+                                        xác thực
+                                        vé</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="full-name">Họ và tên</label>
+                                    <input type="text" id="full-name" value="Nguyễn Ngô Thảo Vân">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="phone-number">Số điện thoại</label>
+                                    <input type="tel" id="phone-number">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="birth-date">Ngày tháng năm sinh</label>
+                                    <input type="date" id="birth-date">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Giới tính</label>
+                                    <div class="gender-options">
+                                        <label><input type="radio" name="gender" value="male"> Nam</label>
+                                        <label><input type="radio" name="gender" value="female" checked> Nữ</label>
+                                        <label><input type="radio" name="gender" value="other"> Khác</label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-profile-save">Hoàn thành</button>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Tái sử dụng Footer -->
+            <footer id="footer-placeholder" class="footer"></footer>
+
+            <!-- CẬP NHẬT ĐƯỜNG DẪN JS -->
+            <script src="../../js/common.js"></script>
+            <script src="../../js/pages/profile.js"></script>
+    </body>
 
 </html>

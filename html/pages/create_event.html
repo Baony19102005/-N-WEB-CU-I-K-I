@@ -30,19 +30,87 @@
 </head>
 
 <body id="create-event-page" class="organizer-body">
+    <script>
+        // AUTH GUARD SCRIPT (version 5 - final for organizer)
+        if (!sessionStorage.getItem('currentUser')) {
+            // Khi DOM sẵn sàng, ẩn nội dung chính đi
+            document.addEventListener('DOMContentLoaded', () => {
+                const mainLayout = document.querySelector('.organizer-main-layout');
+                if (mainLayout) mainLayout.style.display = 'none';
+            });
 
-    <!-- HEADER FULL-WIDTH CỐ ĐỊNH -->
+            // Tạo và chèn overlay
+            const guardOverlay = document.createElement('div');
+            guardOverlay.className = 'auth-guard-overlay';
+            guardOverlay.style.backgroundColor = '#1f1f1f';
+            guardOverlay.innerHTML = `
+            <div class="auth-guard-box" style="background-color: #2D2D2D; border: 1px solid #444;">
+                <a href="hompage.html" class="auth-guard-close" style="color: #aaa;">&times;</a>
+                <h2 style="color: #fff;">Truy cập bị từ chối</h2>
+                <p style="color: #ccc;">Đây là khu vực dành cho Nhà tổ chức. Vui lòng đăng nhập để tiếp tục.</p>
+                <div class="auth-guard-actions">
+                    <button id="guard-login-btn" class="btn-login-guard">Đăng nhập ngay</button>
+                    <a href="hompage.html" class="btn-home-guard">Quay về Trang chủ</a>
+                </div>
+            </div>
+        `;
+            document.body.appendChild(guardOverlay);
+
+            // Đợi common.js tải xong và sẵn sàng
+            document.addEventListener('commonJsLoaded', () => {
+                const guardLoginBtn = document.getElementById('guard-login-btn');
+                // Lấy nút đăng nhập của header chung (dù nó không được hiển thị) để kích hoạt popup
+                const openAuthModalBtn = document.getElementById('open-auth-modal-btn');
+
+                if (guardLoginBtn && openAuthModalBtn) {
+                    guardLoginBtn.addEventListener('click', () => {
+                        openAuthModalBtn.click();
+                    });
+                }
+
+                // Lắng nghe đăng nhập thành công và tải lại trang
+                document.addEventListener('loginSuccess', () => {
+                    window.location.reload();
+                });
+            });
+        }
+    </script>
+
+    <div id="header-placeholder" style="display: none;"></div>
+
+    <!-- HEADER RIÊNG CỦA TRANG ORGANIZER -->
     <header class="organizer-header-fixed">
         <div class="container">
             <a href="hompage.html" class="organizer-logo-header">
                 <img src="../../images/pages/create_event/logo.png" alt="Tanivan Logo">
                 <span>Ticket</span>
             </a>
+
+            <!-- KHỐI NÀY SẼ ĐƯỢC JAVASCRIPT ĐIỀU KHIỂN -->
             <div class="organizer-header-actions">
-                <button class="btn btn-primary-outline">Tạo sự kiện</button>
-                <div class="organizer-user-menu">
-                    <img src="../../images/pages/create_event/user-avatar.png" alt="User Avatar">
-                    <span>Tài khoản</span>
+                <!-- Dành cho người dùng đã đăng nhập (sẽ được JS hiện lên) -->
+                <div id="org-user-view" style="display: none; align-items: center; gap: 20px;">
+                    <a href="create_event.html" class="btn btn-primary-outline">Tạo sự kiện</a>
+                    <div id="org-user-avatar-trigger" class="organizer-user-menu" style="cursor: pointer;">
+                        <img id="org-user-avatar-img" src="../../images/pages/create_event/user-avatar.png"
+                            alt="User Avatar">
+                        <span id="org-user-name-span">Tài khoản</span>
+                    </div>
+                    <!-- Dropdown Menu -->
+                    <div id="org-user-dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 20px; background-color: #372948; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1001; width: 200px; overflow: hidden; border: 1px solid #4a3a5e;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 15px; color: #ccc; text-decoration: none; font-size: 14px;">Cài
+                            đặt tài khoản</a>
+                        <a href="#" id="org-logout-btn"
+                            style="display: block; padding: 12px 15px; color: #F87171; text-decoration: none; font-size: 14px;">Đăng
+                            xuất</a>
+                    </div>
+                </div>
+
+                <!-- Dành cho khách (sẽ được JS hiện lên) -->
+                <div id="org-guest-view" style="display: none;">
+                    <a href="#" id="org-login-btn" class="btn btn-primary-outline">Đăng nhập</a>
                 </div>
             </div>
         </div>
@@ -94,7 +162,8 @@
 
                     <!-- Card Upload hình ảnh -->
                     <div class="form-card">
-                        <h3 class="card-title">UPLOAD HÌNH ẢNH <a href="#" class="view-link">Xem vị trí hiển thị các
+                        <h3 class="card-title">UPLOAD HÌNH ẢNH <a href="#" class="view-link">Xem vị trí hiển thị
+                                các
                                 ảnh</a></h3>
                         <div class="grid-2-col image-upload-grid">
                             <!-- Box upload 1 -->
@@ -104,7 +173,7 @@
                                     <img src="../../images/pages/create_event/icon-upload.png" alt="Upload Icon">
                                     <p>Thêm ảnh sự kiện để<br>hiển thị ở các vị trí khác</p>
                                     <span>(298 × 380)</span>
-                                </div>  
+                                </div>
                             </label>
                             <input type="file" id="event-thumbnail-upload" class="image-upload-input"
                                 data-preview-id="thumbnail-preview" hidden>
@@ -182,7 +251,8 @@
 
                     <!-- Card Ban tổ chức -->
                     <div class="form-card">
-                        <h3 class="card-title">UPLOAD HÌNH ẢNH <a href="#" class="view-link">Xem vị trí hiển thị các
+                        <h3 class="card-title">UPLOAD HÌNH ẢNH <a href="#" class="view-link">Xem vị trí hiển thị
+                                các
                                 ảnh</a></h3>
                         <div class="organizer-info-layout">
                             <label class="upload-box square image-preview-box" for="organizer-logo-upload"
@@ -235,7 +305,8 @@
                     <div class="form-card">
                         <h3 class="card-title">LOẠI VÉ <span class="required">*</span></h3>
                         <div id="ticket-types-list"></div>
-                        <button type="button" class="btn-add-item" id="btn-open-ticket-modal">+ Tạo loại vé mới</button>
+                        <button type="button" class="btn-add-item" id="btn-open-ticket-modal">+ Tạo loại vé
+                            mới</button>
                     </div>
 
                     <!-- Card Suất diễn -->
@@ -243,7 +314,8 @@
                         <h3 class="card-title">SUẤT DIỄN <span class="required">*</span></h3>
                         <!-- Nơi hiển thị danh sách suất diễn -->
                         <div id="sessions-list"></div>
-                        <button type="button" class="btn-add-item" id="btn-open-session-modal">+ Tạo suất diễn</button>
+                        <button type="button" class="btn-add-item" id="btn-open-session-modal">+ Tạo suất
+                            diễn</button>
                     </div>
 
                     <!-- Card Sơ đồ chỗ ngồi -->
@@ -281,7 +353,8 @@
                     <div class="form-group">
                         <label>Quyền riêng tư sự kiện <span class="required">*</span></label>
                         <div class="radio-group">
-                            <label><input type="radio" name="privacy" value="public" checked> Sự kiện mở dành cho
+                            <label><input type="radio" name="privacy" value="public" checked> Sự kiện mở dành
+                                cho
                                 mọi người</label>
                             <label><input type="radio" name="privacy" value="group"> Sự kiện mở dành cho một
                                 nhóm</label>

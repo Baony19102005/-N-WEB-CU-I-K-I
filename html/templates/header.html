@@ -15,7 +15,29 @@
         <div class="user-actions">
             <a href="../pages/create_event.html" target="_blank" class="nav-btn-outline">Tạo sự kiện</a>
             <a href="../pages/myticket.html" class="nav-btn">Vé của tôi</a>
-            <a href="#" id="open-auth-modal-btn" class="nav-btn-solid">Đăng nhập | Đăng ký</a>
+
+            <!-- KHỐI DÀNH CHO KHÁCH (CHƯA ĐĂNG NHẬP) -->
+            <div id="guest-view">
+                <a href="#" id="open-auth-modal-btn" class="nav-btn-solid">Đăng nhập | Đăng ký</a>
+            </div>
+
+            <!-- KHỐI DÀNH CHO NGƯỜI DÙNG ĐÃ ĐĂNG NHẬP (MẶC ĐỊNH SẼ ẨN) -->
+            <div id="user-view" style="display: none; position: relative;">
+                <div id="user-avatar-trigger" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <img id="user-avatar-img" src="../../images/common/default-avatar.png" alt="User Avatar"
+                        style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid white;">
+                    <span id="user-name-span" style="color: white; font-weight: 500;"></span>
+                </div>
+                <div id="user-dropdown-menu"
+                    style="display: none; position: absolute; top: 110%; right: 0; background-color: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 10; width: 200px; overflow: hidden;">
+                    <a href="../pages/profile.html"
+                        style="display: block; padding: 12px 15px; color: #333; text-decoration: none; border: none; font-size: 14px;">Cài
+                        đặt tài khoản</a>
+                    <a href="#" id="logout-btn"
+                        style="display: block; padding: 12px 15px; color: #E53E3E; text-decoration: none; border: none; font-size: 14px; background: #FFF5F5;">Đăng
+                        xuất</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
