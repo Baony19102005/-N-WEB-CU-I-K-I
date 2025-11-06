@@ -1,0 +1,102 @@
+/* Company/About page */
+
+.company-container { background: #e9f0f3; padding: 0 0 56px; }
+
+.company-hero {
+  max-width: 100%;
+  margin: 0 0 20px;
+  background: linear-gradient(135deg,#131935,#1d2146);
+  color: #fff;
+  border-radius: 0;
+  padding: 26px 40px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+}
+
+.company-hero h1 { margin: 0 0 8px; font-size: 1.8rem; letter-spacing: .2px; }
+.company-hero p { margin: 0; opacity: .92; }
+
+.company-toc {
+  max-width: 1100px;
+  margin: 12px auto 20px;
+  background: #fff;
+  padding: 16px 18px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.company-toc h3 { margin: 0 0 8px; font-size: 1.05rem; color: #111; }
+.company-toc ul { margin: 0; padding-left: 18px; line-height: 1.6; }
+.company-toc a { color: #3346d3; text-decoration: none; }
+.company-toc a:hover { text-decoration: underline; }
+
+/* Accordion dark section */
+.accordion-wrap { max-width: 1100px; margin: 0 auto; }
+.accordion-title {
+  margin: 8px 4px 12px;
+  font-size: 1.35rem;
+  color: #12142d;
+  font-weight: 700;
+}
+
+.accordion {
+  background: #fff;
+  padding: 16px;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+/* Title bar inside the accordion box */
+.accordion-head {
+  background: #4a468e;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 14px 16px;
+  margin: -16px -16px 12px -16px; /* flush with borders */
+}
+
+.acc-item { margin-bottom: 14px; }
+.acc-header {
+  width: 100%;
+  text-align: left;
+  background: #f8fafc;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.acc-header:hover { background: #eef2f7; border-color: #d4dae7; }
+.acc-header .chev {
+  width: 10px; height: 10px; border-right: 2px solid #6b7280; border-bottom: 2px solid #6b7280; transform: rotate(-45deg); transition: .2s;
+}
+.acc-item.active .acc-header .chev { transform: rotate(45deg); }
+
+.acc-content {
+  display: none;
+  background: #fff;
+  color: #1f2937;
+  border: 1px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 14px 16px 16px;
+  line-height: 1.7;
+}
+.acc-content ul, .acc-content ol { padding-left: 18px; }
+.acc-item.active .acc-content { display: block; }
+
+/* Improve rhythm */
+.acc-item + .acc-item { margin-top: 12px; }
+
+@media (max-width: 640px) {
+  .company-hero { border-radius: 12px; padding: 18px; }
+  .accordion { padding: 12px; border-radius: 12px; }
+  .acc-header { padding: 12px 14px; border-radius: 10px; }
+}
