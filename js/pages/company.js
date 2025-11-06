@@ -8,7 +8,5 @@ document.addEventListener('DOMContentLoaded', () => {
       items.forEach(i => { if (i !== item) i.classList.remove('active'); });
       item.classList.toggle('active');
     });
-    // Mở sẵn mục đầu tiên
-    if (index === 0) item.classList.add('active');
   });
 });
