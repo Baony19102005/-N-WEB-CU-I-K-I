@@ -11,389 +11,445 @@
 </head>
 
 <body>
+    <script>
+        // AUTH GUARD SCRIPT (version 4 - FINAL)
+        if (!sessionStorage.getItem('currentUser')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const mainContent = document.querySelector('main');
+                if (mainContent) mainContent.style.display = 'none';
+            });
+
+            const guardOverlay = document.createElement('div');
+            guardOverlay.className = 'auth-guard-overlay';
+            guardOverlay.id = 'auth-guard-overlay';
+            guardOverlay.innerHTML = `
+            <div class="auth-guard-box">
+                <a href="hompage.html" class="auth-guard-close">&times;</a>
+                <h2>Vui lòng đăng nhập</h2>
+                <p>Bạn cần đăng nhập để truy cập chức năng này. Hãy đăng nhập để tiếp tục nhé!</p>
+                <div class="auth-guard-actions">
+                    <button id="guard-login-btn" class="btn-login-guard">Đăng nhập ngay</button>
+                    <a href="hompage.html" class="btn-home-guard">Quay về Trang chủ</a>
+                </div>
+            </div>
+        `;
+            document.body.appendChild(guardOverlay);
+
+            // Đợi common.js tải xong và sẵn sàng
+            document.addEventListener('commonJsLoaded', () => {
+                const guardLoginBtn = document.getElementById('guard-login-btn');
+                const openAuthModalBtn = document.getElementById('open-auth-modal-btn');
+
+                if (guardLoginBtn && openAuthModalBtn) {
+                    guardLoginBtn.addEventListener('click', () => {
+                        // Mở popup đăng nhập
+                        openAuthModalBtn.click();
+                    });
+                }
+
+                // Lắng nghe sự kiện đăng nhập thành công từ common.js
+                document.addEventListener('loginSuccess', () => {
+                    // Tải lại trang hiện tại. 
+                    // Vì sessionStorage đã có 'currentUser', guard sẽ không kích hoạt nữa.
+                    window.location.reload();
+                });
+            });
+        }
+    </script>
+
     <!-- Tái sử dụng Header -->
     <header id="header-placeholder" class="header"></header>
 
     <!-- Nội dung chính của trang Vé của tôi -->
     <main class="profile-page-background">
-        <div class="container">
-            <!-- Breadcrumb -->
-            <nav class="breadcrumb">
-                <a href="../pages/hompage.html">Trang chủ</a>
-                <span>&gt;</span>
-                <a href="../pages/profile.html">Cài đặt tài khoản</a>
-                <span>&gt;</span>
-                <p>Vé của tôi</p>
-            </nav>
+        <!-- ... phần còn lại của file giữ nguyên ... -->
 
-            <!-- Bố cục chính của trang (tái sử dụng từ trang profile) -->
-            <div class="profile-layout">
-                <!-- THANH ĐIỀU HƯỚNG BÊN TRÁI (SIDEBAR) -->
-                <aside class="profile-sidebar">
-                    <div class="user-info">
-                        <img src="../../images/pages/myticket/user-avatar.png" alt="User Avatar" class="user-avatar-small">
-                        <div>
-                            <p>Tài khoản của</p>
-                            <h3>Nguyễn Ngô Thảo Vân</h3>
-                        </div>
-                    </div>
-                    <nav class="profile-nav">
-                        <ul>
-                            <li>
-                                <a href="../pages/profile.html"> <!-- Link tới trang profile -->
-                                    <img src="../../images/pages/myticket/icon-user.png" alt="User Icon">
-                                    <span>Cài đặt tài khoản</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../pages/myticket.html" class="active"> <!-- Trang hiện tại active -->
-                                    <img src="../../images/pages/myticket/icon-ticket.png" alt="Ticket Icon">
-                                    <span>Vé của tôi</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../pages/myticket.html">
-                                    <img src="../../images/pages/myticket/icon-calendar-white.png" alt="Calendar Icon">
-                                    <span>Sự kiện của tôi</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </aside>
+        <!-- Tái sử dụng Header -->
+        <header id="header-placeholder" class="header"></header>
 
-                <!-- NỘI DUNG CHÍNH BÊN PHẢI -->
-                <section class="profile-content my-tickets">
-                    <h1>Vé của tôi</h1>
+        <!-- Nội dung chính của trang Vé của tôi -->
+        <main class="profile-page-background">
+            <div class="container">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="../pages/hompage.html">Trang chủ</a>
+                    <span>&gt;</span>
+                    <a href="../pages/profile.html">Cài đặt tài khoản</a>
+                    <span>&gt;</span>
+                    <p>Vé của tôi</p>
+                </nav>
 
-                    <!-- BỘ LỌC VÉ -->
-                    <div class="ticket-filters">
-                        <div class="filter-pills">
-                            <a href="#" class="filter-pill active">Tất cả</a>
-                            <a href="#" class="filter-pill">Thành công</a>
-                            <a href="#" class="filter-pill">Đang xử lý</a>
+                <!-- Bố cục chính của trang (tái sử dụng từ trang profile) -->
+                <div class="profile-layout">
+                    <!-- THANH ĐIỀU HƯỚNG BÊN TRÁI (SIDEBAR) -->
+                    <aside class="profile-sidebar">
+                        <div class="user-info">
+                            <img src="../../images/pages/myticket/user-avatar.png" alt="User Avatar"
+                                class="user-avatar-small">
+                            <div>
+                                <p>Tài khoản của</p>
+                                <h3>Nguyễn Ngô Thảo Vân</h3>
+                            </div>
                         </div>
-                        <div class="sub-filters">
-                            <a href="#" class="sub-filter-link active">Sắp diễn ra</a>
-                            <a href="#" class="sub-filter-link">Đã kết thúc</a>
-                        </div>
-                    </div>
+                        <nav class="profile-nav">
+                            <ul>
+                                <li>
+                                    <a href="../pages/profile.html"> <!-- Link tới trang profile -->
+                                        <img src="../../images/pages/myticket/icon-user.png" alt="User Icon">
+                                        <span>Cài đặt tài khoản</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../pages/myticket.html" class="active"> <!-- Trang hiện tại active -->
+                                        <img src="../../images/pages/myticket/icon-ticket.png" alt="Ticket Icon">
+                                        <span>Vé của tôi</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../pages/myticket.html">
+                                        <img src="../../images/pages/myticket/icon-calendar-white.png"
+                                            alt="Calendar Icon">
+                                        <span>Sự kiện của tôi</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </aside>
 
-                    <!-- DANH SÁCH VÉ -->
-                    <div class="ticket-list-container">
-                        <!-- Vé mẫu 1 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                    <!-- NỘI DUNG CHÍNH BÊN PHẢI -->
+                    <section class="profile-content my-tickets">
+                        <h1>Vé của tôi</h1>
+
+                        <!-- BỘ LỌC VÉ -->
+                        <div class="ticket-filters">
+                            <div class="filter-pills">
+                                <a href="#" class="filter-pill active">Tất cả</a>
+                                <a href="#" class="filter-pill">Thành công</a>
+                                <a href="#" class="filter-pill">Đang xử lý</a>
                             </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                            <div class="sub-filters">
+                                <a href="#" class="sub-filter-link active">Sắp diễn ra</a>
+                                <a href="#" class="sub-filter-link">Đã kết thúc</a>
                             </div>
                         </div>
-                       
-                        <!-- Vé mẫu 2 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+
+                        <!-- DANH SÁCH VÉ -->
+                        <div class="ticket-list-container">
+                            <!-- Vé mẫu 1 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
                             </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+
+                            <!-- Vé mẫu 2 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
                                 </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
                                 </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
                                 </div>
                             </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                            <!-- Vé mẫu 3 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <!-- Vé mẫu 4 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <!-- Vé mẫu 1 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+
+                            <!-- Vé mẫu 2 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <!-- Vé mẫu 3 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <!-- Vé mẫu 4 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <!-- Vé mẫu 1 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+
+                            <!-- Vé mẫu 2 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <!-- Vé mẫu 3 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <!-- Vé mẫu 4 -->
+                            <div class="ticket-card">
+                                <div class="ticket-image">
+                                    <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
+                                </div>
+                                <div class="ticket-details">
+                                    <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
+                                        <p>19:00 - 23:00, 23 tháng 03, 2025</p>
+                                    </div>
+                                    <div class="info-line">
+                                        <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
+                                        <p>THE GLOBAL CITY</p>
+                                    </div>
+                                    <div class="specifics">
+                                        <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
+                                        <p>Mã đặt vé: M25030001</p>
+                                    </div>
+                                </div>
+                                <div class="ticket-actions">
+                                    <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
+                                </div>
+                            </div>
+
+                            <!-- Thêm các vé khác nếu cần -->
+                            <div class="pagination">
+                                <a href="#" class="page-arrow disabled">&laquo;</a> <!-- Nút lùi -->
+                                <a href="#" class="page-number active">1</a>
+                                <a href="#" class="page-number">2</a>
+                                <a href="#" class="page-number">3</a>
+                                <span class="page-ellipsis">...</span>
+                                <a href="#" class="page-number">10</a>
+                                <a href="#" class="page-arrow">&raquo;</a> <!-- Nút tiến -->
                             </div>
                         </div>
-                        <!-- Vé mẫu 3 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <!-- Vé mẫu 4 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <!-- Vé mẫu 1 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                       
-                        <!-- Vé mẫu 2 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <!-- Vé mẫu 3 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <!-- Vé mẫu 4 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <!-- Vé mẫu 1 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                       
-                        <!-- Vé mẫu 2 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <!-- Vé mẫu 3 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        <!-- Vé mẫu 4 -->
-                        <div class="ticket-card">
-                            <div class="ticket-image">
-                                <img src="../../images/pages/myticket/ticket-event-1.jpg" alt="Event Image">
-                            </div>
-                            <div class="ticket-details">
-                                <h3>[CAT&MOUSE] Ca sĩ Bạch Công Khanh và ca sĩ Phượng Vũ</h3>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-calendar-dark.png" alt="Calendar">
-                                    <p>19:00 - 23:00, 23 tháng 03, 2025</p>
-                                </div>
-                                <div class="info-line">
-                                    <img src="../../images/pages/myticket/icon-location-dark.png" alt="Location">
-                                    <p>THE GLOBAL CITY</p>
-                                </div>
-                                <div class="specifics">
-                                    <p>Loại vé: VIP 02 (Số lượng: 02 vé)</p>
-                                    <p>Mã đặt vé: M25030001</p>
-                                </div>
-                            </div>
-                            <div class="ticket-actions">
-                                <a href="event_detail.html" class="btn-view-detail">Xem chi tiết</a>
-                            </div>
-                        </div>
-                        
-                        <!-- Thêm các vé khác nếu cần -->
-                          <div class="pagination">
-                            <a href="#" class="page-arrow disabled">&laquo;</a> <!-- Nút lùi -->
-                            <a href="#" class="page-number active">1</a>
-                            <a href="#" class="page-number">2</a>
-                            <a href="#" class="page-number">3</a>
-                            <span class="page-ellipsis">...</span>
-                            <a href="#" class="page-number">10</a>
-                            <a href="#" class="page-arrow">&raquo;</a> <!-- Nút tiến -->
-                        </div>
-                    </div>
-                </section>
+                    </section>
+                </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <!-- Tái sử dụng Footer -->
-    <footer id="footer-placeholder" class="footer"></footer>
+        <!-- Tái sử dụng Footer -->
+        <footer id="footer-placeholder" class="footer"></footer>
 
-    <!-- CẬP NHẬT ĐƯỜNG DẪN JS -->
-    <script src="../../js/common.js"></script>
-    <script src="../../js/pages/profile.js"></script>
+        <!-- CẬP NHẬT ĐƯỜNG DẪN JS -->
+        <script src="../../js/common.js"></script>
+        <script src="../../js/pages/profile.js"></script>
 </body>
+
 
 </html>

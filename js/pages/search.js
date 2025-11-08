@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const eventDate = new Date(firstSession.thoiGian.batDau).toLocaleDateString('vi-VN');
 
             const eventCardHTML = `
-                <a href="event_deatail.html" onclick="saveEventId('${event.id}')" style="text-decoration: none; color: inherit;">
+    <a href="event_detail.html" onclick="saveEventId('${event.id}')" style="text-decoration: none; color: inherit;">
                     <div class="event-card-horizontal"> <!-- << ĐÃ SỬA -->
                         <img src="${fixImagePath(event.banner)}" alt="${event.tenSuKien}"> <!-- << ĐÃ SỬA -->
                         <div class="event-info">
@@ -59,11 +59,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    // THAY THẾ TOÀN BỘ HÀM NÀY
     function applyAllFilters() {
         let filteredEvents = [...allEventsData];
 
-        // 1. Lọc theo TỪ KHÓA (nếu có trong activeFilters)
+        // 1. Lọc theo TỪ KHÓA (giữ nguyên)
         if (activeFilters.keyword) {
             const lowercasedKeyword = activeFilters.keyword.toLowerCase();
             filteredEvents = filteredEvents.filter(event =>
@@ -71,36 +70,61 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         }
 
-        // 2. Lọc theo DANH MỤC (nếu có trong activeFilters)
+        // 2. Lọc theo DANH MỤC (giữ nguyên)
         if (activeFilters.category) {
-            const popupCategoryMap = { 'nhạc sống': 'Âm nhạc', 'sân khấu & nghệ thuật': 'Sân khấu & Nghệ thuật', 'thể thao': 'Thể thao', 'khác': 'Khác' };
-            const categoryToFilter = popupCategoryMap[activeFilters.category.value.toLowerCase()] || activeFilters.category.text;
+            const categoryToFilter = activeFilters.category.text;
             filteredEvents = filteredEvents.filter(event => event.theLoai === categoryToFilter);
         }
 
-        // 3. Lọc theo ĐỊA ĐIỂM (nếu có trong activeFilters)
+        // 3. Lọc theo ĐỊA ĐIỂM (giữ nguyên)
         if (activeFilters.location) {
-            const locationMap = { 'hcm': 'TP.HCM', 'hn': 'Hà Nội', 'dl': 'Đà Lạt' };
-            const locationName = locationMap[activeFilters.location.value];
-            if (locationName) {
-                filteredEvents = filteredEvents.filter(event => event.diaChi.diaDiem.tinh === locationName);
+            const locationValue = activeFilters.location.value;
+            const mainCities = ['TP.HCM', 'Hà Nội', 'Đà Lạt'];
+
+            if (locationValue === 'hcm') {
+                filteredEvents = filteredEvents.filter(event => event.diaChi.diaDiem.tinh === 'TP.HCM');
+            } else if (locationValue === 'hn') {
+                filteredEvents = filteredEvents.filter(event => event.diaChi.diaDiem.tinh === 'Hà Nội');
+            } else if (locationValue === 'dl') {
+                filteredEvents = filteredEvents.filter(event => event.diaChi.diaDiem.tinh === 'Đà Lạt');
+            } else if (locationValue === 'other') {
+                filteredEvents = filteredEvents.filter(event => !mainCities.includes(event.diaChi.diaDiem.tinh));
             }
         }
 
-        // 4. Lọc VÉ MIỄN PHÍ (nếu có trong activeFilters)
+        // 4. Lọc VÉ MIỄN PHÍ (giữ nguyên)
         if (activeFilters.price && activeFilters.price.value === 'free') {
             filteredEvents = filteredEvents.filter(event =>
-                (event.suatDien || [{ loaiVe: [] }]).some(session =>
-                    session.loaiVe.some(ticket => ticket.giaVe === 0)
-                )
+                (event.loaiVe || []).some(ticket => ticket.giaVe === 0)
             );
+        }
+
+        // 5. LỌC THEO KHOẢNG THỜI GIAN (LOGIC MỚI)
+        if (activeFilters.startDate && activeFilters.endDate) {
+            const filterStart = activeFilters.startDate.getTime();
+            const filterEnd = activeFilters.endDate.getTime();
+
+            filteredEvents = filteredEvents.filter(event => {
+                // Kiểm tra xem sự kiện có bất kỳ suất chiếu nào nằm trong khoảng thời gian không
+                if (!event.suatChieu || event.suatChieu.length === 0) {
+                    return false; // Bỏ qua nếu không có thông tin suất chiếu
+                }
+
+                return event.suatChieu.some(session => {
+                    const sessionStart = new Date(session.batDau).getTime();
+                    const sessionEnd = new Date(session.ketThuc).getTime();
+
+                    // Logic kiểm tra sự giao thoa giữa 2 khoảng thời gian:
+                    // (StartA <= EndB) and (EndA >= StartB)
+                    return sessionStart <= filterEnd && sessionEnd >= filterStart;
+                });
+            });
         }
 
         displayEvents(filteredEvents);
     }
 
 
-    // THAY THẾ TOÀN BỘ HÀM NÀY
     async function initializeSearchPage() {
         try {
             const response = await fetch("../../data/events.json");
@@ -109,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const urlParams = new URLSearchParams(window.location.search);
             const keyword = urlParams.get('keyword');
             const categoryFromUrl = urlParams.get('category');
+            const locationFromUrl = urlParams.get('location'); // <-- THÊM DÒNG NÀY
 
             // Cập nhật activeFilters từ URL
             if (keyword) {
@@ -116,17 +141,26 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (categoryFromUrl) {
                 const categoryMap = { 'music': 'Âm nhạc', 'art': 'Sân khấu & Nghệ thuật', 'sport': 'Thể thao', 'other': 'Khác' };
-                const categoryName = categoryMap[categoryFromUrl];
-                if (categoryName) {
-                    activeFilters.category = { value: categoryFromUrl, text: categoryName };
+                if (categoryMap[categoryFromUrl]) {
+                    activeFilters.category = { value: categoryFromUrl, text: categoryMap[categoryFromUrl] };
                 }
             }
+            // <-- THÊM KHỐI CODE NÀY ĐỂ XỬ LÝ LOCATION
+            if (locationFromUrl) {
+                const locationTextMap = { 'hcm': 'TP. Hồ Chí Minh', 'hn': 'Hà Nội', 'dl': 'Đà Lạt', 'other': 'Địa điểm khác' };
+                if (locationTextMap[locationFromUrl]) {
+                    activeFilters.location = { value: locationFromUrl, text: locationTextMap[locationFromUrl] };
+                }
+            }
+            // KẾT THÚC KHỐI CODE MỚI -->
 
             // Cập nhật tiêu đề
             if (keyword) {
                 searchTitle.innerHTML = `Kết quả tìm kiếm cho: "<strong>${keyword}</strong>"`;
             } else if (activeFilters.category) {
                 searchTitle.textContent = `Kết quả cho danh mục: "${activeFilters.category.text}"`;
+            } else if (activeFilters.location) { // <-- THÊM DÒNG NÀY
+                searchTitle.textContent = `Sự kiện tại: "${activeFilters.location.text}"`; // <-- THÊM DÒNG NÀY
             } else {
                 searchTitle.textContent = "Tất cả sự kiện";
             }
@@ -138,7 +172,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Lỗi khi tải hoặc xử lý dữ liệu:", error);
         }
     }
-
     // --- LOGIC CHO POPUP BỘ LỌC CHÍNH ---
     function initializeFilterPopups() {
         if (!mainFilterBtn || !mainFilterModal || !activeFiltersContainer) return;
@@ -257,6 +290,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+        // Đảm bảo window.initializeDatePicker tồn tại trước khi gọi
         if (window.initializeDatePicker) {
             window.initializeDatePicker({
                 modalId: 'date-filter-modal',
@@ -268,21 +302,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 prevBtnId: 'calendar-prev-month',
                 nextBtnId: 'calendar-next-month',
                 mode: 'range',
+
+                // ĐOẠN CODE onApply ĐÃ ĐƯỢC ĐẶT LẠI VÀO ĐÚNG VỊ TRÍ
                 onApply: ({ startDate, endDate }) => {
                     const dateFilterText = document.getElementById('date-filter-text');
                     if (!dateFilterText) return;
+
+                    // Xóa các bộ lọc ngày cũ trước khi thêm mới
+                    delete activeFilters.startDate;
+                    delete activeFilters.endDate;
+
                     const formatDate = (date) => `${date.getDate()} thg ${date.getMonth() + 1}`;
+
                     if (startDate && endDate) {
+                        // Đặt giờ về đầu ngày và cuối ngày để so sánh chính xác
+                        startDate.setHours(0, 0, 0, 0);
+                        endDate.setHours(23, 59, 59, 999);
+
+                        // Lưu vào activeFilters
+                        activeFilters.startDate = startDate;
+                        activeFilters.endDate = endDate;
+
+                        // Cập nhật text trên nút
                         dateFilterText.textContent = startDate.getTime() === endDate.getTime() ? formatDate(startDate) : `${formatDate(startDate)} - ${formatDate(endDate)}`;
-                    } else if (startDate) {
+
+                    } else if (startDate) { // Trường hợp chỉ chọn 1 ngày
+                        startDate.setHours(0, 0, 0, 0);
+                        const singleDayEnd = new Date(startDate);
+                        singleDayEnd.setHours(23, 59, 59, 999);
+
+                        activeFilters.startDate = startDate;
+                        activeFilters.endDate = singleDayEnd;
+
                         dateFilterText.textContent = formatDate(startDate);
                     } else {
+                        // Nếu không chọn ngày nào (reset)
                         dateFilterText.textContent = 'Tất cả các ngày';
                     }
+
+                    // Sau khi cập nhật bộ lọc ngày, gọi lại hàm lọc chính
+                    applyAllFilters();
                 }
             });
         }
-    }
+    } // Kết thúc hàm initializeFilterPopups
 
     // CHẠY HÀM KHỞI TẠO CHÍNH
     initializeSearchPage();

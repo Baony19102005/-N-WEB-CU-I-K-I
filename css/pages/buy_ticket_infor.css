@@ -51,6 +51,18 @@ body {
   font-family: inherit;
 }
 
+/* Trạng thái lỗi: viền đỏ + ánh sáng nhẹ giúp nhìn thấy vị trí */
+.buyer-form .field-error {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.buyer-form .field-error-text {
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 6px;
+}
+
 .buyer-form textarea {
   resize: vertical;
   min-height: 80px;
@@ -146,20 +158,17 @@ body {
   margin: 28px auto;
   border-radius: 16px;
   overflow: hidden;
-  height: 240px;
+  min-height: 160px;
 
-  /* ảnh banner sự kiện */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  /* đổ bóng nhẹ cho khối */
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  /* ONE BOX header style (like Ticketbox) */
+  background: linear-gradient(145deg, #121429, #191c3a);
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 60px;
+  padding: 24px 40px;
 }
 
 /* không overlay tối nữa */
@@ -167,8 +176,10 @@ body {
   display: none;
 }
 
-/* === BÊN TRÁI: KHỐI ĐẾM NGƯỢC === */
+/* === KHỐI ĐẾM NGƯỢC (bên PHẢI) === */
 .event-header-left {
+  /* Đưa đồng hồ sang phải */
+  order: 2;
   background: rgba(255, 255, 255, 0.15);
   border: 1.5px solid rgba(255, 255, 255, 0.4);
   border-radius: 12px;
@@ -177,7 +188,7 @@ body {
   backdrop-filter: blur(6px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   color: #fff;
-  min-width: 190px;
+  min-width: 220px;
 }
 
 .event-header-left p {
@@ -194,30 +205,38 @@ body {
   letter-spacing: 1px;
 }
 
-/* === BÊN PHẢI: THÔNG TIN SỰ KIỆN === */
+/* === THÔNG TIN SỰ KIỆN (bên TRÁI) === */
 .event-header-right {
-  color: #fff;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  /* Đưa thông tin sự kiện sang trái */
+  order: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px; /* giãn khoảng cách giữa các dòng */
   align-items: flex-start;
   justify-content: center;
+  color: #fff;
+  flex: 1;
+  padding-right: 24px; /* cách countdown 1 chút */
 }
 
 .event-header-right h2 {
   font-size: 1.45rem;
   font-weight: 700;
-  margin: 0;
+  margin: 0 0 8px 0; /* giãn dưới tiêu đề */
+  color: #fff;
+  line-height: 1.25;
 }
 
 .event-header-detail {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.95rem;
+  font-size: 1rem; /* to hơn chút cho cân đối */
   color: #f2f2f2;
 }
+
+/* giãn giữa các dòng thông tin */
+.event-header-detail + .event-header-detail { margin-top: 6px; }
 
 .event-header-detail .icon {
   width: 15px;
@@ -237,7 +256,7 @@ body {
   .event-header {
     flex-direction: column;
     justify-content: center;
-    height: auto;
+    min-height: auto;
     padding: 24px 30px;
   }
 
@@ -249,4 +268,90 @@ body {
     align-items: center;
     text-align: center;
   }
+}
+
+/* ========== TỐI ƯU KHUNG TÓM TẮT VÉ BÊN PHẢI ========== */
+.ticket-summary {
+  /* Rộng hơn để tránh chữ ôm và xuống dòng nhãn */
+  flex: 0 0 400px;
+  padding: 24px;
+}
+
+.ticket-summary ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ticket-summary li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Giữ nhãn cố định, không co hẹp và không xuống dòng */
+.ticket-summary li span {
+  flex: 0 0 90px;
+  white-space: nowrap;
+  color: #333;
+}
+
+/* Phần giá trị linh hoạt và có thể xuống dòng nếu tên sự kiện quá dài */
+.ticket-summary li b {
+  flex: 1 1 auto;
+  /* Căn chữ dạng justify cho tên sự kiện dài */
+  text-align: justify;
+  text-justify: inter-word;
+  /* Tránh giãn dòng cuối quá rộng */
+  text-align-last: left;
+  overflow-wrap: anywhere;
+}
+
+/* Responsive: thu gọn khung tóm tắt khi màn hình hẹp */
+@media (max-width: 1200px) {
+  .ticket-summary { flex-basis: 360px; }
+}
+
+@media (max-width: 1024px) {
+  .ticket-info-layout { flex-direction: column; }
+  .ticket-summary {
+    flex-basis: auto;
+    width: 100%;
+    order: 2;
+  }
+}
+
+/* ===== POPUP THÔNG BÁO CHUNG (HẾT THỜI GIAN) ===== */
+.notify-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3200;
+}
+
+.notify-modal-overlay.active { display: flex; }
+
+.notify-modal {
+  width: 360px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.notify-modal h3 { margin: 0 0 8px; font-size: 18px; color: #111; }
+.notify-modal p { margin: 0 0 16px; color: #333; }
+.notify-ok-btn {
+  background: #6d28d9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
 }

@@ -25,11 +25,11 @@
         <div class="event-header-right">
             <h2 id="event-title"></h2>
             <div class="event-header-detail">
-                <img src="../../images/icon-time.png" alt="time" class="icon">
+                <img src="../../images/pages/payment/icon-time.png" alt="time" class="icon">
                 <span id="event-time"></span>
             </div>
             <div class="event-header-detail">
-                <img src="../../images/icon-location.png" alt="location" class="icon">
+                <img src="../../images/pages/payment/icon-location.png" alt="location" class="icon">
                 <span id="event-location"></span>
             </div>
         </div>
@@ -83,6 +83,15 @@
 
     <!-- FOOTER -->
     <footer id="footer-placeholder" class="footer"></footer>
+
+    <!-- POPUP THÔNG BÁO HẾT THỜI GIAN -->
+    <div class="notify-modal-overlay" id="notifyModal">
+        <div class="notify-modal">
+            <h3>Thông báo</h3>
+            <p id="notifyText">Hết thời gian giữ chỗ. Bạn sẽ được chuyển về trang chọn vé.</p>
+            <button id="notifyOkBtn" class="notify-ok-btn">OK</button>
+        </div>
+    </div>
 
     <!-- JS -->
     <script src="../../js/common.js"></script>

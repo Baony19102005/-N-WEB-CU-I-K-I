@@ -17,6 +17,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
+
+// Helper: lấy chuỗi "giá từ" với phân cách bằng dấu phẩy
+function getMinPriceText(event) {
+    if (!event || !Array.isArray(event.loaiVe) || event.loaiVe.length === 0) return "Miễn phí";
+    // Chỉ tính những vé còn bán; nếu tất cả hết thì lấy toàn bộ danh sách
+    const available = event.loaiVe.filter(v => String(v.trangThai || '').toLowerCase() === 'còn vé');
+    const source = available.length > 0 ? available : event.loaiVe;
+    const prices = source
+        .map(v => (typeof v.giaVe === 'number' ? v.giaVe : parseFloat(v.giaVe)))
+        .filter(n => Number.isFinite(n) && n >= 0);
+    if (prices.length === 0) return "Miễn phí";
+    const min = Math.min(...prices);
+    return min > 0 ? `${min.toLocaleString('en-US')}đ` : "Miễn phí";
+}
+
 // Hàm hiển thị sự kiện nổi bật
 function displayFeaturedEvents(events) {
     const featuredContainer = document.getElementById("featured-events");
@@ -25,15 +40,16 @@ function displayFeaturedEvents(events) {
     const featuredEvents = events.slice(0, 4); // Lấy 4 sự kiện đầu tiên
 
     featuredEvents.forEach(event => {
-        // Chuyển đổi đường dẫn ảnh banner
-        const imagePath = event.banner.replace("../images/", "../../images/");
+        // Hiển thị poster thay vì banner cho mục Sự kiện nổi bật
+        const imagePath = (event.anhSuKien || event.banner || "").replace("../images/", "../../images/");
+        const minPriceText = getMinPriceText(event);
         const eventHTML = `
             <a href="event_detail.html" style="text-decoration: none; color: inherit;" onclick="saveEventId('${event.id}')">
                 <div class="event-card">
                     <img src="${imagePath}" alt="${event.tenSuKien}">
                     <div class="event-info">
                         <h3>${event.tenSuKien}</h3>
-                        <p class="event-price">Từ ${event.loaiVe[0]?.giaVe.toLocaleString()}đ</p>
+                        <p class="event-price">Từ ${minPriceText}</p>
                         <p class="event-date">${new Date(event.thoiGian.batDau).toLocaleDateString('vi-VN')}</p>
                     </div>
                 </div>
@@ -53,13 +69,14 @@ function displayStageArtEvents(events) {
 
     stageArtEvents.forEach(event => {
         const imagePath = event.banner.replace("../images/", "../../images/");
+        const minPriceText = getMinPriceText(event);
         const eventHTML = `
             <a href="event_detail.html" style="text-decoration: none; color: inherit;" onclick="saveEventId('${event.id}')">
                 <div class="event-card-horizontal">
                     <img src="${imagePath}" alt="${event.tenSuKien}">
                     <div class="event-info">
                         <h3>${event.tenSuKien}</h3>
-                        <p class="event-price">Từ ${event.loaiVe[0]?.giaVe.toLocaleString()}đ</p>
+                        <p class="event-price">Từ ${minPriceText}</p>
                         <p class="event-date">${new Date(event.thoiGian.batDau).toLocaleDateString('vi-VN')}</p>
                     </div>
                 </div>
@@ -79,13 +96,14 @@ function displayOtherCategoryEvents(events) {
 
     otherCategoryEvents.forEach(event => {
         const imagePath = event.banner.replace("../images/", "../../images/");
+        const minPriceText = getMinPriceText(event);
         const eventHTML = `
             <a href="event_detail.html" style="text-decoration: none; color: inherit;" onclick="saveEventId('${event.id}')">
                 <div class="event-card-horizontal">
                     <img src="${imagePath}" alt="${event.tenSuKien}">
                     <div class="event-info">
                         <h3>${event.tenSuKien}</h3>
-                        <p class="event-price">Từ ${event.loaiVe[0]?.giaVe.toLocaleString()}đ</p>
+                        <p class="event-price">Từ ${minPriceText}</p>
                         <p class="event-date">${new Date(event.thoiGian.batDau).toLocaleDateString('vi-VN')}</p>
                     </div>
                 </div>
@@ -125,13 +143,14 @@ function displayForYouEvents(events) {
 
     forYouEvents.forEach(event => {
         const imagePath = event.banner.replace("../images/", "../../images/");
+        const minPriceText = getMinPriceText(event);
         const eventHTML = `
             <a href="event_detail.html" style="text-decoration: none; color: inherit;" onclick="saveEventId('${event.id}')">
                 <div class="event-card-horizontal">
                     <img src="${imagePath}" alt="${event.tenSuKien}">
                     <div class="event-info">
                         <h3>${event.tenSuKien}</h3>
-                        <p class="event-price">Từ ${event.loaiVe[0]?.giaVe.toLocaleString()}đ</p>
+                        <p class="event-price">Từ ${minPriceText}</p>
                         <p class="event-date">${new Date(event.thoiGian.batDau).toLocaleDateString('vi-VN')}</p>
                     </div>
                 </div>

@@ -8,21 +8,34 @@
 
 /* ========== Event Header ========== */
 .event-header {
-  background-color: #2f2f37;
+  /* Match buy_ticket_infor header style */
+  background: linear-gradient(145deg, #121429, #191c3a);
   color: #fff;
-  padding: 25px 35px;
-  border-radius: 12px;
+  padding: 24px 40px;
+  border-radius: 16px;
   margin-bottom: 30px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Bên trái: tiêu đề + thông tin (xếp dọc) */
+.event-header-right {
+  display: flex;
   flex-direction: column;
-  gap: 12px;
-  position: relative;
+  gap: 10px; /* giãn dòng như buy_ticket_infor */
+  align-items: flex-start;
+  justify-content: center;
+  color: #fff;
+  flex: 1;
+  padding-right: 24px;
 }
 
 .event-header h2 {
   font-size: 20px;
   font-weight: 700;
   color: #fff;
+  margin: 0 0 8px 0; /* giãn dưới tiêu đề */
 }
 
 .event-details {
@@ -45,20 +58,22 @@
 
 .event-meta span {
   color: #e6e6e6;
-  font-size: 14px;
+  font-size: 15px; /* to hơn chút */
 }
 
-/* Countdown timer */
+/* giãn giữa các dòng meta */
+.event-meta + .event-meta { margin-top: 6px; }
+
+/* Countdown timer (glass card on the right) */
 .countdown-box {
-  position: absolute;
-  right: 30px;
-  top: 25px;
-  background-color: #7d7d7d;
-  border: 2px solid #fff;
-  border-radius: 14px;
-  padding: 15px 25px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 14px 24px;
   text-align: center;
   color: #fff;
+  backdrop-filter: blur(6px);
+  min-width: 220px;
 }
 
 .countdown-box p {
@@ -66,7 +81,7 @@
   margin-bottom: 10px;
 }
 
-#countdown-timer {
+.countdown-timer {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,12 +90,13 @@
   gap: 6px;
 }
 
-#countdown-timer span {
+.countdown-timer .time-box {
   background-color: #f94d56;
   color: #fff;
   border-radius: 10px;
   padding: 8px 14px;
   font-size: 20px;
+  min-width: 42px;
 }
 
 /* ========== Layout ========== */
@@ -171,7 +187,7 @@
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   padding: 20px 25px;
-  margin-bottom: 20px;
+  margin-bottom: 0; /* tránh cộng dồn với gap của cột phải */
 }
 
 .ticket-summary h4,
@@ -274,7 +290,7 @@
   padding: 25px 25px 30px 25px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px; /* gần nhau hơn một chút */
 }
 
 /* Từng phần bên trong khung phải */
@@ -288,6 +304,12 @@
   color: #111827;
   font-size: 14px;
   line-height: 1.5;
+}
+
+/* Hiển thị xuống dòng trong nội dung hóa đơn như người dùng nhập */
+#pay_invoice {
+  white-space: pre-line;   /* giữ ký tự \n thành xuống dòng */
+  overflow-wrap: anywhere; /* tránh tràn dòng với chuỗi dài */
 }
 
 
@@ -433,6 +455,40 @@ POPUPPPPPPPPPPPP
   flex-direction: column;
   overflow: hidden;
   border: 1px solid #D1D5DB;
+}
+
+/* ===== POPUP THÔNG BÁO CHUNG ===== */
+.notify-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3200;
+}
+
+.notify-modal-overlay.active { display: flex; }
+
+.notify-modal {
+  width: 360px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+  padding: 20px 24px;
+  text-align: center;
+}
+
+.notify-modal h3 { margin: 0 0 8px; font-size: 18px; color: #111; }
+.notify-modal p { margin: 0 0 16px; color: #333; }
+.notify-ok-btn {
+  background: #6d28d9;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 /* header khu nhập mã */
@@ -832,6 +888,3 @@ POPUPPPPPPPPPPPP
   margin-top: 6px;     
   display: inline-bl
 }
-
-
-

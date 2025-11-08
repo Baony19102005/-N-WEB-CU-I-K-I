@@ -37,6 +37,43 @@
   border-radius: 12px;
 }
 
+/* ======= SIMPLE TICKET SELECTOR (no seatmap) ======= */
+.simple-ticket-box {
+  background: #0f1411;
+  color: #e8f5ed;
+  border-radius: 12px;
+  padding: 18px 16px;
+  text-align: left;
+}
+
+.simple-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  color: #a7e0ba;
+  margin-bottom: 14px;
+}
+
+.simple-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 6px;
+  border-bottom: 1px dashed rgba(255,255,255,0.25);
+}
+
+.simple-row .row-info { max-width: 70%; }
+.row-name { font-weight: 700; margin-bottom: 4px; }
+.row-price { opacity: 0.95; }
+
+.row-stepper { display: flex; align-items: center; gap: 8px; }
+.step-btn {
+  width: 36px; height: 36px; border-radius: 8px;
+  border: 1px solid #a7e0ba; background: #fff; color: #0f1411;
+  font-size: 18px; font-weight: 700; cursor: pointer;
+}
+.step-qty { width: 28px; display: inline-block; text-align: center; font-weight: 700; }
+
 /* BÊN PHẢI */
 .ticket-info {
   flex: 0 0 340px;
@@ -90,6 +127,19 @@
   border-bottom: 1px solid #eee;
   cursor: pointer;
   font-size: 0.95rem;
+  gap: 12px; /* tránh đè giá khi tên vé dài */
+}
+
+/* Bên trái (tên vé) cho phép xuống dòng nhưng không đẩy giá sang dòng mới */
+.price-item > span {
+  flex: 1 1 auto;
+  min-width: 0; /* cho phép text wrap đúng */
+}
+
+/* Bên phải (giá) luôn một dòng và không co lại */
+.price-item > b {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .price-item:hover {
@@ -196,3 +246,4 @@
   cursor: pointer;
   font-size: 0.9rem;
 }
+

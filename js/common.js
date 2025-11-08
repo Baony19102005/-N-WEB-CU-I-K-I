@@ -49,17 +49,255 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error(`Lỗi khi tải template cho '${selector}':`, error));
     };
 
+
+    // ===================================================================
+    // LOGIC XỬ LÝ AUTHENTICATION (ĐĂNG NHẬP, ĐĂNG KÝ, ĐĂNG XUẤT)
+    // ===================================================================
+
     /**
-     * Khởi tạo tất cả logic cho popup (mở, đóng, chuyển form).
+     * Lấy danh sách tất cả người dùng từ localStorage.
+     * @returns {Array} Mảng các đối tượng người dùng.
      */
+    function getUsers() {
+        return JSON.parse(localStorage.getItem('users')) || [];
+    }
+
+    /**
+     * Lưu lại danh sách người dùng vào localStorage.
+     * @param {Array} users - Mảng người dùng cần lưu.
+     */
+    function saveUsers(users) {
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    /**
+     * Lưu thông tin người dùng đang đăng nhập vào sessionStorage.
+     * @param {object} user - Đối tượng người dùng.
+     */
+    function setCurrentUser(user) {
+        sessionStorage.setItem('currentUser', JSON.stringify(user));
+    }
+
+    /**
+     * Lấy thông tin người dùng đang đăng nhập từ sessionStorage.
+     * @returns {object|null} Đối tượng người dùng hoặc null.
+     */
+    function getCurrentUser() {
+        return JSON.parse(sessionStorage.getItem('currentUser'));
+    }
+
+    /**
+     * Xóa thông tin người dùng đang đăng nhập.
+     */
+    function clearCurrentUser() {
+        sessionStorage.removeItem('currentUser');
+    }
+
+    function updateHeaderUI() {
+        const currentUser = getCurrentUser();
+
+        // --- Header Chung ---
+        const guestView = document.getElementById('guest-view');
+        const userView = document.getElementById('user-view');
+        if (guestView && userView) {
+            guestView.style.display = currentUser ? 'none' : 'block';
+            userView.style.display = currentUser ? 'block' : 'none';
+            if (currentUser) {
+                const userNameSpan = document.getElementById('user-name-span');
+                const userAvatarImg = document.getElementById('user-avatar-img');
+                // Hiển thị tên (ưu tiên fullName, nếu không có thì lấy từ email)
+                userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
+                // Hiển thị avatar (nếu có) hoặc ảnh mặc định
+                userAvatarImg.src = currentUser.avatar || '../../images/common/default-avatar.png';
+            }
+        }
+
+        // --- Header Riêng của Organizer ---
+        const orgGuestView = document.getElementById('org-guest-view');
+        const orgUserView = document.getElementById('org-user-view');
+        if (orgGuestView && orgUserView) {
+            orgGuestView.style.display = currentUser ? 'none' : 'flex';
+            orgUserView.style.display = currentUser ? 'flex' : 'none';
+            if (currentUser) {
+                const orgUserNameSpan = document.getElementById('org-user-name-span');
+                const orgUserAvatarImg = document.getElementById('org-user-avatar-img');
+                orgUserNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
+                orgUserAvatarImg.src = currentUser.avatar || '../../images/pages/create_event/user-avatar.png';
+            }
+        }
+    }
+
+    function initializeUserMenu() {
+        // Menu cho header chung
+        const userAvatarTrigger = document.getElementById('user-avatar-trigger');
+        const userDropdownMenu = document.getElementById('user-dropdown-menu');
+        const logoutBtn = document.getElementById('logout-btn');
+        if (userAvatarTrigger && userDropdownMenu) {
+            userAvatarTrigger.addEventListener('click', () => {
+                userDropdownMenu.style.display = userDropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                clearCurrentUser();
+                updateHeaderUI();
+            });
+        }
+
+        // Menu cho header organizer
+        const orgAvatarTrigger = document.getElementById('org-user-avatar-trigger');
+        const orgDropdownMenu = document.getElementById('org-user-dropdown-menu');
+        const orgLogoutBtn = document.getElementById('org-logout-btn');
+        const orgLoginBtn = document.getElementById('org-login-btn'); // Nút đăng nhập của header org
+        const openAuthModalBtn = document.getElementById('open-auth-modal-btn'); // Nút đăng nhập của header chung
+
+        if (orgAvatarTrigger && orgDropdownMenu) {
+            orgAvatarTrigger.addEventListener('click', () => {
+                orgDropdownMenu.style.display = orgDropdownMenu.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+        if (orgLogoutBtn) {
+            orgLogoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                clearCurrentUser();
+                window.location.reload(); // Tải lại trang để guard kích hoạt
+            });
+        }
+        // Gắn sự kiện cho nút "Đăng nhập" của header organizer
+        if (orgLoginBtn && openAuthModalBtn) {
+            orgLoginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openAuthModalBtn.click(); // Kích hoạt popup từ header chung
+            });
+        }
+
+        // Ẩn tất cả dropdown khi click ra ngoài
+        document.addEventListener('click', (e) => {
+            if (userDropdownMenu && userAvatarTrigger && !userAvatarTrigger.contains(e.target)) {
+                userDropdownMenu.style.display = 'none';
+            }
+            if (orgDropdownMenu && orgAvatarTrigger && !orgAvatarTrigger.contains(e.target)) {
+                orgDropdownMenu.style.display = 'none';
+            }
+        });
+    }
+
+    /**
+         * Giả lập quá trình đăng nhập bằng Google.
+         */
+    function handleGoogleLogin() {
+        // 1. Giả lập một tài khoản Google mẫu
+        const googleUser = {
+            email: "google.user@gmail.com",
+            // Google không trả về mật khẩu, nên chúng ta không cần lưu
+            // Bạn có thể thêm các thông tin khác như tên, avatar...
+            name: "Google User",
+            avatar: "../../images/common/google-avatar-example.png" // Chuẩn bị 1 ảnh avatar mẫu
+        };
+
+        // 2. Lấy danh sách user hiện tại
+        let users = getUsers();
+
+        // 3. Kiểm tra xem user Google này đã tồn tại trong "database" của chúng ta chưa
+        let existingUser = users.find(user => user.email === googleUser.email);
+
+        if (!existingUser) {
+            // Nếu chưa tồn tại, tạo một tài khoản mới cho họ
+            users.push(googleUser);
+            saveUsers(users);
+            existingUser = googleUser;
+        }
+
+        // 4. Thực hiện đăng nhập
+        setCurrentUser(existingUser);
+
+        // 5. Thông báo, đóng popup và cập nhật giao diện
+        alert(`Đăng nhập thành công với tài khoản Google: ${existingUser.email}`);
+        const authModal = document.getElementById('auth-modal');
+        if (authModal) {
+            authModal.classList.remove('active');
+        }
+        updateHeaderUI();
+        document.dispatchEvent(new Event('loginSuccess'));
+    }
+
+
     function initializeAuthModal() {
         const authModal = document.getElementById('auth-modal');
         const openModalBtn = document.getElementById('open-auth-modal-btn');
-
         if (!authModal || !openModalBtn) {
-            console.warn("Không tìm thấy element của modal hoặc nút mở modal. Bỏ qua khởi tạo popup.");
+            console.warn("Bỏ qua khởi tạo popup: không tìm thấy auth-modal hoặc open-auth-modal-btn.");
             return;
         }
+
+        const handleFormSubmit = () => { // <--- BỎ tham số formType
+            const emailInput = authModal.querySelector('input[type="email"], input[placeholder*="email"]');
+            const passwordInputs = authModal.querySelectorAll('input[type="password"]');
+
+            if (!emailInput || passwordInputs.length === 0) {
+                alert('Lỗi cấu trúc form: Không tìm thấy ô email hoặc mật khẩu.');
+                return;
+            }
+
+            // --- XÁC ĐỊNH LOẠI FORM TẠI THỜI ĐIỂM CLICK ---
+            // Nếu có nhiều hơn 1 ô password, đó là form signup
+            const formType = passwordInputs.length > 1 ? 'signup' : 'login';
+            // ---------------------------------------------------
+
+            const email = emailInput.value.trim();
+            const password = passwordInputs[0].value;
+
+            // ... (Phần validation email, password rỗng giữ nguyên) ...
+            if (!email || !password) {
+                alert('Vui lòng nhập đầy đủ email và mật khẩu.');
+                return;
+            }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Định dạng email không hợp lệ. Vui lòng kiểm tra lại.');
+                return;
+            }
+
+            const users = getUsers();
+
+            if (formType === 'signup') {
+                const passwordConfirm = passwordInputs[1].value;
+                if (!passwordConfirm) {
+                    alert('Vui lòng nhập lại mật khẩu.');
+                    return;
+                }
+                if (password !== passwordConfirm) {
+                    alert('Mật khẩu nhập lại không khớp.');
+                    return;
+                }
+                if (users.find(user => user.email === email)) {
+                    alert('Email này đã được sử dụng. Vui lòng chọn email khác.');
+                    return;
+                }
+
+                const newUser = { email, password };
+                users.push(newUser);
+                saveUsers(users);
+                setCurrentUser(newUser);
+
+                alert('Đăng ký thành công! Chuyển đến trang cài đặt tài khoản.');
+                authModal.classList.remove('active');
+                window.location.href = isInsidePages ? 'profile.html' : 'html/pages/profile.html';
+
+            } else if (formType === 'login') {
+                const foundUser = users.find(user => user.email === email && user.password === password);
+                if (foundUser) {
+                    setCurrentUser(foundUser);
+                    alert('Đăng nhập thành công!');
+                    authModal.classList.remove('active');
+                    updateHeaderUI();
+                    document.dispatchEvent(new Event('loginSuccess'));
+                } else {
+                    alert('Email hoặc mật khẩu không chính xác.');
+                }
+            }
+        };
 
         const loadAndShowModal = (modalName) => {
             const modalPath = isInsidePages ? `../templates/${modalName}.html` : `html/templates/${modalName}.html`;
@@ -69,28 +307,41 @@ document.addEventListener("DOMContentLoaded", function () {
                     const correctedHtml = html.replace(/src="\.\.\/\.\.\/images\//g, 'src="../../images/');
                     authModal.innerHTML = correctedHtml;
                     authModal.classList.add('active');
-                    attachModalEvents();
+                    attachModalEvents(); // <--- BỎ tham số modalName
                 });
         };
 
-        const attachModalEvents = () => {
-            const closeModalBtn = authModal.querySelector('.close-modal-btn');
-            if (closeModalBtn) closeModalBtn.addEventListener('click', () => authModal.classList.remove('active'));
+        const attachModalEvents = () => { // <--- BỎ tham số modalName
+            const content = authModal.querySelector('.auth-modal-content');
+            if (!content) return;
 
-            authModal.querySelectorAll('[data-modal]').forEach(link => {
+            // Dọn dẹp listener cũ trước khi gắn mới (phương pháp an toàn)
+            const oldPrimaryBtn = content.querySelector('.btn-primary');
+            const newPrimaryBtn = oldPrimaryBtn.cloneNode(true);
+            oldPrimaryBtn.parentNode.replaceChild(newPrimaryBtn, oldPrimaryBtn);
+
+            // Gắn sự kiện
+            content.querySelector('.close-modal-btn')?.addEventListener('click', () => authModal.classList.remove('active'));
+            newPrimaryBtn.addEventListener('click', handleFormSubmit); // <--- THAY ĐỔI
+            content.querySelector('.btn-google')?.addEventListener('click', handleGoogleLogin);
+
+            content.querySelectorAll('[data-modal]').forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    loadAndShowModal(link.getAttribute('data-modal'));
+                    loadAndShowModal(link.dataset.modal);
                 });
             });
 
-            authModal.querySelectorAll('.password-toggle-icon').forEach(toggle => {
+            content.querySelectorAll('.password-toggle-icon').forEach(toggle => {
                 toggle.addEventListener('click', () => {
+                    // ... logic toggle password giữ nguyên ...
                     const passwordInput = toggle.previousElementSibling;
-                    const isPassword = passwordInput.type === 'password';
-                    passwordInput.type = isPassword ? 'text' : 'password';
-                    const eyeIconPath = '../../images/common/';
-                    toggle.src = isPassword ? `${eyeIconPath}icon-eye-open.png` : `${eyeIconPath}icon-eye-closed.png`;
+                    if (passwordInput && passwordInput.type) {
+                        const isPassword = passwordInput.type === 'password';
+                        passwordInput.type = isPassword ? 'text' : 'password';
+                        const eyeIconPath = '../../images/common/';
+                        toggle.src = isPassword ? `${eyeIconPath}icon-eye-open.png` : `${eyeIconPath}icon-eye-closed.png`;
+                    }
                 });
             });
         };
@@ -99,11 +350,10 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             loadAndShowModal('login');
         });
-
         authModal.addEventListener('click', (e) => {
             if (e.target === authModal) authModal.classList.remove('active');
         });
-    };
+    }
 
     // (Hàm initializeDatePicker của bạn giữ nguyên, không cần sửa)
     window.initializeDatePicker = (options) => {
@@ -260,33 +510,45 @@ document.addEventListener("DOMContentLoaded", function () {
     // ĐIỂM BẮT ĐẦU CHẠY CODE
     // ===================================================================
 
-    // Hàm chính để khởi tạo trang
     async function initializePage() {
-        // Bước 1: Tải đồng thời header và footer. Chờ cho đến khi cả hai hoàn thành.
+        // LUÔN TẢI HEADER CHUNG VÀ FOOTER TRÊN MỌI TRANG
         await Promise.all([
             loadTemplate('#header-placeholder', 'html/templates/header.html'),
             loadTemplate('#footer-placeholder', 'html/templates/footer.html')
         ]);
 
-        // Bước 2: Sau khi header và footer đã chắc chắn có trong DOM,
-        // mới tiến hành khởi tạo các chức năng phụ thuộc vào chúng.
-        initializeAuthModal();
+        // ẨN HEADER CHUNG NẾU ĐÂY LÀ TRANG ORGANIZER
+        const isOrganizerPage = document.body.classList.contains('organizer-body');
+        if (isOrganizerPage) {
+            const headerPlaceholder = document.getElementById('header-placeholder');
+            if (headerPlaceholder) {
+                headerPlaceholder.style.display = 'none';
+            }
+        }
 
-        // (Nếu các hàm khác cũng phụ thuộc vào header/footer, hãy đặt chúng ở đây)
+        // Sau khi các thành phần cần thiết đã tải xong
+        updateHeaderUI();
+        initializeAuthModal(); // Bây giờ hàm này sẽ luôn tìm thấy #open-auth-modal-btn
+        initializeUserMenu();
+
+        // --- GỌI CÁC HÀM KHỞI TẠO CỦA TRANG CON TẠI ĐÂY ---
+        // Điều này đảm bảo chúng chỉ được gọi một lần, sau khi mọi thứ đã sẵn sàng.
+        if (typeof initializeProfilePage === 'function') {
+            initializeProfilePage();
+        }
+        if (typeof initializeMyTicketPage === 'function') {
+            initializeMyTicketPage();
+        }
+        if (typeof initializeCreateEventPage === 'function') {
+            initializeCreateEventPage();
+        }
+        // Thêm các hàm của trang khác vào đây nếu cần...
+
+        // Phát tín hiệu cho các script guard (nếu vẫn cần)
+        document.dispatchEvent(new Event('commonJsLoaded'));
     }
 
     // Gọi hàm khởi tạo chính
     initializePage();
 
-    // --- PHẦN 2: CHẠY LOGIC DÀNH RIÊNG CHO TỪNG TRANG ---
-    // Phần này có thể giữ nguyên vì nó không phụ thuộc vào header/footer
-    if (typeof initializeCreateEventPage === 'function' && document.getElementById('create-event-page')) {
-        initializeCreateEventPage();
-    }
-    if (typeof initializeProfilePage === 'function' && document.querySelector('.profile-content:not(.my-tickets)')) {
-        initializeProfilePage();
-    }
-    if (typeof initializeMyTicketPage === 'function' && document.querySelector('.my-tickets')) {
-        initializeMyTicketPage();
-    }
-});
+}); // <-- Kết thúc của document.addEventListener('DOMContentLoaded', ...)
