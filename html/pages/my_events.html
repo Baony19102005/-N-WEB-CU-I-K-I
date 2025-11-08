@@ -14,18 +14,35 @@
 
 <body class="organizer-body">
 
-    <!-- HEADER (TÁI SỬ DỤNG) -->
+    <!-- HEADER CHUẨN DÀNH CHO TẤT CẢ CÁC TRANG ORGANIZER -->
     <header class="organizer-header-fixed">
         <div class="container">
-            <a href="#" class="organizer-logo-header">
+            <a href="hompage.html" class="organizer-logo-header">
                 <img src="../../images/pages/create_event/logo.png" alt="Tanivan Logo">
                 <span>Ticket</span>
             </a>
             <div class="organizer-header-actions">
-                <a href="create_event.html" class="btn btn-primary-outline">Tạo sự kiện</a>
-                <div class="organizer-user-menu">
-                    <img src="../../images/pages/create_event/user-avatar.png" alt="User Avatar">
-                    <span>Tài khoản</span>
+                <!-- Dành cho người dùng đã đăng nhập -->
+                <div id="org-user-view" style="display: none; align-items: center; gap: 20px;">
+                    <a href="create_event.html" class="btn btn-primary-outline">Tạo sự kiện</a>
+                    <div id="org-user-avatar-trigger" class="organizer-user-menu" style="cursor: pointer;">
+                        <img id="org-user-avatar-img" src="../../images/pages/create_event/user-avatar.png"
+                            alt="User Avatar">
+                        <span id="org-user-name-span">Tài khoản</span>
+                    </div>
+                    <div id="org-user-dropdown-menu"
+                        style="display: none; position: absolute; top: 100%; right: 20px; background-color: #372948; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1001; width: 200px; overflow: hidden; border: 1px solid #4a3a5e;">
+                        <a href="profile.html"
+                            style="display: block; padding: 12px 15px; color: #ccc; text-decoration: none; font-size: 14px;">Cài
+                            đặt tài khoản</a>
+                        <a href="#" id="org-logout-btn"
+                            style="display: block; padding: 12px 15px; color: #F87171; text-decoration: none; font-size: 14px;">Đăng
+                            xuất</a>
+                    </div>
+                </div>
+                <!-- Dành cho khách -->
+                <div id="org-guest-view" style="display: none;">
+                    <a href="#" id="org-login-btn" class="btn btn-primary-outline">Đăng nhập</a>
                 </div>
             </div>
         </div>
@@ -148,6 +165,7 @@
             </div>
         </main>
     </div>
+    <script src="../../js/common.js"></script>
     <script src="../../js/pages/my_events.js"></script>
 </body>
 

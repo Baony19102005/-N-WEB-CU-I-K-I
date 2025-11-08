@@ -231,7 +231,14 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        const handleFormSubmit = () => { // <--- BỎ tham số formType
+        // Guard: nếu đã khởi tạo trước đó thì không gắn lại sự kiện (tránh alert/handlers bị chạy 2 lần)
+        if (authModal.dataset.authInitialized === 'true') {
+            return;
+        }
+        authModal.dataset.authInitialized = 'true';
+
+        // --- HÀM XỬ LÝ SUBMIT, GIỮ NGUYÊN NHƯ CŨ ---
+        const handleFormSubmit = () => {
             const emailInput = authModal.querySelector('input[type="email"], input[placeholder*="email"]');
             const passwordInputs = authModal.querySelectorAll('input[type="password"]');
 
@@ -240,15 +247,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // --- XÁC ĐỊNH LOẠI FORM TẠI THỜI ĐIỂM CLICK ---
-            // Nếu có nhiều hơn 1 ô password, đó là form signup
             const formType = passwordInputs.length > 1 ? 'signup' : 'login';
-            // ---------------------------------------------------
-
             const email = emailInput.value.trim();
             const password = passwordInputs[0].value;
 
-            // ... (Phần validation email, password rỗng giữ nguyên) ...
             if (!email || !password) {
                 alert('Vui lòng nhập đầy đủ email và mật khẩu.');
                 return;
@@ -260,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const users = getUsers();
-
             if (formType === 'signup') {
                 const passwordConfirm = passwordInputs[1].value;
                 if (!passwordConfirm) {
@@ -299,6 +300,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         };
 
+        // --- HÀM TẢI POPUP, GIỮ NGUYÊN NHƯ CŨ ---
         const loadAndShowModal = (modalName) => {
             const modalPath = isInsidePages ? `../templates/${modalName}.html` : `html/templates/${modalName}.html`;
             fetch(modalPath)
@@ -307,45 +309,55 @@ document.addEventListener("DOMContentLoaded", function () {
                     const correctedHtml = html.replace(/src="\.\.\/\.\.\/images\//g, 'src="../../images/');
                     authModal.innerHTML = correctedHtml;
                     authModal.classList.add('active');
-                    attachModalEvents(); // <--- BỎ tham số modalName
+                    // Không cần gọi attachModalEvents nữa vì đã dùng ủy quyền sự kiện
                 });
         };
 
-        const attachModalEvents = () => { // <--- BỎ tham số modalName
-            const content = authModal.querySelector('.auth-modal-content');
-            if (!content) return;
+        // --- LOGIC ỦY QUYỀN SỰ KIỆN (THAY THẾ CHO attachModalEvents) ---
+        authModal.addEventListener('click', function (event) {
+            const target = event.target;
 
-            // Dọn dẹp listener cũ trước khi gắn mới (phương pháp an toàn)
-            const oldPrimaryBtn = content.querySelector('.btn-primary');
-            const newPrimaryBtn = oldPrimaryBtn.cloneNode(true);
-            oldPrimaryBtn.parentNode.replaceChild(newPrimaryBtn, oldPrimaryBtn);
+            // 1. Xử lý nút đóng
+            if (target.classList.contains('close-modal-btn')) {
+                authModal.classList.remove('active');
+                return;
+            }
 
-            // Gắn sự kiện
-            content.querySelector('.close-modal-btn')?.addEventListener('click', () => authModal.classList.remove('active'));
-            newPrimaryBtn.addEventListener('click', handleFormSubmit); // <--- THAY ĐỔI
-            content.querySelector('.btn-google')?.addEventListener('click', handleGoogleLogin);
+            // 2. Xử lý chuyển form (login/signup)
+            const switchLink = target.closest('[data-modal]');
+            if (switchLink) {
+                event.preventDefault();
+                loadAndShowModal(switchLink.dataset.modal);
+                return;
+            }
 
-            content.querySelectorAll('[data-modal]').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    loadAndShowModal(link.dataset.modal);
-                });
-            });
+            // 3. Xử lý nút submit chính ("Tiếp tục")
+            if (target.classList.contains('btn-primary')) {
+                handleFormSubmit();
+                return;
+            }
 
-            content.querySelectorAll('.password-toggle-icon').forEach(toggle => {
-                toggle.addEventListener('click', () => {
-                    // ... logic toggle password giữ nguyên ...
-                    const passwordInput = toggle.previousElementSibling;
-                    if (passwordInput && passwordInput.type) {
-                        const isPassword = passwordInput.type === 'password';
-                        passwordInput.type = isPassword ? 'text' : 'password';
-                        const eyeIconPath = '../../images/common/';
-                        toggle.src = isPassword ? `${eyeIconPath}icon-eye-open.png` : `${eyeIconPath}icon-eye-closed.png`;
-                    }
-                });
-            });
-        };
+            // 4. Xử lý nút Google
+            if (target.classList.contains('btn-google')) {
+                handleGoogleLogin();
+                return;
+            }
 
+            // 5. Xử lý toggle password
+            if (target.classList.contains('password-toggle-icon')) {
+                const passwordInput = target.previousElementSibling;
+                if (passwordInput && passwordInput.type) {
+                    const isPassword = passwordInput.type === 'password';
+                    passwordInput.type = isPassword ? 'text' : 'password';
+                    const eyeIconPath = '../../images/common/';
+                    target.src = isPassword ? `${eyeIconPath}icon-eye-open.png` : `${eyeIconPath}icon-eye-closed.png`;
+                }
+                return;
+            }
+        });
+        // -----------------------------------------------------------------
+
+        // Gắn sự kiện cho nút mở popup ban đầu và click ra ngoài
         openModalBtn.addEventListener('click', (e) => {
             e.preventDefault();
             loadAndShowModal('login');
@@ -354,7 +366,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (e.target === authModal) authModal.classList.remove('active');
         });
     }
-
     // (Hàm initializeDatePicker của bạn giữ nguyên, không cần sửa)
     window.initializeDatePicker = (options) => {
         const modal = document.getElementById(options.modalId);

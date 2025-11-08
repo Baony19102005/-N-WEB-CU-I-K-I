@@ -27,7 +27,7 @@ function initializeCreateEventPage() {
     const deleteSessionConfirmModal = document.getElementById('delete-session-confirm-modal');
     const btnConfirmDeleteSession = document.getElementById('btn-confirm-delete-session');
     const btnCancelDeleteSession = document.getElementById('btn-cancel-delete-session');
-    
+
     const populateHourSelect = (selectElement) => {
         if (!selectElement) return;
         selectElement.innerHTML = '';
@@ -62,7 +62,7 @@ function initializeCreateEventPage() {
         document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
             const trigger = dropdown.querySelector('.dropdown-trigger');
             const panel = dropdown.querySelector('.dropdown-panel');
-            if(!trigger || !panel) return;
+            if (!trigger || !panel) return;
 
             if (dropdown.dataset.role === 'hour') panel.value = '19';
             if (dropdown.dataset.role === 'minute') panel.value = '00';
@@ -98,7 +98,7 @@ function initializeCreateEventPage() {
     let editingTicketIndex = null;
     let sessions = [];
     let editingSessionIndex = null;
-    
+
     let currentStep = 1;
     const totalSteps = 4;
 
@@ -114,7 +114,7 @@ function initializeCreateEventPage() {
     const deleteConfirmModal = document.getElementById('delete-confirm-modal');
     const btnConfirmDelete = document.getElementById('btn-confirm-delete');
     const btnCancelDelete = document.getElementById('btn-cancel-delete');
-    
+
     const validationModal = document.getElementById('validation-modal');
     if (validationModal) {
         validationModal.addEventListener('click', (e) => {
@@ -159,24 +159,66 @@ function initializeCreateEventPage() {
     };
 
     const handleFormSubmit = () => {
-        const formData = {
-            eventName: document.getElementById('event-name').value,
-            locationType: document.querySelector('input[name="location_type"]:checked').value,
-            locationName: document.getElementById('location-name').value,
-            province: document.getElementById('province').value,
-            district: document.getElementById('district').value,
-            ward: document.getElementById('ward').value,
-            street: document.getElementById('street').value,
-            category: document.getElementById('event-category').value,
-            description: (typeof tinymce !== 'undefined') ? tinymce.get('event-description-editor').getContent() : '',
-            organizerName: document.getElementById('organizer-name').value,
-            organizerInfo: document.getElementById('organizer-info').value,
-        };
-        console.log("Dữ liệu đã gửi đi:", formData);
+        let myCreatedEvents = JSON.parse(localStorage.getItem('myCreatedEvents')) || [];
+
+        const eventId = `evt_${Date.now()}`; // Tạo ID duy nhất và dùng chung
+
+        // Lấy Data URL từ ảnh
+        const anhSuKienDataUrl = document.getElementById('thumbnail-preview').style.backgroundImage.slice(5, -2).replace(/"/g, "");
+        const bannerDataUrl = document.getElementById('banner-preview').style.backgroundImage.slice(5, -2).replace(/"/g, "");
+
+        // --- GIẢI PHÁP: LƯU ẢNH VÀO sessionStorage ---
+        try {
+            // Tạo key riêng cho mỗi ảnh để tránh trùng lặp
+            const anhSuKienKey = `img_${eventId}_thumb`;
+            const bannerKey = `img_${eventId}_banner`;
+
+            sessionStorage.setItem(anhSuKienKey, anhSuKienDataUrl);
+            sessionStorage.setItem(bannerKey, bannerDataUrl);
+
+            // Tạo object sự kiện chỉ chứa KEY tham chiếu đến ảnh
+            const newEventData = {
+                id: eventId,
+                status: 'pending',
+                tenSuKien: document.getElementById('event-name').value,
+                // Chỉ lưu KEY, không lưu cả chuỗi data URL
+                anhSuKienRef: anhSuKienKey,
+                bannerRef: bannerKey,
+                diaChi: { diaDiem: { /* ... */ } },
+                thoiGian: {
+                    batDau: document.getElementById('start-date').value,
+                    ketThuc: document.getElementById('end-date').value,
+                },
+                suatChieu: sessions,
+                loaiVe: ticketTypes,
+                daBan: 0,
+                tongVe: ticketTypes.reduce((total, ticket) => total + parseInt(ticket.quantity || 0), 0)
+            };
+
+            // Kiểm tra dữ liệu cơ bản
+            if (!newEventData.tenSuKien || !anhSuKienDataUrl) {
+                alert("Lỗi: Tên sự kiện và ảnh sự kiện là bắt buộc.");
+                return;
+            }
+
+            myCreatedEvents.unshift(newEventData);
+            localStorage.setItem('myCreatedEvents', JSON.stringify(myCreatedEvents));
+
+            console.log("Đã lưu sự kiện mới vào localStorage (chỉ với tham chiếu ảnh):", newEventData);
+
+        } catch (error) {
+            // Bắt lỗi nếu sessionStorage cũng bị đầy
+            if (error.name === 'QuotaExceededError') {
+                alert('Lỗi: Dung lượng lưu trữ tạm thời đã đầy. Vui lòng thử lại sau khi xóa bớt cache hoặc dùng ảnh nhẹ hơn.');
+            } else {
+                alert('Đã có lỗi xảy ra khi lưu sự kiện.');
+            }
+            console.error(error);
+        }
     };
 
     const renderTicketTypes = () => {
-        if(!ticketTypesListContainer) return;
+        if (!ticketTypesListContainer) return;
         ticketTypesListContainer.innerHTML = '';
         if (ticketTypes.length === 0) return;
         const list = document.createElement('div');
@@ -217,7 +259,7 @@ function initializeCreateEventPage() {
     };
 
     const renderSessions = () => {
-        if(!sessionsListContainer) return;
+        if (!sessionsListContainer) return;
         sessionsListContainer.innerHTML = '';
         if (sessions.length === 0) return;
         const list = document.createElement('div');
@@ -244,14 +286,14 @@ function initializeCreateEventPage() {
             });
             item.querySelector('.btn-delete-session').addEventListener('click', () => {
                 editingSessionIndex = index;
-                if(deleteSessionConfirmModal) deleteSessionConfirmModal.classList.add('active');
+                if (deleteSessionConfirmModal) deleteSessionConfirmModal.classList.add('active');
             });
             list.appendChild(item);
         });
         sessionsListContainer.appendChild(list);
     };
 
-    if(btnNext) btnNext.addEventListener('click', () => {
+    if (btnNext) btnNext.addEventListener('click', () => {
         if (typeof tinymce !== 'undefined') tinymce.triggerSave();
         if (validateCurrentStep()) {
             if (currentStep < totalSteps) {
@@ -266,7 +308,7 @@ function initializeCreateEventPage() {
         }
     });
 
-    if(btnSave) btnSave.addEventListener('click', () => alert('Đã lưu bản nháp!'));
+    if (btnSave) btnSave.addEventListener('click', () => alert('Đã lưu bản nháp!'));
 
     document.querySelectorAll('.image-upload-input').forEach(input => {
         input.addEventListener('change', function (event) {
@@ -408,6 +450,6 @@ function initializeCreateEventPage() {
         deleteConfirmModal.addEventListener('click', (e) => { if (e.target === deleteConfirmModal) deleteConfirmModal.classList.remove('active'); });
     }
     //currentStep=2;
-    
+
     updateUI();
 };

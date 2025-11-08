@@ -58,7 +58,7 @@ function displayEventDetails(eventData) {
         const timeString = `${startTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} - ${endTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}, ${dateString}`;
         document.querySelector('.hero-info-box .info-item:nth-of-type(1) p').textContent = timeString;
     }
-    
+
     const address = eventData.diaChi.diaDiem;
     const addressContainer = document.querySelector('.hero-info-box .info-item:nth-of-type(2) div');
     if (addressContainer) {
@@ -69,7 +69,7 @@ function displayEventDetails(eventData) {
     const heroBanner = document.querySelector('.hero-image-box img');
     heroBanner.src = fixImagePath(eventData.banner);
     heroBanner.alt = eventData.tenSuKien;
-    
+
     // Tính giá vé thấp nhất
     if (eventData.loaiVe && eventData.loaiVe.length > 0) {
         const minPrice = Math.min(...eventData.loaiVe.map(ticket => ticket.giaVe));
@@ -84,13 +84,17 @@ function displayEventDetails(eventData) {
     } else {
         introContent.innerHTML = eventData.thongTinSuKien;
     }
-    
+
     // --- C. Cập nhật Ban tổ chức ---
     const btcInfoContainer = document.querySelector('.btc-info');
     if (btcInfoContainer && eventData.banToChuc) {
+        const { ten = '', logo = '', thongTin = '' } = eventData.banToChuc;
         btcInfoContainer.innerHTML = `
-            <img src="${fixImagePath(eventData.banToChuc.logo)}" alt="Logo ${eventData.banToChuc.ten}">
-            <p>${eventData.banToChuc.ten}</p>
+            <img src="${fixImagePath(logo)}" alt="Logo ${ten}">
+            <div class="btc-text">
+                <p class="btc-name">${ten}</p>
+                ${thongTin ? `<p class="btc-desc">${thongTin}</p>` : ''}
+            </div>
         `;
     }
 
@@ -104,13 +108,13 @@ function displayEventDetails(eventData) {
             const endTime = new Date(session.ketThuc);
             const dateString = startTime.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const timeString = `${startTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} - ${endTime.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}`;
-            
+
             // Kiểm tra xem tất cả vé trong suất chiếu này có hết không
             const allTicketsSoldOut = eventData.loaiVe.every(ticket => ticket.trangThai.toLowerCase() !== 'còn vé');
 
             const performanceItem = document.createElement('div');
             performanceItem.className = 'performance-item';
-            
+
             let ticketDetailsHTML = '';
             eventData.loaiVe.forEach(ticket => {
                 const isAvailable = ticket.trangThai.toLowerCase() === 'còn vé';
@@ -131,10 +135,10 @@ function displayEventDetails(eventData) {
                         <img src="../../images/pages/event_detail/icon-chevron-down-white.png" class="chevron-icon" alt="Toggle">
                         <span>${session.ten} (${timeString}, ${dateString})</span>
                     </div>
-                    ${allTicketsSoldOut 
-                        ? `<span class="status-badge-small">Đã hết vé</span>`
-                        : `<a href="buy_ticket.html" class="btn-buy-session">Mua vé ngay</a>`
-                    }
+                    ${allTicketsSoldOut
+                    ? `<span class="status-badge-small">Đã hết vé</span>`
+                    : `<a href="buy_ticket.html" class="btn-buy-session">Mua vé ngay</a>`
+                }
                 </div>
                 <div class="ticket-details-wrapper">
                     ${ticketDetailsHTML}
@@ -145,9 +149,6 @@ function displayEventDetails(eventData) {
     }
 }
 
-/**
- * Gắn các sự kiện click cho các element tương tác trên trang.
- */
 function initializeInteractions() {
     // --- GÁN SỰ KIỆN CHO NÚT MỞ RỘNG/THU GỌN GIỚI THIỆU ---
     const introToggleBtn = document.getElementById('intro-toggle-btn');
@@ -159,10 +160,9 @@ function initializeInteractions() {
         });
     }
 
-    // --- GÁN SỰ KIỆN CHO CÁC SUẤT CHIẾU (performance-toggle) ---
+    // --- GÁN SỰ KIỆN CHO CÁC SUẤT CHIẾU ---
     document.querySelectorAll('.performance-toggle').forEach(toggle => {
         toggle.addEventListener('click', (e) => {
-            // Không toggle nếu người dùng click vào nút "Mua vé ngay"
             if (e.target.classList.contains('btn-buy-session')) {
                 return;
             }
@@ -173,17 +173,34 @@ function initializeInteractions() {
         });
     });
 
-    // --- GÁN SỰ KIỆN CHO CÁC NÚT "MUA VÉ NGAY" ---
-    // Lưu ý: Thẻ a đã có href nên không cần thêm logic chuyển trang,
-    // nhưng nếu bạn muốn làm gì đó trước khi chuyển trang thì viết ở đây.
+    // --- BẢO VỆ CÁC NÚT "MUA VÉ NGAY" (LOGIC MỚI) ---
     document.querySelectorAll('a.btn-buy-now, a.btn-buy-session').forEach(button => {
-        button.addEventListener('click', () => {
-            // eventId đã được lưu từ trước khi vào trang này.
-            // Đoạn code này chỉ để đảm bảo, không bắt buộc.
-            const eventId = localStorage.getItem('selectedEventId');
-            if (!eventId) {
-                alert("Lỗi: Không tìm thấy ID sự kiện để tiếp tục.");
-                event.preventDefault(); // Ngăn chuyển trang nếu có lỗi
+        button.addEventListener('click', (event) => {
+            const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+            const openAuthModalBtn = document.getElementById('open-auth-modal-btn');
+
+            if (!currentUser) {
+                // Nếu chưa đăng nhập, ngăn chuyển trang và mở popup
+                event.preventDefault();
+                alert('Vui lòng đăng nhập để tiếp tục mua vé.');
+                if (openAuthModalBtn) {
+                    openAuthModalBtn.click(); // Kích hoạt popup đăng nhập
+                }
+
+                // Lắng nghe sự kiện đăng nhập thành công để tự động chuyển trang
+                document.addEventListener('loginSuccess', () => {
+                    // Sau khi đăng nhập thành công, chuyển người dùng đến trang mua vé
+                    window.location.href = button.href;
+                }, { once: true }); // { once: true } để listener tự hủy sau 1 lần chạy
+
+            } else {
+                // Nếu đã đăng nhập, chỉ cần đảm bảo eventId được lưu
+                const eventId = localStorage.getItem('selectedEventId');
+                if (!eventId) {
+                    alert("Lỗi: Không tìm thấy ID sự kiện để tiếp tục.");
+                    event.preventDefault();
+                }
+                // Mặc định, thẻ <a> sẽ tự chuyển trang đến href
             }
         });
     });

@@ -86,11 +86,11 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="event-card">
             <h4>${eventData.tenSuKien}</h4>
             <div class="event-meta">
-              <img src="../../images/icon-time.png" alt="time" class="icon" />
+              <img src="../../images/pages/payment/icon-time.png" alt="time" class="icon" />
               <span>${timeString}</span>
             </div>
             <div class="event-meta">
-              <img src="../../images/icon-location.png" alt="location" class="icon" />
+              <img src="../../images/pages/payment/icon-location.png" alt="location" class="icon" />
               <span>${locationString}</span>
             </div>
           </div>
@@ -98,10 +98,95 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    const seatSection = document.querySelector('.seat-map');
     if (eventData?.seatmap?.anh) {
         const img = document.getElementById("seatmap-img");
         img.src = eventData.seatmap.anh.replace("../images/", "../../images/");
         img.alt = eventData.tenSuKien || "Sơ đồ chỗ ngồi";
+    } else if (seatSection) {
+        // Không có seatmap: hiển thị UI chọn vé đơn giản với bộ đếm số lượng
+        seatSection.innerHTML = `
+            <h3 class="map-title">Chọn vé</h3>
+            <div class="simple-ticket-box">
+                <div class="simple-header"><span>Loại vé</span><span>Số lượng</span></div>
+                <div id="simple-ticket-list"></div>
+            </div>
+        `;
+
+        const listEl = seatSection.querySelector('#simple-ticket-list');
+        const qtyMap = {};
+        const renderRow = (ticket, idx) => {
+            const row = document.createElement('div');
+            row.className = 'simple-row';
+            row.innerHTML = `
+                <div class="row-info">
+                    <div class="row-name">${ticket.tenVe}</div>
+                    <div class="row-price">${Number(ticket.giaVe).toLocaleString()} đ</div>
+                </div>
+                <div class="row-stepper" data-index="${idx}">
+                    <button type="button" class="step-btn step-minus">-</button>
+                    <span class="step-qty">0</span>
+                    <button type="button" class="step-btn step-plus">+</button>
+                </div>
+            `;
+            qtyMap[idx] = 0;
+            listEl.appendChild(row);
+        };
+        (eventData.loaiVe || []).forEach(renderRow);
+
+        // Chỉ cho phép chọn một loại vé tại một thời điểm
+        const updateAllZeroExcept = (keepIdx) => {
+            listEl.querySelectorAll('.row-stepper').forEach(st => {
+                const i = Number(st.dataset.index);
+                if (i !== keepIdx) {
+                    qtyMap[i] = 0;
+                    st.querySelector('.step-qty').textContent = '0';
+                }
+            });
+        };
+
+        listEl.addEventListener('click', (e) => {
+            const wrap = e.target.closest('.row-stepper');
+            if (!wrap) return;
+            const idx = Number(wrap.dataset.index);
+            const qtyEl = wrap.querySelector('.step-qty');
+            if (e.target.classList.contains('step-plus')) {
+                updateAllZeroExcept(idx);
+                qtyMap[idx] = Math.min(10, (qtyMap[idx] || 0) + 1);
+                qtyEl.textContent = String(qtyMap[idx]);
+            } else if (e.target.classList.contains('step-minus')) {
+                qtyMap[idx] = Math.max(0, (qtyMap[idx] || 0) - 1);
+                qtyEl.textContent = String(qtyMap[idx]);
+            }
+        });
+
+        // Nút tiếp tục bên phải sử dụng lựa chọn này
+        const proceedBtn = document.querySelector('.choose-btn');
+        if (proceedBtn) {
+            proceedBtn.textContent = 'Tiếp tục →';
+            proceedBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                const selectedIdx = Object.keys(qtyMap).find(k => qtyMap[k] > 0);
+                if (selectedIdx == null) {
+                    // không chọn gì, không làm gì
+                    return;
+                }
+                const ticket = eventData.loaiVe[Number(selectedIdx)];
+                const quantity = qtyMap[selectedIdx];
+                const price = Number(ticket.giaVe) || 0;
+                const info = {
+                    eventName: document.querySelector('#event-info h4')?.textContent || eventData.tenSuKien || 'Sự kiện',
+                    time: document.querySelector('#event-info .event-meta span')?.textContent || '',
+                    location: document.querySelectorAll('#event-info .event-meta span')[1]?.textContent || '',
+                    zoneName: ticket.tenVe,
+                    quantity,
+                    price,
+                    total: quantity * price,
+                };
+                localStorage.setItem('selectedTicket', JSON.stringify(info));
+                window.location.href = "../../html/pages/buy_ticket_infor.html";
+            });
+        }
     }
 
     if (eventData?.loaiVe) {

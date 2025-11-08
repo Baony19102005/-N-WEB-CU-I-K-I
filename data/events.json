@@ -14,7 +14,7 @@
     }
   },
   "theLoai": "Âm nhạc",
-  "thongTinSuKien": "Anh Trai Vượt Ngàn Chông Gai trở lại với hai đêm diễn đặc biệt (DAY 3 và DAY 4) tại The Global City. Sân khấu được thiết kế hoành tráng, hệ thống âm thanh – ánh sáng tiêu chuẩn lễ hội, mang đến trải nghiệm bùng nổ cảm xúc.\n\nNội dung nổi bật:\n- Dàn line-up quy tụ các nghệ sĩ nổi tiếng của chương trình cùng nhiều tiết mục phối mới.\n- Khu vực khán giả được chia rõ theo hạng vé, tối ưu tầm nhìn và trải nghiệm.\n- Khu tiện ích onsite: quầy F&B, khu chờ check-in, quầy merchandise chính thức.\n\nQuy định/chú ý:\n- Khuyến nghị khán giả từ 12 tuổi trở lên. Khán giả dưới 16 tuổi cần có người giám hộ đi cùng.\n- Không mang vũ khí, vật sắc nhọn, chất cháy nổ, dù/gậy selfie, máy quay chuyên dụng.\n- Vào cổng theo luồng hướng dẫn của BTC; giữ gìn trật tự, không chen lấn xô đẩy.\n- Vé sau khi mua không hoàn/đổi trong mọi trường hợp, trừ khi BTC thông báo hoãn/hủy.\n\nGợi ý di chuyển:\n- Ưu tiên phương tiện công cộng/xe công nghệ; theo biển chỉ dẫn để vào đúng cổng soát vé.",
+  "thongTinSuKien": "../images/events/ev2512010/ev2512010-info.png",
   "linkSuKien": "https://tannivan.vn/event/ev2512010-anh-trai-vuot-ngan-chong-gai",
   "banToChuc": {
     "ten": "Techcombank x YeaH1 Group x 1Production",
@@ -177,7 +177,7 @@
   ],
   "loaiVe": [
     {
-      "tenVe": "Hạng VIP (Khu A-G)",
+      "tenVe": "Hạng VIP",
       "giaVe": 320000,
       "trangThai": "Còn vé",
       "tongSoLuong": 200,
@@ -187,7 +187,7 @@
       "thongTinVe": "Khu vực gần sân khấu nhất (Khu A-G). Không dành cho trẻ dưới 12 tuổi. (Màu Đỏ)"
     },
     {
-      "tenVe": "Hạng Regular (Khu H-O)",
+      "tenVe": "Hạng Regular",
       "giaVe": 270000,
       "trangThai": "Còn vé",
       "tongSoLuong": 300,
@@ -197,7 +197,7 @@
       "thongTinVe": "Khu vực giữa (Khu H-O). Không dành cho trẻ dưới 12 tuổi. (Màu Cam/Vàng)"
     },
     {
-      "tenVe": "Vé HSSV (Khu LA-LB)",
+      "tenVe": "Vé HSSV",
       "giaVe": 220000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
@@ -210,9 +210,9 @@
   "seatmap": {
     "anh": "../images/events/ev2510001/ev2510001-seatmap.png",
     "mappingMau": {
-      "#EF4444": "Hạng VIP (Khu A-G)",
-      "#F59E0B": "Hạng Regular (Khu H-O)",
-      "#3B82F6": "Vé HSSV (Khu LA-LB)"
+      "#EF4444": "Hạng VIP",
+      "#F59E0B": "Hạng Regular",
+      "#3B82F6": "Vé HSSV"
     }
   },
   "thanhToan": {
@@ -233,7 +233,7 @@
 {
   "id": "ev2511001",
   "tenSuKien": "G-DRAGON 2025 WORLD TOUR [ÜBERMENSCH] IN HANOI, PRESENTED BY VPBANK",
-  "anhSuKien": "../images/events/ev2511001/ev2511001-poster.png",
+  "anhSuKien": "../images/events/ev2511001/ev2511001-poster.jpg",
   "banner": "../images/events/ev2511001/ev2511001-banner.png",
   "diaChi": {
     "loai": "offline",
@@ -342,14 +342,14 @@
       "thongTinVe": "Khu vực ngồi B, tầm nhìn xa hơn."
     },
     {
-      "tenVe": "CAT-3A (RV - Tầm nhìn hạn chế)",
+      "tenVe": "CAT-3A (RV)",
       "giaVe": 3600000,
       "trangThai": "Còn vé",
       "mauKhuVuc": "#A8C16D",
       "thongTinVe": "Khu vực ngồi A, tầm nhìn hạn chế (Reduced View)."
     },
     {
-      "tenVe": "CAT-3B (RV - Tầm nhìn hạn chế)",
+      "tenVe": "CAT-3B (RV)",
       "giaVe": 3600000,
       "trangThai": "Còn vé",
       "mauKhuVuc": "#A8C16D",
@@ -370,13 +370,6 @@
       "thongTinVe": "Khu vực đứng phía sau CAT-2/3, tầm nhìn xa."
     },
     {
-      "tenVe": "CAT-5A",
-      "giaVe": 2500000,
-      "trangThai": "Đã hết",
-      "mauKhuVuc": "#2D3F5C",
-      "thongTinVe": "Khu vực đứng xa nhất, giá vé thấp nhất."
-    },
-    {
       "tenVe": "CAT-5B",
       "giaVe": 2500000,
       "trangThai": "Còn vé",
@@ -385,16 +378,15 @@
     }
   ],
   "seatmap": {
-    "anh": "../images/events/ev2511001/ev2511001-seatmap.jpg",
+    "anh": "../images/events/ev2511001/ev2511001-seatmap.png",
     "mappingMau": {
-      "#C44F35": "VVIP (Đứng)",
-      "#B67C9D": "VIP (Đứng)",
-      "#D3AF37": "PREMIUM (Đứng)",
-      "#70D5A3": "CAT-1 (Ngồi)",
-      "#7D9D81": "CAT-2 (Ngồi)",
-      "#A8C16D": "CAT-3 (Ngồi)",
-      "#33C2CA": "CAT-4 (Đứng)",
-      "#2D3F5C": "CAT-5 (Đứng)"
+      "#C44F35": "VVIP",
+      "#B67C9D": "VIP",
+      "#D3AF37": "PREMIUM",
+      "#70D5A3": "CAT-1",
+      "#7D9D81": "CAT-2",
+      "#A8C16D": "CAT-3",
+      "#33C2CA": "CAT-4"
     }
   },
   "thanhToan": {
@@ -548,7 +540,7 @@
   ],
   "loaiVe": [
     {
-      "tenVe": "Hạng VIP (Khu vực Đỏ)",
+      "tenVe": "Hạng VIP",
       "giaVe": 320000,
       "trangThai": "Còn vé",
       "tongSoLuong": 100,
@@ -558,7 +550,7 @@
       "thongTinVe": "Vé khu vực tốt nhất (Khu vực Đỏ), tầm nhìn gần sân khấu. Không dành cho trẻ dưới 12 tuổi."
     },
     {
-      "tenVe": "Hạng Regular (Khu vực Cam/Vàng)",
+      "tenVe": "Hạng Regular",
       "giaVe": 270000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
@@ -568,7 +560,7 @@
       "thongTinVe": "Vé khu vực giữa (Khu vực Cam/Vàng), tầm nhìn rõ, âm thanh tốt."
     },
     {
-      "tenVe": "Vé HSSV (Khu vực Xanh Dương)",
+      "tenVe": "Vé HSSV",
       "giaVe": 220000,
       "trangThai": "Còn vé",
       "tongSoLuong": 200,
@@ -581,9 +573,9 @@
   "seatmap": {
     "anh": "../images/events/ev2511002/ev2511002-seatmap.png",
     "mappingMau": {
-      "#EF4444": "Hạng VIP (Khu vực Đỏ)",
-      "#F59E0B": "Hạng Regular (Khu vực Cam/Vàng)",
-      "#3B82F6": "Vé HSSV (Khu vực Xanh Dương)"
+      "#EF4444": "Hạng VIP",
+      "#F59E0B": "Hạng Regular",
+      "#3B82F6": "Vé HSSV"
     }
   },
   "thanhToan": {
@@ -636,7 +628,7 @@
   ],
   "loaiVe": [
     {
-      "tenVe": "Hạng VIP (Khu vực Đỏ)",
+      "tenVe": "Hạng VIP ",
       "giaVe": 320000,
       "trangThai": "Còn vé",
       "tongSoLuong": 100,
@@ -646,7 +638,7 @@
       "thongTinVe": "Vé khu vực tốt nhất (Khu vực Đỏ), gần sân khấu. Không dành cho trẻ dưới 12 tuổi."
     },
     {
-      "tenVe": "Hạng Regular (Khu vực Cam/Vàng)",
+      "tenVe": "Hạng Regular",
       "giaVe": 270000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
@@ -656,7 +648,7 @@
       "thongTinVe": "Vé khu vực giữa (Khu vực Cam/Vàng), tầm nhìn rõ, âm thanh tốt."
     },
     {
-      "tenVe": "Vé HSSV (Khu vực Xanh Dương)",
+      "tenVe": "Vé HSSV",
       "giaVe": 220000,
       "trangThai": "Còn vé",
       "tongSoLuong": 200,
@@ -669,9 +661,9 @@
   "seatmap": {
     "anh": "../images/events/ev2511003/ev2511003-seatmap.png",
     "mappingMau": {
-      "#EF4444": "Hạng VIP (Khu vực Đỏ)",
-      "#F59E0B": "Hạng Regular (Khu vực Cam/Vàng)",
-      "#3B82F6": "Vé HSSV (Khu vực Xanh Dương)"
+      "#EF4444": "Hạng VIP ",
+      "#F59E0B": "Hạng Regular ",
+      "#3B82F6": "Vé HSSV "
     }
   },
   "thanhToan": {
@@ -755,7 +747,7 @@
     }
   ],
   "seatmap": {
-    "anh": "../images/events/ev2510002/ev2510002-seatmap.png",
+    "anh": "../images/events/ev2512002/ev2512002-seatmap.png",
     "mappingMau": {
       "#EF4444": "Hạng VIP",
       "#F59E0B": "Hạng Regular",
@@ -812,7 +804,7 @@
   ],
   "loaiVe": [
     {
-      "tenVe": "Phụ thu Bến Thành (VIP)",
+      "tenVe": "Bến Thành (VIP)",
       "giaVe": 1000000,
       "trangThai": "Còn vé",
       "tongSoLuong": 50,
@@ -822,7 +814,7 @@
       "thongTinVe": "Khu vực Bến Thành (Sofa/Hàng 3), phụ thu cao nhất, vị trí trung tâm gần sân khấu."
     },
     {
-      "tenVe": "Phụ thu Tân Định",
+      "tenVe": "Tân Định",
       "giaVe": 800000,
       "trangThai": "Còn vé",
       "tongSoLuong": 80,
@@ -832,7 +824,7 @@
       "thongTinVe": "Khu vực Tân Định (Ghế ngồi), tầm nhìn tốt, phụ thu trung bình."
     },
     {
-      "tenVe": "Phụ thu An Đông",
+      "tenVe": "An Đông",
       "giaVe": 600000,
       "trangThai": "Còn vé",
       "tongSoLuong": 100,
@@ -842,7 +834,7 @@
       "thongTinVe": "Khu vực An Đông (Ghế ngồi), tầm nhìn thoáng, phụ thu thấp hơn."
     },
     {
-      "tenVe": "Phụ thu Bình Tây 1",
+      "tenVe": "Bình Tây 1",
       "giaVe": 400000,
       "trangThai": "Còn vé",
       "tongSoLuong": 120,
@@ -853,7 +845,7 @@
     }
   ],
   "seatmap": {
-    "anh": "../images/events/ev2511004/ev2511004-seatmap.jpg",
+    "anh": "../images/events/ev2511004/ev2511004-seatmap.png",
     "mappingMau": {
       "#EF4444": "BẾN THÀNH (VIP)",
       "#F59E0B": "TÂN ĐỊNH",
@@ -916,7 +908,7 @@
   ],
   "loaiVe": [
     {
-      "tenVe": "CHUNG TAY 1 (Khu vực xa)",
+      "tenVe": "CHUNG TAY 1",
       "giaVe": 700000,
       "trangThai": "Còn vé",
       "tongSoLuong": 100,
@@ -926,7 +918,7 @@
       "thongTinVe": "Khu vực xa sân khấu, tầm nhìn thoáng (Giá vé tham khảo: 800.000 ₫)."
     },
     {
-      "tenVe": "CHUNG TAY 2 (Khu vực xa)",
+      "tenVe": "CHUNG TAY 2",
       "giaVe": 700000,
       "trangThai": "Còn vé",
       "tongSoLuong": 100,
@@ -936,7 +928,7 @@
       "thongTinVe": "Khu vực xa sân khấu, tầm nhìn thoáng."
     },
     {
-      "tenVe": "MẠNH MẼ 1 (Khu vực giữa)",
+      "tenVe": "MẠNH MẼ 1",
       "giaVe": 1200000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
@@ -946,7 +938,7 @@
       "thongTinVe": "Khu vực trung tâm bên trái sân khấu."
     },
     {
-      "tenVe": "MẠNH MẼ 2 (Khu vực giữa)",
+      "tenVe": "MẠNH MẼ 2",
       "giaVe": 1200000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
@@ -956,7 +948,7 @@
       "thongTinVe": "Khu vực trung tâm bên phải sân khấu."
     },
     {
-      "tenVe": "ĐOÀN KẾT 1 (Khu vực VIP)",
+      "tenVe": "ĐOÀN KẾT 1",
       "giaVe": 1800000,
       "trangThai": "Còn vé",
       "tongSoLuong": 120,
@@ -966,7 +958,7 @@
       "thongTinVe": "Khu vực VIP, chính giữa, gần sân khấu nhất."
     },
     {
-      "tenVe": "ĐOÀN KẾT 2 (Khu vực VIP)",
+      "tenVe": "ĐOÀN KẾT 2",
       "giaVe": 1800000,
       "trangThai": "Còn vé",
       "tongSoLuong": 120,
@@ -976,7 +968,7 @@
       "thongTinVe": "Khu vực VIP, chính giữa, gần sân khấu nhất."
     },
     {
-      "tenVe": "ĐỒNG LÒNG 1 (Khu vực trên)",
+      "tenVe": "ĐỒNG LÒNG 1",
       "giaVe": 900000,
       "trangThai": "Còn vé",
       "tongSoLuong": 200,
@@ -986,7 +978,7 @@
       "thongTinVe": "Khu vực phía trên trái sân khấu, tầm nhìn rộng."
     },
     {
-      "tenVe": "ĐỒNG LÒNG 2 (Khu vực trên)",
+      "tenVe": "ĐỒNG LÒNG 2",
       "giaVe": 900000,
       "trangThai": "Còn vé",
       "tongSoLuong": 200,
@@ -997,7 +989,7 @@
     }
   ],
   "seatmap": {
-    "anh": "../images/events/ev2503001/ev2510003-seatmap.png",
+    "anh": "../images/events/ev2510003/ev2510003-seatmap.png",
     "mappingMau": {
       "#8B5CF6": "ĐỒNG LÒNG",
       "#F59E0B": "MẠNH MẼ",
@@ -1276,7 +1268,7 @@
   ],
   "loaiVe": [
     {
-      "tenVe": "Vé Workshop Acrylic & Neon (1 slot)",
+      "tenVe": "Vé Workshop Acrylic & Neon",
       "giaVe": 279000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
@@ -1286,7 +1278,7 @@
       "thongTinVe": "Bao gồm toàn bộ vật liệu, dụng cụ và 1 phần nước."
     },
     {
-      "tenVe": "Vé Workshop Acrylic & Neon (Ưu đãi trẻ em)",
+      "tenVe": "Vé Workshop Acrylic & Neon",
       "giaVe": 250000,
       "trangThai": "Còn vé",
       "tongSoLuong": 50,
@@ -1317,134 +1309,6 @@
   }
 }
 
-,
-{
-  "id": "ev2511005",
-  "tenSuKien": "RHYMASTIC's 1st FAN MEETING IN HCMC: RHYMeeting",
-  "anhSuKien": "../images/events/ev2511005/ev2511005-poster.jpg",
-  "banner": "../images/events/ev2511005/ev2511005-banner.png",
-  "diaChi": {
-    "loai": "offline",
-    "diaDiem": {
-      "tinh": "TP.HCM",
-      "quan": "Quận 1",
-      "phuong": "Bến Nghé",
-      "soNha": "Số 6 Mạc Đĩnh Chi, Nhà hát Bến Thành"
-    }
-  },
-  "theLoai": "Sân khấu & Nghệ thuật",
-  "thongTinSuKien": "<section><h3>Giới thiệu chương trình</h3><p><strong>RHYMeeting</strong> là buổi Fan Meeting đầu tiên của <strong>Rhymastic</strong> tại TP.HCM, mang đến không gian gặp gỡ gần gũi, giao lưu và thưởng thức các tiết mục biểu diễn giàu năng lượng.</p><h4>Đơn vị tổ chức</h4><p><strong>SS LABEL</strong> (thuộc SpaceSpeakers Group) – hãng thu âm chuyên nghiệp, sản xuất và phát hành âm nhạc, quản lý nghệ sĩ.</p><h4>Lưu ý</h4><ul><li>Sắp xếp chỗ ngồi theo quy định của BTC tại Nhà hát Bến Thành.</li><li>Vui lòng tuân thủ nội quy địa điểm tổ chức.</li></ul></section>",
-  "linkSuKien": "https://tannivan.vn/event/ev2511005-rhymeeting-hcmc",
-  "banToChuc": {
-    "ten": "SS LABEL",
-    "thongTin": "SpaceSpeakers Label (SSL) là hãng thu âm chuyên nghiệp về thể loại pop, RNB, rap/hip hop, trực thuộc SpaceSpeakers Groups.",
-    "logo": "../images/events/ev2511005/ev2511005-logo-btc.png"
-  },
-  "thoiGian": {
-    "batDau": "2025-11-19T19:00:00",
-    "ketThuc": "2025-11-19T21:00:00"
-  },
-  "suatChieu": [
-    {
-      "ten": "Suất duy nhất",
-      "batDau": "2025-11-19T19:00:00",
-      "ketThuc": "2025-11-19T21:00:00"
-    }
-  ],
-  "loaiVe": [
-    {
-      "tenVe": "RHYMER 1",
-      "giaVe": 1200000,
-      "trangThai": "Còn vé",
-      "tongSoLuong": 100,
-      "soLuongToiThieu": 1,
-      "soLuongToiDa": 4,
-      "mauKhuVuc": "#EF4444",
-      "thongTinVe": "Khu vực RHYMER gần sân khấu nhất, chỗ ngồi tốt nhất."
-    },
-    {
-      "tenVe": "RHYMER 2",
-      "giaVe": 1200000,
-      "trangThai": "Còn vé",
-      "tongSoLuong": 100,
-      "soLuongToiThieu": 1,
-      "soLuongToiDa": 4,
-      "mauKhuVuc": "#EF4444",
-      "thongTinVe": "Khu vực RHYMER gần sân khấu nhất, chỗ ngồi tốt nhất."
-    },
-    {
-      "tenVe": "RHYMER 3",
-      "giaVe": 1200000,
-      "trangThai": "Còn vé",
-      "tongSoLuong": 100,
-      "soLuongToiThieu": 1,
-      "soLuongToiDa": 4,
-      "mauKhuVuc": "#EF4444",
-      "thongTinVe": "Khu vực RHYMER gần sân khấu nhất, chỗ ngồi tốt nhất."
-    },
-    {
-      "tenVe": "RHYMER 4",
-      "giaVe": 1200000,
-      "trangThai": "Còn vé",
-      "tongSoLuong": 100,
-      "soLuongToiThieu": 1,
-      "soLuongToiDa": 4,
-      "mauKhuVuc": "#EF4444",
-      "thongTinVe": "Khu vực RHYMER gần sân khấu nhất, chỗ ngồi tốt nhất."
-    },
-    {
-      "tenVe": "RHYM NGHĨ 1 - 6",
-      "giaVe": 900000,
-      "trangThai": "Còn vé",
-      "tongSoLuong": 300,
-      "soLuongToiThieu": 1,
-      "soLuongToiDa": 5,
-      "mauKhuVuc": "#F59E0B",
-      "thongTinVe": "Khu vực RHYM NGHĨ, tầm nhìn trung bình."
-    },
-    {
-      "tenVe": "RHYM LÀM 1 - 4",
-      "giaVe": 750000,
-      "trangThai": "Còn vé",
-      "tongSoLuong": 200,
-      "soLuongToiThieu": 1,
-      "soLuongToiDa": 5,
-      "mauKhuVuc": "#9CA3AF",
-      "thongTinVe": "Khu vực RHYM LÀM, tầm nhìn xa hơn."
-    },
-    {
-      "tenVe": "RHYM CHƠI 1 - 4",
-      "giaVe": 600000,
-      "trangThai": "Còn vé",
-      "tongSoLuong": 200,
-      "soLuongToiThieu": 1,
-      "soLuongToiDa": 5,
-      "mauKhuVuc": "#3B82F6",
-      "thongTinVe": "Khu vực RHYM CHƠI, tầm nhìn xa nhất."
-    }
-  ],
-  "seatmap": {
-    "anh": "../images/events/ev2511005/ev2511005-seatmap.jpg",
-    "mappingMau": {
-      "#EF4444": "RHYMER",
-      "#F59E0B": "RHYM NGHĨ",
-      "#9CA3AF": "RHYM LÀM",
-      "#3B82F6": "RHYM CHƠI"
-    }
-  },
-  "thanhToan": {
-    "chuTaiKhoan": "SS LABEL",
-    "soTaiKhoan": "123456789",
-    "nganHang": "MB Bank",
-    "chiNhanh": "Quận 1",
-    "xuatHoaDon": {
-      "loaiHinh": "Công ty TNHH",
-      "hoTen": "Công ty TNHH Tanivan",
-      "diaChi": "669 Đỗ Mười, Thủ Đức, TP.HCM",
-      "maSoThue": "0312345678"
-    }
-  }
-}
 
 ,
 {
@@ -1513,7 +1377,7 @@
 ,
 {
   "id": "ev2512003",
-  "tenSuKien": "[TP.HCM] NHỮNG THÀNH PHỐ MƠ MÀNG YEAR END 2025 - WONDERTOPÍA",
+  "tenSuKien": "[TP.HCM] NHỮNG THÀNH PHỐ MƠ MÀNG YEAR END 2025 - WONDERTOPIA",
   "anhSuKien": "../images/events/ev2512003/ev2512003-poster.jpg",
   "banner": "../images/events/ev2512003/ev2512003-banner.png",
   "diaChi": {
@@ -1526,7 +1390,7 @@
     }
   },
   "theLoai": "Âm nhạc",
-  "thongTinSuKien": "Chào mừng cư dân đến với **NTPMMM Year End 2025 - Wondertopia**, đêm nhạc đầy cảm xúc. Tại đây, từng giai điệu sẽ dẫn lối, đưa bạn đến những nơi tuyệt vời nhất trên thế giới, nơi mọi người cùng nhau hòa nhịp trong một màn trình diễn duy nhất.\n\n**Hành trình khép lại năm 2025** sẽ trở thành một đại tiệc của âm nhạc, sáng tạo và bất ngờ. Wondertopia không chỉ là một show diễn – mà là không gian nơi chúng ta tìm thấy sự đồng điệu, truyền cảm hứng cho một khởi đầu mới rực rỡ.\n\n**Quy định chung:** Chương trình dành cho khán giả trên 16 tuổi. Khán giả từ 10-15 tuổi tham gia cần có người giám hộ đi kèm (người giám hộ phải từ 18 tuổi trở lên), người giám hộ không mất vé và hoàn toàn chịu trách nhiệm nếu có bất kỳ sự cố nào xảy ra. BTC có quyền từ chối khán giả vi phạm quy định.\n\n**Lưu ý về vé:** Vé chỉ dành cho một khán giả tham dự, không kèm trẻ em và trẻ vị thành niên. Người giám hộ đi kèm khán giả vị thành niên phải mua vé để tham dự. Vé không được đổi hoặc hoàn trả dưới mọi hình thức.",
+  "thongTinSuKien": "Chào mừng cư dân đến với <strong>NTPMMM Year End 2025 - Wondertopia</strong>, đêm nhạc đầy cảm xúc. Tại đây, từng giai điệu sẽ dẫn lối, đưa bạn đến những nơi tuyệt vời nhất trên thế giới, nơi mọi người cùng nhau hòa nhịp trong một màn trình diễn duy nhất.<br><br><strong>Hành trình khép lại năm 2025</strong> sẽ trở thành một đại tiệc của âm nhạc, sáng tạo và bất ngờ. Wondertopia không chỉ là một show diễn – mà là không gian nơi chúng ta tìm thấy sự đồng điệu, truyền cảm hứng cho một khởi đầu mới rực rỡ.<br><br><strong>Quy định chung:</strong> Chương trình dành cho khán giả trên 16 tuổi. Khán giả từ 10-15 tuổi tham gia cần có người giám hộ đi kèm (người giám hộ phải từ 18 tuổi trở lên), người giám hộ không mất vé và hoàn toàn chịu trách nhiệm nếu có bất kỳ sự cố nào xảy ra. BTC có quyền từ chối khán giả vi phạm quy định.<br><br><strong>Lưu ý về vé:</strong> Vé chỉ dành cho một khán giả tham dự, không kèm trẻ em và trẻ vị thành niên. Người giám hộ đi kèm khán giả vị thành niên phải mua vé để tham dự. Vé không được đổi hoặc hoàn trả dưới mọi hình thức.",
   "linkSuKien": "https://tannivan.vn/event/ev2512003-ntpmmm-wondertopia-hcmc",
   "banToChuc": {
     "ten": "Những Thành Phố Mơ Màng",
@@ -1556,7 +1420,7 @@
       "thongTinVe": "Vé thường, bao gồm Lightstick NTPMMM & quà tặng."
     },
     {
-      "tenVe": "Combo 1 Regular Ticket + 1 Lightstick NTPMMM (-2%)",
+      "tenVe": "Combo 1 Regular Ticket + 1 Lightstick",
       "giaVe": 1081920,
       "trangThai": "Còn vé",
       "tongSoLuong": 200,
@@ -1566,7 +1430,7 @@
       "thongTinVe": "Combo vé thường kèm 1 Lightstick NTPMMM (sẽ được giao hàng)."
     },
     {
-      "tenVe": "Combo 4 Regular Ticket (-5%)",
+      "tenVe": "Combo 4 Regular Ticket",
       "giaVe": 717250,
       "trangThai": "Hết vé",
       "tongSoLuong": 100,
@@ -1576,7 +1440,7 @@
       "thongTinVe": "Vé nhóm 4 người, ưu đãi 5%. Đã hết vé."
     },
     {
-      "tenVe": "Combo 10 Regular Ticket (-15%)",
+      "tenVe": "Combo 10 Regular Ticket",
       "giaVe": 641750,
       "trangThai": "Hết vé",
       "tongSoLuong": 50,
@@ -1630,7 +1494,7 @@
     }
   },
   "theLoai": "Âm nhạc",
-  "thongTinSuKien": "Đón chờ Concert cá nhân đầu tiên của **Soobin Hoàng Sơn - The First Sight** tại Hà Nội vào dịp cuối năm. Đây là đêm nhạc đặc biệt, nơi Soobin sẽ trình diễn những bản hit đã làm nên tên tuổi, đồng thời giới thiệu các ca khúc mới đầy bất ngờ.\n\n**Chủ đề:** The First Sight - Cái nhìn đầu tiên. Buổi hòa nhạc hứa hẹn một không gian âm nhạc lãng mạn, nơi khán giả có thể cùng chia sẻ những rung cảm đầu tiên.\n\n**Khán giả:** Chương trình dành cho khán giả từ 16 tuổi trở lên. Trẻ em dưới 10 tuổi không được vào cửa. Khán giả từ 10-15 tuổi phải có người giám hộ đi kèm. Vé không được đổi hoặc hoàn trả.\n\n**Quyền lợi vé V.I.P:** Vé **Shine Your Light** (khu vực VIP) bao gồm photo card độc quyền, bộ quà tặng giới hạn, và ưu tiên vào cửa.\n\n",
+  "thongTinSuKien": "Đón chờ Concert cá nhân đầu tiên của <strong>Soobin Hoàng Sơn - The First Sight</strong> tại Hà Nội vào dịp cuối năm. Đây là đêm nhạc đặc biệt, nơi Soobin sẽ trình diễn những bản hit đã làm nên tên tuổi như <em>Phía Sau Một Cô Gái</em>, <em>Đi Để Trở Về</em>, <em>Xin Đừng Lặng Im</em>, cùng nhiều ca khúc mới được phối lại với phong cách hiện đại và cảm xúc.<br><br><strong>Chủ đề:</strong> <em>The First Sight</em> - Cái nhìn đầu tiên. Buổi hòa nhạc hứa hẹn mang đến một không gian âm nhạc lãng mạn, nơi khán giả có thể cùng chia sẻ những rung cảm đầu tiên, hòa mình vào những giai điệu sâu lắng, ánh sáng rực rỡ và sân khấu được dàn dựng công phu.<br><br><strong>Đặc biệt:</strong> Chương trình được đầu tư hoành tráng với hệ thống âm thanh – ánh sáng chuẩn quốc tế, cùng dàn nhạc sống và vũ đoàn chuyên nghiệp, hứa hẹn mang đến trải nghiệm âm nhạc trọn vẹn nhất cho người hâm mộ. Ngoài ra, Soobin sẽ có những màn giao lưu trực tiếp, chia sẻ về hành trình âm nhạc và gửi lời tri ân tới các fan đã đồng hành suốt chặng đường qua.<br><br><strong>Khán giả:</strong> Chương trình dành cho khán giả từ 16 tuổi trở lên. Trẻ em dưới 10 tuổi không được vào cửa. Khán giả từ 10–15 tuổi phải có người giám hộ đi kèm (người giám hộ từ 18 tuổi trở lên). Vé không được đổi hoặc hoàn trả dưới mọi hình thức.<br><br><strong>Quyền lợi vé V.I.P:</strong> Vé <em>Shine Your Light</em> (khu vực VIP) bao gồm photo card độc quyền, bộ quà tặng giới hạn, khu vực ngồi gần sân khấu và quyền ưu tiên check-in sớm.<br><br><strong>Thời gian & địa điểm:</strong> 20:00 ngày 21/12/2025 tại Trung tâm Hội nghị Quốc gia (Hà Nội). Cửa mở lúc 18:30.<br><br><strong>Lưu ý:</strong> Ban Tổ Chức khuyến khích khán giả đến sớm để trải nghiệm khu vực check-in, quầy lưu niệm và các hoạt động tương tác đặc biệt trước giờ diễn. Hãy chuẩn bị tinh thần để cùng Soobin thắp sáng đêm nhạc cuối năm bằng những cảm xúc rực rỡ nhất!",
   "linkSuKien": "https://tannivan.vn/event/ev2512004-soobin-the-first-sight-hanoi",
   "banToChuc": {
     "ten": "Yêu Music x TNA Entertainment",
@@ -1845,7 +1709,7 @@
       "soLuongToiThieu": 1,
       "soLuongToiDa": 3,
       "mauKhuVuc": "#EF4444",
-      "thongTinVe": "Khu vực VIP, gần sân khấu, có quyền lợi đặc biệt (Tương đương VŨ ĐIỆU của Anh Trai)."
+      "thongTinVe": "Khu vực VIP, gần sân khấu, có quyền lợi đặc biệt."
     },
     {
       "tenVe": "SÓNG 2 (PLATINUM)",
@@ -1855,7 +1719,7 @@
       "soLuongToiThieu": 1,
       "soLuongToiDa": 4,
       "mauKhuVuc": "#F59E0B",
-      "thongTinVe": "Khu vực ghế ngồi tốt, tầm nhìn rõ (Tương đương MẠNH MẼ của Anh Trai)."
+      "thongTinVe": "Khu vực ghế ngồi tốt, tầm nhìn rõ."
     },
     {
       "tenVe": "SÓNG 3 (GOLD)",
@@ -1949,7 +1813,7 @@
       "soLuongToiThieu": 1,
       "soLuongToiDa": 3,
       "mauKhuVuc": "#EF4444",
-      "thongTinVe": "Khu vực VIP, gần sân khấu. Bao gồm Photo Card & Hi-touch (Tương đương VŨ ĐIỆU của Anh Trai)."
+      "thongTinVe": "Khu vực VIP, gần sân khấu. Bao gồm Photo Card & Hi-touch."
     },
     {
       "tenVe": "PLATINUM (SAY)",
@@ -2061,7 +1925,7 @@
       "thongTinVe": "Khu vực xa sân khấu."
     },
     {
-      "tenVe": "YEU XA",
+      "tenVe": "YÊU XA",
       "giaVe": 1500000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
@@ -2071,7 +1935,7 @@
       "thongTinVe": "Khu vực trung tâm bên trái sân khấu."
     },
     {
-      "tenVe": "VE NHÀ",
+      "tenVe": "VỀ NHÀ",
       "giaVe": 1500000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
@@ -2101,7 +1965,7 @@
       "thongTinVe": "Khu vực VIP, chính giữa, gần sân khấu nhất. Bao gồm quà tặng độc quyền."
     },
     {
-      "tenVe": "HÀNH TINH ÁNH SÁNG",
+      "tenVe": "ÁNH SÁNG",
       "giaVe": 1200000,
       "trangThai": "Còn vé",
       "tongSoLuong": 200,
@@ -2111,7 +1975,7 @@
       "thongTinVe": "Khu vực phía trên trái sân khấu, tầm nhìn rộng."
     },
     {
-      "tenVe": "MỘT ĐÊM DUY NHẤT",
+      "tenVe": "SAO BĂNG",
       "giaVe": 1200000,
       "trangThai": "Còn vé",
       "tongSoLuong": 200,
@@ -2125,8 +1989,8 @@
     "anh": "../images/events/ev2512009/ev2512009-seatmap.png",
     "mappingMau": {
       "#EF4444": "VENUS, MƠ",
-      "#F59E0B": "YEU XA, VE NHÀ",
-      "#8B5CF6": "HÀNH TINH ÁNH SÁNG, MỘT ĐÊM DUY NHẤT",
+      "#F59E0B": "YÊU XA, VỀ NHÀ",
+      "#8B5CF6": "ÁNH SÁNG, SAO BĂNG",
       "#1E3A8A": "SADNESS, BROKEN"
     }
   },
@@ -2180,7 +2044,7 @@
   ],
   "loaiVe": [
     {
-      "tenVe": "V.I.P Tầng Trệt (Hàng A-C)",
+      "tenVe": "V.I.P Tầng Trệt",
       "giaVe": 450000,
       "trangThai": "Còn vé",
       "tongSoLuong": 80,
@@ -2190,7 +2054,7 @@
       "thongTinVe": "Vị trí tốt nhất, gần sân khấu, tặng nước suối."
     },
     {
-      "tenVe": "Thường Tầng Trệt (Hàng D-G)",
+      "tenVe": "Thường Tầng Trệt",
       "giaVe": 350000,
       "trangThai": "Còn vé",
       "tongSoLuong": 120,
@@ -2200,7 +2064,7 @@
       "thongTinVe": "Vị trí trung tâm tầng trệt."
     },
     {
-      "tenVe": "Vé Ban Công (Lầu)",
+      "tenVe": "Vé Ban Công",
       "giaVe": 250000,
       "trangThai": "Còn vé",
       "tongSoLuong": 150,
