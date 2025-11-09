@@ -117,16 +117,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         const qtyMap = {};
         const renderRow = (ticket, idx) => {
             const row = document.createElement('div');
-            row.className = 'simple-row';
+            const isSoldOut = typeof ticket.trangThai === 'string' && ticket.trangThai.toLowerCase().includes('hết');
+            row.className = 'simple-row' + (isSoldOut ? ' sold-out' : '');
             row.innerHTML = `
                 <div class="row-info">
-                    <div class="row-name">${ticket.tenVe}</div>
+                    <div class="row-name">${ticket.tenVe} ${isSoldOut ? '<span class="sold-out-badge">Hết vé</span>' : ''}</div>
                     <div class="row-price">${Number(ticket.giaVe).toLocaleString()} đ</div>
                 </div>
                 <div class="row-stepper" data-index="${idx}">
-                    <button type="button" class="step-btn step-minus">-</button>
-                    <span class="step-qty">0</span>
-                    <button type="button" class="step-btn step-plus">+</button>
+                    ${isSoldOut ? '<span class="step-qty">0</span>' : '<button type="button" class="step-btn step-minus">-</button><span class="step-qty">0</span><button type="button" class="step-btn step-plus">+</button>'}
                 </div>
             `;
             qtyMap[idx] = 0;
@@ -148,6 +147,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         listEl.addEventListener('click', (e) => {
             const wrap = e.target.closest('.row-stepper');
             if (!wrap) return;
+            if (wrap.closest('.simple-row')?.classList.contains('sold-out')) return;
             const idx = Number(wrap.dataset.index);
             const qtyEl = wrap.querySelector('.step-qty');
             if (e.target.classList.contains('step-plus')) {
@@ -197,13 +197,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             li.className = "price-item";
             li.dataset.name = v.tenVe;
             li.dataset.price = v.giaVe;
+            const isSoldOut = typeof v.trangThai === 'string' && v.trangThai.toLowerCase().includes('hết');
+            li.className += isSoldOut ? ' sold-out' : '';
             li.innerHTML = `
-        <span><span class="color" style="background:${v.mauKhuVuc}"></span>${v.tenVe}</span>
+        <span><span class="color" style="background:${v.mauKhuVuc}"></span>${v.tenVe} ${isSoldOut ? '<span class="sold-out-badge">Hết vé</span>' : ''}</span>
         <b>${v.giaVe.toLocaleString()} đ</b>`;
 
-            li.addEventListener("click", () => {
-                openPopup(li.dataset.name, li.dataset.price);
-            });
+            if (!isSoldOut) {
+                li.addEventListener("click", () => {
+                    openPopup(li.dataset.name, li.dataset.price);
+                });
+            }
             list.appendChild(li);
         });
     }

@@ -1,4 +1,4 @@
-/* ====================================
+﻿/* ====================================
    BUY TICKET PAGE - Tanivan Ticket
 ==================================== */
 
@@ -9,7 +9,7 @@
   padding: 24px;
 }
 
-/* BÊN TRÁI */
+/* BĂN TRĂI */
 .seat-map {
   flex: 1;
   background: #f6f7fb;
@@ -62,11 +62,6 @@
   border-bottom: 1px dashed rgba(255,255,255,0.25);
 }
 
-.simple-row.sold-out .row-stepper {
-  opacity: 0.6;
-  pointer-events: none;
-}
-
 .simple-row .row-info { max-width: 70%; }
 .row-name { font-weight: 700; margin-bottom: 4px; }
 .row-price { opacity: 0.95; }
@@ -79,7 +74,7 @@
 }
 .step-qty { width: 28px; display: inline-block; text-align: center; font-weight: 700; }
 
-/* BÊN PHẢI */
+/* BĂN PHáº¢I */
 .ticket-info {
   flex: 0 0 340px;
   background: #fff;
@@ -107,13 +102,13 @@
 .event-meta .icon {
   width: 15px;
   height: 15px;
-  /* Hạ icon xuống rõ rệt để đều với chữ */
+  /* Háº¡ icon xuá»‘ng rĂµ rá»‡t Ä‘á»ƒ Ä‘á»u vá»›i chá»¯ */
   transform: translateY(7px);
   opacity: 0.8;
   display: inline-block;
 }
 
-/* DANH SÁCH GIÁ VÉ */
+/* DANH SĂCH GIĂ VĂ‰ */
 .price-title {
   font-weight: 600;
   color: #36366d;
@@ -134,22 +129,16 @@
   border-bottom: 1px solid #eee;
   cursor: pointer;
   font-size: 0.95rem;
-  gap: 12px; /* tránh đè giá khi tên vé dài */
+  gap: 12px; /* trĂ¡nh Ä‘Ă¨ giĂ¡ khi tĂªn vĂ© dĂ i */
 }
 
-.price-item.sold-out {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-/* Bên trái (tên vé) cho phép xuống dòng nhưng không đẩy giá sang dòng mới */
+/* BĂªn trĂ¡i (tĂªn vĂ©) cho phĂ©p xuá»‘ng dĂ²ng nhÆ°ng khĂ´ng Ä‘áº©y giĂ¡ sang dĂ²ng má»›i */
 .price-item > span {
   flex: 1 1 auto;
-  min-width: 0; /* cho phép text wrap đúng */
+  min-width: 0; /* cho phĂ©p text wrap Ä‘Ăºng */
 }
 
-/* Bên phải (giá) luôn một dòng và không co lại */
+/* BĂªn pháº£i (giĂ¡) luĂ´n má»™t dĂ²ng vĂ  khĂ´ng co láº¡i */
 .price-item > b {
   flex: 0 0 auto;
   white-space: nowrap;
@@ -167,7 +156,7 @@
   margin-right: 6px;
 }
 
-/* NÚT */
+/* NĂT */
 .choose-btn {
   width: 100%;
   margin-top: 16px;
@@ -223,7 +212,7 @@
   cursor: pointer;
 }
 
-/* ===== NÚT TIẾP TỤC ===== */
+/* ===== NĂT TIáº¾P Tá»¤C ===== */
 .btn-continue {
   width: 100%;
   margin-top: 16px;
@@ -235,18 +224,18 @@
   font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease;
-  cursor: pointer; /* hình bàn tay khi hover */
+  cursor: pointer; /* hĂ¬nh bĂ n tay khi hover */
 }
 
-/* Hiệu ứng hover: gradient sáng hơn và phóng nhẹ */
+/* Hiá»‡u á»©ng hover: gradient sĂ¡ng hÆ¡n vĂ  phĂ³ng nháº¹ */
 .btn-continue:hover {
   background: linear-gradient(90deg, #8b68e8, #b190ff);
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(108, 77, 194, 0.4);
-  cursor: pointer; /* bảo đảm đổi hình bàn tay */
+  cursor: pointer; /* báº£o Ä‘áº£m Ä‘á»•i hĂ¬nh bĂ n tay */
 }
 
-/* Hiệu ứng click (ấn xuống nhẹ) */
+/* Hiá»‡u á»©ng click (áº¥n xuá»‘ng nháº¹) */
 .btn-continue:active {
   transform: translateY(0);
   box-shadow: 0 2px 5px rgba(108, 77, 194, 0.3);
@@ -258,17 +247,4 @@
   color: #666;
   cursor: pointer;
   font-size: 0.9rem;
-}
-
-/* Badge trạng thái hết vé */
-.sold-out-badge {
-  display: inline-block;
-  margin-left: 8px;
-  background: #fee2e2;
-  color: #b91c1c;
-  border: 1px solid #fecaca;
-  padding: 2px 6px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 700;
 }
