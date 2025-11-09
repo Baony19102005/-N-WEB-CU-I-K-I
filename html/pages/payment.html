@@ -15,16 +15,18 @@
 
     <main class="payment-container">
         <!-- Thông tin sự kiện -->
-        <section class="event-header">
-            <h2>[CONCERT] ANH TRAI VƯỢT NGÀN CHÔNG GAI DAY3, DAY4</h2>
-            <div class="event-details">
-                <div class="event-meta">
-                    <img src="../../images/icon-time.png" class="icon" alt="Thời gian">
-                    <span>18:00 - 23:00, 28/12/2025</span>
-                </div>
-                <div class="event-meta">
-                    <img src="../../images/icon-location.png" class="icon" alt="Địa điểm">
-                    <span>The Global City, TP.HCM</span>
+        <section class="event-header" id="paymentEventHeader">
+            <div class="event-header-right">
+                <h2 id="pay_event_title">[CONCERT] ANH TRAI VƯỢT NGÀN CHÔNG GAI DAY3, DAY4</h2>
+                <div class="event-details">
+                    <div class="event-meta">
+                        <img src="../../images/pages/payment/icon-time.png" class="icon" alt="Thời gian">
+                        <span id="pay_event_time">18:00 - 23:00, 28/12/2025</span>
+                    </div>
+                    <div class="event-meta">
+                        <img src="../../images/pages/payment/icon-location.png" class="icon" alt="Địa điểm">
+                        <span id="pay_event_location">The Global City, TP.HCM</span>
+                    </div>
                 </div>
             </div>
 
@@ -37,14 +39,13 @@
                     <div class="time-box" id="seconds">00</div>
                 </div>
             </div>
-            </div>
+            
         </section>
 
         <div class="payment-layout">
             <!-- Bên trái -->
             <div class="payment-left">
                 <h3 class="section-title">Phương thức thanh toán</h3>
-
                 <div class="payment-box">
                     <h4>Chọn phương thức thanh toán</h4>
                     <div class="payment-methods">
@@ -129,7 +130,7 @@
                 <div class="voucher-item" data-logo="momo" data-method="momo" data-minorder="800000">
                     <div class="voucher-left">
                         <div class="voucher-logo">
-                            <img src="../../images/logo-momo.png" alt="Momo logo">
+                            <img src="../../images/pages/payment/logo-momo.png" alt="Momo logo">
                         </div>
                         <div class="voucher-info">
                             <div class="voucher-title-main">Giảm 20.000đ</div>
@@ -149,7 +150,7 @@
                 <div class="voucher-item" data-logo="spay" data-method="spay" data-minorder="800000">
                     <div class="voucher-left">
                         <div class="voucher-logo">
-                            <img src="../../images/icon-Spay.jpg" alt="ShopeePay logo">
+                            <img src="../../images/pages/payment/icon-Spay.jpg" alt="ShopeePay logo">
                         </div>
                         <div class="voucher-info">
                             <div class="voucher-title-main">Giảm 20.000đ</div>
@@ -168,7 +169,7 @@
                 <div class="voucher-item" data-logo="zalo" data-method="zalo" data-minorder="600000">
                     <div class="voucher-left">
                         <div class="voucher-logo">
-                            <img src="../../images/icon-zalopay.png" alt="Zalo logo">
+                            <img src="../../images/pages/payment/icon-zalopay.png" alt="Zalo logo">
                         </div>
                         <div class="voucher-info">
                             <div class="voucher-title-main">Giảm 15.000đ</div>
@@ -187,7 +188,7 @@
                 <div class="voucher-item" data-logo="momo" data-method="momo" data-minorder="400000">
                     <div class="voucher-left">
                         <div class="voucher-logo">
-                            <img src="../../images/logo-momo.png" alt="Momo logo">
+                            <img src="../../images/pages/payment/logo-momo.png" alt="Momo logo">
                         </div>
                         <div class="voucher-info">
                             <div class="voucher-main">
@@ -223,7 +224,7 @@
 
             <div class="qr-body">
                 <div class="qr-left">
-                    <img src="../../images/QR-test.png" alt="QR Code" class="qr-image">
+                    <img src="../../images/pages/payment/QR-test.png" alt="QR Code" class="qr-image">
                     <p class="qr-amount">Tổng tiền<br><strong id="qrTotal">1.200.000 đ</strong></p>
                 </div>
 
@@ -239,6 +240,11 @@
                     <div class="qr-timer-box">
                         Giao dịch sẽ kết thúc sau<br>
                         <span id="qrMinutes">10</span> : <span id="qrSeconds">30</span>
+                    </div>
+
+                    <!-- Nút xác nhận đã thanh toán thành công -->
+                    <div style="margin-top: 14px; text-align: right;">
+                        <button id="qrPaidSuccessBtn" class="confirmBtn">Thanh toán thành công</button>
                     </div>
                 </div>
             </div>

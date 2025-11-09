@@ -28,115 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       payEmail.textContent = buyerData.email;
     }
 
-    // ===============================
-    // POPUP QR THANH TOÁN
-    // ===============================
-    document.addEventListener("DOMContentLoaded", () => {
-      const qrModal = document.getElementById("qrModal");
-      const qrCloseBtn = document.getElementById("qrCloseBtn");
-      const confirmPaymentBtn = document.getElementById("confirmPaymentBtn");
-      const qrMinutes = document.getElementById("qrMinutes");
-      const qrSeconds = document.getElementById("qrSeconds");
-      const qrTotal = document.getElementById("qrTotal");
-
-      if (!qrModal || !confirmPaymentBtn) return;
-
-      let countdownInterval;
-
-      confirmPaymentBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-
-        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-        if (!currentUser) {
-          alert('Vui lòng đăng nhập để hoàn tất thanh toán.');
-          // Kích hoạt popup đăng nhập (nút này được tạo bởi common.js)
-          const openAuthBtn = document.getElementById('open-auth-modal-btn');
-          if (openAuthBtn) {
-            openAuthBtn.click();
-          } else {
-            // Fallback nếu không tìm thấy nút
-            window.location.href = '../../html/pages/hompage.html';
-          }
-          return; // Dừng lại không làm gì thêm
-        }
-        // Validate buyer info (phone, email) before proceeding
-        try {
-          const buyer = JSON.parse(localStorage.getItem("buyerInfo") || "null");
-          const phone = String(buyer?.phone || "").trim();
-          const email = String(buyer?.email || "").trim();
-          // VN mobile: start with +84 or 0 then 3/5/7/8/9 + 8 digits
-          const phoneRegex = /^(?:\+?84|0)(?:3|5|7|8|9)\d{8}$/;
-          // Simple robust email check
-          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-          if (!buyer || !phone || !email) {
-            alert("Thiếu thông tin người mua (họ tên/số điện thoại/email). Vui lòng quay lại bước trước để nhập.");
-            return;
-          }
-          if (!phoneRegex.test(phone)) {
-            alert("Số điện thoại không hợp lệ. Vui lòng nhập số di động Việt Nam (bắt đầu 0/ +84, 10 số).");
-            return;
-          }
-          if (!emailRegex.test(email)) {
-            alert("Email không hợp lệ. Vui lòng kiểm tra lại.");
-            return;
-          }
-        } catch (err) {
-          console.error("Lỗi kiểm tra buyerInfo:", err);
-          alert("Không đọc được thông tin người mua. Vui lòng thực hiện lại bước trước.");
-          return;
-        }
-        // Lưu vé vào localStorage trước khi mở QR
-        saveTicketToMyTickets();
-
-        // Lấy dữ liệu vé và voucher
-        const ticketData = JSON.parse(localStorage.getItem("ticketSelection"));
-        const voucher = JSON.parse(localStorage.getItem("selectedVoucher"));
-
-        if (ticketData) {
-          let total = Number(ticketData.price) * Number(ticketData.quantity);
-          if (voucher) total -= voucher.discount;
-          qrTotal.textContent = `${total.toLocaleString()} đ`;
-        }
-
-        // Giả lập thanh toán thành công và chuyển hướng
-        alert("Thanh toán thành công! Vé của bạn đã được lưu.");
-        // Chuyển hướng đến trang "Vé của tôi"
-        window.location.href = '../../html/pages/myticket.html';
-        return; // Dừng lại để không chạy code mở QR bên dưới nữa
-
-        // Khởi động đếm ngược 10:30
-        let time = 10 * 60 + 30;
-        clearInterval(countdownInterval);
-
-        countdownInterval = setInterval(() => {
-          const minutes = Math.floor(time / 60);
-          const seconds = time % 60;
-          qrMinutes.textContent = minutes.toString().padStart(2, "0");
-          qrSeconds.textContent = seconds.toString().padStart(2, "0");
-          time--;
-
-          if (time < 0) {
-            clearInterval(countdownInterval);
-            alert("Giao dịch đã hết hạn! Vui lòng quét lại mã QR để thanh toán.");
-            qrModal.classList.remove("active");
-          }
-        }, 1000);
-      });
-
-      // Đóng popup
-      qrCloseBtn.addEventListener("click", () => {
-        qrModal.classList.remove("active");
-        clearInterval(countdownInterval);
-      });
-
-      qrModal.addEventListener("click", (e) => {
-        if (e.target === qrModal) {
-          qrModal.classList.remove("active");
-          clearInterval(countdownInterval);
-        }
-      });
-    });
+    // (Đã di chuyển logic QR xuống dưới để tránh trùng lặp và lỗi)
 
   }
 });
@@ -317,9 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const appliedVoucher = { name: voucherName, discount: discountValue, minOrder, logo: logoType };
       localStorage.setItem('selectedVoucher', JSON.stringify(appliedVoucher));
 
-      const logoSrc = logoType === 'momo' ? '../../images/logo-momo.png'
-        : logoType === 'zalo' ? '../../images/icon-zalopay.png'
-          : '../../images/icon-Spay.jpg';
+      const logoSrc = logoType === 'momo' ? '../../images/pages/payment/logo-momo.png'
+        : logoType === 'zalo' ? '../../images/pages/payment/icon-zalopay.png'
+          : '../../images/pages/payment/icon-Spay.jpg';
 
       voucherDisplay.innerHTML = `
         <div class="applied-voucher">
@@ -384,10 +276,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // render ra ngoài
     const logoSrc =
       logoType === "momo"
-        ? "../../images/logo-momo.png"
+        ? "../../images/pages/payment/logo-momo.png"
         : logoType === "zalo"
-          ? "../../images/icon-zalopay.png"
-          : "../../images/icon-Spay.jpg";
+          ? "../../images/pages/payment/icon-zalopay.png"
+          : "../../images/pages/payment/icon-Spay.jpg";
 
     voucherDisplay.innerHTML = `
       <div class="applied-voucher">
@@ -451,10 +343,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const logoSrc =
       savedVoucher.logo === "momo"
-        ? "../../images/logo-momo.png"
+        ? "../../images/pages/payment/logo-momo.png"
         : savedVoucher.logo === "zalo"
-          ? "../../images/icon-zalopay.png"
-          : "../../images/icon-Spay.jpg";
+          ? "../../images/pages/payment/icon-zalopay.png"
+          : "../../images/pages/payment/icon-Spay.jpg";
 
     voucherDisplay.innerHTML = `
       <div class="applied-voucher">
@@ -560,64 +452,116 @@ document.addEventListener("DOMContentLoaded", () => {
   const qrMinutes = document.getElementById("qrMinutes");
   const qrSeconds = document.getElementById("qrSeconds");
   const qrTotal = document.getElementById("qrTotal");
+  const qrPaidSuccessBtn = document.getElementById("qrPaidSuccessBtn");
 
   if (!qrModal || !confirmPaymentBtn) return;
 
   let countdownInterval;
 
-  confirmPaymentBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    // Lưu vé vào localStorage trước khi mở QR
-    saveTicketToMyTickets();
-
-    // Lấy dữ liệu vé
-    const selForQr2 = JSON.parse(localStorage.getItem("selectedTicket") || "null");
-    const ticketData = selForQr2 ? { price: Number(selForQr2.price), quantity: Number(selForQr2.quantity) } : JSON.parse(localStorage.getItem("ticketSelection") || "null");
-    const voucher = JSON.parse(localStorage.getItem("selectedVoucher"));
-    if (ticketData) {
-      let total = Number(ticketData.price) * Number(ticketData.quantity);
-      if (voucher) total -= voucher.discount;
-      qrTotal.textContent = `${total.toLocaleString()} đ`;
+  function openQrModalWithCountdown(totalAmount) {
+    try { clearInterval(countdownInterval); } catch (_) {}
+    if (typeof totalAmount === 'number') {
+      qrTotal.textContent = totalAmount.toLocaleString('vi-VN') + ' đ';
     }
-
-    // Giả lập thanh toán thành công và chuyển hướng
-    alert("Thanh toán thành công! Vé của bạn đã được lưu.");
-    // Chuyển hướng đến trang "Vé của tôi"
-    window.location.href = '../../html/pages/myticket.html';
-    return; // Dừng lại để không chạy code mở QR bên dưới nữa
-
-    // Đếm ngược 10:30
-    let time = 10 * 60 + 30; // 10 phút 30 giây
-    clearInterval(countdownInterval);
+    // Set initial 10:30
+    let time = 10 * 60 + 30;
+    qrMinutes.textContent = Math.floor(time / 60).toString().padStart(2, '0');
+    qrSeconds.textContent = (time % 60).toString().padStart(2, '0');
+    qrModal.classList.add('active');
 
     countdownInterval = setInterval(() => {
       const minutes = Math.floor(time / 60);
       const seconds = time % 60;
-
-      qrMinutes.textContent = minutes.toString().padStart(2, "0");
-      qrSeconds.textContent = seconds.toString().padStart(2, "0");
-
+      qrMinutes.textContent = minutes.toString().padStart(2, '0');
+      qrSeconds.textContent = seconds.toString().padStart(2, '0');
       time--;
-
       if (time < 0) {
         clearInterval(countdownInterval);
-        alert("Giao dịch đã hết hạn! Vui lòng quét lại mã QR để thanh toán.");
-        qrModal.classList.remove("active");
+        alert('Giao dịch đã hết hạn! Vui lòng quét lại mã QR để thanh toán.');
+        qrModal.classList.remove('active');
       }
     }, 1000);
+  }
+
+  confirmPaymentBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Yêu cầu đăng nhập
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    if (!currentUser) {
+      alert('Vui lòng đăng nhập để hoàn tất thanh toán.');
+      const openAuthBtn = document.getElementById('open-auth-modal-btn');
+      if (openAuthBtn) {
+        openAuthBtn.click();
+      } else {
+        window.location.href = '../../html/pages/hompage.html';
+      }
+      return;
+    }
+
+    // Validate buyer info (phone, email)
+    try {
+      const buyer = JSON.parse(localStorage.getItem("buyerInfo") || "null");
+      const phone = String(buyer?.phone || "").trim();
+      const email = String(buyer?.email || "").trim();
+      const phoneRegex = /^(?:\+?84|0)(?:3|5|7|8|9)\d{8}$/;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!buyer || !phone || !email) {
+        alert("Thiếu thông tin người mua (họ tên/số điện thoại/email). Vui lòng quay lại bước trước để nhập.");
+        return;
+      }
+      if (!phoneRegex.test(phone)) {
+        alert("Số điện thoại không hợp lệ. Vui lòng nhập số di động Việt Nam (bắt đầu 0/ +84, 10 số).");
+        return;
+      }
+      if (!emailRegex.test(email)) {
+        alert("Email không hợp lệ. Vui lòng kiểm tra lại.");
+        return;
+      }
+    } catch (err) {
+      console.error("Lỗi kiểm tra buyerInfo:", err);
+      alert("Không đọc được thông tin người mua. Vui lòng thực hiện lại bước trước.");
+      return;
+    }
+
+    // Tính tổng tiền và mở QR
+    const selForQr = JSON.parse(localStorage.getItem("selectedTicket") || "null");
+    const basicData = selForQr ? { price: Number(selForQr.price), quantity: Number(selForQr.quantity) } : JSON.parse(localStorage.getItem("ticketSelection") || "null");
+    const voucher = JSON.parse(localStorage.getItem("selectedVoucher"));
+    let totalAmount = 0;
+    if (basicData && basicData.price != null && basicData.quantity != null) {
+      totalAmount = Number(basicData.price) * Number(basicData.quantity);
+      if (voucher) totalAmount -= Number(voucher.discount || 0);
+    }
+    openQrModalWithCountdown(totalAmount);
   });
 
-  // Đóng popup
+  // Nút xác nhận thanh toán thành công trong popup
+  if (qrPaidSuccessBtn) {
+    qrPaidSuccessBtn.addEventListener('click', () => {
+      try {
+        saveTicketToMyTickets();
+      } catch (e) {
+        console.error('Lỗi khi lưu vé:', e);
+      }
+      try { clearInterval(countdownInterval); } catch (_) {}
+      qrModal.classList.remove('active');
+      alert('Thanh toán thành công! Vé của bạn đã được lưu.');
+      window.location.href = '../../html/pages/myticket.html';
+    });
+  }
+
+  // Đóng popup (nút X)
   qrCloseBtn.addEventListener("click", () => {
     qrModal.classList.remove("active");
-    clearInterval(countdownInterval);
+    try { clearInterval(countdownInterval); } catch (_) {}
   });
 
   // Click ra ngoài cũng đóng popup
   qrModal.addEventListener("click", (e) => {
     if (e.target === qrModal) {
       qrModal.classList.remove("active");
-      clearInterval(countdownInterval);
+      try { clearInterval(countdownInterval); } catch (_) {}
     }
   });
 });
